@@ -3,7 +3,12 @@
 <div class="main-container">
   <app-sidebar></app-sidebar>
   <div class="form-list-panel">
-    <h2><b>Relação de Acolhidos</b></h2>
+    <h2><b>Listagem de Acolhidos</b></h2>
+    <nav class="breadcrumb">
+      <a routerLink="/home">Home</a>
+      <span class="breadcrumb-span">/</span>
+      <span>Listagem de Acolhidos</span>
+    </nav>
 
     <div class="filters">
       <label>
@@ -47,8 +52,6 @@
               <td>
                 <div class="buttons">
                   <a [routerLink]="['/acolhido/edicao', a.id]" class="btn"> Editar </a>
-
-                  <a (click)="excluir(a.id!)" class="btn"> Excluir </a>
                 </div>
               </td>
             </tr>

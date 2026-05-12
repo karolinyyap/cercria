@@ -1,5 +1,5 @@
 export class Medicamento {
-  id?: number;
+  id!: number;
   nome: string = '';
   unidadeMedida: string = '';
   categoria: string = '';

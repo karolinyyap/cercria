@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { Header } from '../../../components/header/header';
@@ -18,8 +18,9 @@ import { ToastrService } from 'ngx-toastr';
 export class FuncionarioEdicao implements OnInit {
   funcionario: Funcionario = new Funcionario();
 
+  private servico = inject(FuncionarioService);
+
   constructor(
-    private servico: FuncionarioService,
     private rota: ActivatedRoute,
     private cdr: ChangeDetectorRef,
     private toastr: ToastrService,
@@ -37,7 +38,23 @@ export class FuncionarioEdicao implements OnInit {
     const id = Number(this.rota.snapshot.paramMap.get('id'));
     this.servico.buscarPorId(id).subscribe((retorno) => {
       this.funcionario = retorno;
+
+      this.funcionario.dataNascimento = this.formatarData(this.funcionario.dataNascimento);
+      this.funcionario.dataAdmissao = this.formatarData(this.funcionario.dataAdmissao);
+      this.funcionario.dataSaida = this.formatarData(this.funcionario.dataSaida);
+
       this.cdr.detectChanges();
     });
+  }
+
+  formatarData(data: any): string {
+    if (!data) return '';
+
+    const d = new Date(data);
+    const ano = d.getFullYear();
+    const mes = String(d.getMonth() + 1).padStart(2, '0');
+    const dia = String(d.getDate()).padStart(2, '0');
+
+    return `${ano}-${mes}-${dia}`;
   }
 }

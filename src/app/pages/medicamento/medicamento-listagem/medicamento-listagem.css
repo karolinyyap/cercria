@@ -17,10 +17,10 @@
 
 h2 {
   margin-top: 40px;
-  text-align: center;
   color: var(--cor-secundaria);
   font-size: 30px;
   letter-spacing: 0.01em;
+  padding-left: 5%;
 }
 
 .btnExterno {
@@ -264,4 +264,33 @@ td:last-child {
 .btn-editar:hover {
   background: var(--cor-secundaria);
   color: white;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 2px;
+  font-size: 15px;
+  color: #5a6a9a;
+  padding-left: 5%;
+}
+
+.breadcrumb-span {
+  color: #2a4fa8;
+}
+
+.breadcrumb a {
+  color: #1e3b8a;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+.breadcrumb span:last-child {
+  color: #5a6a9a;
+  font-weight: 400;
 }

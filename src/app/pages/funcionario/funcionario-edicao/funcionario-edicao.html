@@ -3,7 +3,14 @@
 <div class="main-container">
   <app-sidebar></app-sidebar>
   <div class="form-list-panel">
-    <h2><b>Listagem de Funcionário</b></h2>
+    <h2><b>Edição de Funcionário</b></h2>
+    <nav class="breadcrumb">
+      <a routerLink="/home">Home</a>
+      <span class="breadcrumb-span">/</span>
+      <a routerLink="/funcionario/listagem">Listagem de Funcionários</a>
+      <span class="breadcrumb-span">/</span>
+      <span>Editando {{ funcionario.nome }}</span>
+    </nav>
 
     <form class="form-grid" #form="ngForm" (ngSubmit)="editar()">
       <div class="form-buttons">
@@ -11,7 +18,7 @@
       </div>
 
       <div class="campo grande">
-        <label>Nome completo *</label>
+        <label>Nome completo <span>*</span></label>
         <input
           type="text"
           name="nome"
@@ -32,7 +39,7 @@
       </div>
 
       <div class="campo">
-        <label>Telefone *</label>
+        <label>Telefone <span>*</span></label>
         <input
           type="tel"
           name="telefone"
@@ -47,7 +54,7 @@
       </div>
 
       <div class="campo">
-        <label>Data de nascimento *</label>
+        <label>Data de nascimento <span>*</span></label>
         <input
           type="date"
           name="dataNascimento"
@@ -62,7 +69,7 @@
       </div>
 
       <div class="campo grande">
-        <label>E-mail *</label>
+        <label>E-mail <span>*</span></label>
         <input
           type="email"
           name="email"
@@ -83,7 +90,7 @@
       </div>
 
       <div class="campo">
-        <label>CPF *</label>
+        <label>CPF <span>*</span></label>
         <input
           type="text"
           name="cpf"
@@ -98,7 +105,7 @@
       </div>
 
       <div class="campo">
-        <label>RG *</label>
+        <label>RG <span>*</span></label>
         <input
           type="text"
           name="rg"
@@ -114,7 +121,7 @@
       </div>
 
       <div class="campo">
-        <label>Órgão Emissor *</label>
+        <label>Órgão Emissor <span>*</span></label>
         <input
           type="text"
           name="orgaoEmissor"
@@ -129,7 +136,7 @@
       </div>
 
       <div class="campo">
-        <label>UF *</label>
+        <label>UF <span>*</span></label>
         <input
           type="text"
           name="uf"
@@ -145,7 +152,7 @@
       </div>
 
       <div class="campo">
-        <label>Cargo *</label>
+        <label>Cargo <span>*</span></label>
         <select name="cargo" required [(ngModel)]="funcionario.cargo" #cargo="ngModel">
           <option value="">Selecione</option>
           <option value="Coordenador">Coordenador</option>
@@ -163,7 +170,7 @@
       </div>
 
       <div class="campo">
-        <label>Escolaridade *</label>
+        <label>Escolaridade <span>*</span></label>
         <select
           name="escolaridade"
           required
@@ -191,7 +198,7 @@
       </div>
 
       <div class="campo">
-        <label>Carga Horária *</label>
+        <label>Carga Horária <span>*</span></label>
         <input
           type="text"
           name="cargaHoraria"
@@ -207,7 +214,7 @@
       </div>
 
       <div class="campo">
-        <label>Sexo *</label>
+        <label>Sexo <span>*</span></label>
         <select name="sexo" required [(ngModel)]="funcionario.sexo" #sexo="ngModel">
           <option value="">Selecione</option>
           <option value="Feminino">Feminino</option>
@@ -220,7 +227,7 @@
       </div>
 
       <div class="campo">
-        <label>Data de admissão *</label>
+        <label>Data de admissão <span>*</span></label>
         <input
           type="date"
           name="dataAdmissao"
@@ -237,21 +244,6 @@
       <div class="campo">
         <label>Data de saída</label>
         <input type="date" name="dataSaida" [(ngModel)]="funcionario.dataSaida" />
-      </div>
-
-      <div class="campo">
-        <label>Senha *</label>
-        <input
-          type="password"
-          name="senha"
-          required
-          [(ngModel)]="funcionario.senha"
-          #senha="ngModel"
-        />
-
-        @if (senha.invalid && senha.touched) {
-          <small class="erro">Mínimo 6 caracteres</small>
-        }
       </div>
 
       <div class="form-buttons">

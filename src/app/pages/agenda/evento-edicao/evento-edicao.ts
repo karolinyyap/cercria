@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal, inject } from '@angular/core';
 import { RouterLink, ActivatedRoute, Router } from '@angular/router';
 import { Header } from '../../../components/header/header';
 import { Sidebar } from '../../../components/sidebar/sidebar';
@@ -29,10 +29,11 @@ export class EdicaoEvento implements OnInit {
   filtroAcolhido: string = '';
   filtroResponsavel: string = '';
 
+  private acolhidoService = inject(AcolhidoService);
+  private eventoService = inject(EventoService);
+  private funcionarioService = inject(FuncionarioService);
+
   constructor(
-    private eventoService: EventoService,
-    private acolhidoService: AcolhidoService,
-    private funcionarioService: FuncionarioService,
     private rota: ActivatedRoute,
     private toastr: ToastrService,
     private router: Router,

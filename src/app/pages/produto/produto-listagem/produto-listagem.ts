@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { Header } from '../../../components/header/header';
@@ -18,10 +18,8 @@ import Swal from 'sweetalert2';
 export class ProdutoListagem {
   produtos = signal<Produto[]>([]);
 
-  constructor(
-    private servico: ProdutoService,
-    private toastr: ToastrService,
-  ) {}
+  private servico = inject(ProdutoService);
+  constructor(private toastr: ToastrService) {}
 
   ngOnInit(): void {
     this.servico.selecionar().subscribe({

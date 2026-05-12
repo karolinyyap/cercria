@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { Header } from '../../../components/header/header';
@@ -7,7 +7,6 @@ import { Acolhido } from '../../../models/Acolhido';
 import { NgxMaskPipe } from 'ngx-mask';
 import { CommonModule } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
-import Swal from 'sweetalert2';
 import { AcolhidoService } from '../../../services/acolhido/acolhido.service';
 
 @Component({
@@ -19,10 +18,9 @@ import { AcolhidoService } from '../../../services/acolhido/acolhido.service';
 export class AcolhidoListagem {
   acolhidos = signal<Acolhido[]>([]);
 
-  constructor(
-    private servico: AcolhidoService,
-    private toastr: ToastrService,
-  ) {}
+  private servico = inject(AcolhidoService);
+
+  constructor(private toastr: ToastrService) {}
 
   ngOnInit(): void {
     this.servico.selecionar().subscribe({
@@ -32,29 +30,6 @@ export class AcolhidoListagem {
       error: (err) => {
         console.error('erro:', err);
       },
-    });
-  }
-
-  excluir(id: number) {
-    Swal.fire({
-      title: 'Tem certeza?',
-      text: 'Esse funcionário será excluído!',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Sim, excluir',
-      cancelButtonText: 'Cancelar',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.servico.remover(id).subscribe({
-          next: () => {
-            this.acolhidos.update((lista) => lista.filter((m) => m.id !== id));
-            this.toastr.success('Acolhido excluído com sucesso!');
-          },
-          error: (err) => {
-            console.error('Erro ao excluir:', err);
-          },
-        });
-      }
     });
   }
 

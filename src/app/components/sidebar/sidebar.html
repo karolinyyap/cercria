@@ -1,13 +1,13 @@
 <div class="sidebar" [class.aberta]="sidebarService.aberta()">
   <!-- INÍCIO -->
   <div class="menu-item" routerLink="/home" routerLinkActive="ativo">
-    <img src="/assets/casa_navbar.png" />
+    <img src="/assets/home.png" />
     <span>Início</span>
   </div>
 
   <!-- FUNCIONÁRIOS -->
   <div class="menu-item" (click)="toggleMenu('funcionario')">
-    <img src="/assets/user.png" />
+    <img src="/assets/funcionario.png" />
     <span>Funcionários</span>
     <span class="seta" [class.aberta]="menuAberto === 'funcionario'">▼</span>
   </div>
@@ -23,7 +23,7 @@
 
   <!-- ACOLHIDOS -->
   <div class="menu-item" (click)="toggleMenu('acolhido')">
-    <img src="/assets/acolhidos_icone.png" />
+    <img src="/assets/acolhidos.png" />
     <span>Acolhidos</span>
     <span class="seta" [class.aberta]="menuAberto === 'acolhido'">▼</span>
   </div>
@@ -39,7 +39,7 @@
 
   <!-- MEDICAMENTOS -->
   <div class="menu-item" (click)="toggleMenu('medicamento')">
-    <img src="/assets/remedios_icone.png" />
+    <img src="/assets/medicamento.png" />
     <span>Medicamentos</span>
     <span class="seta" [class.aberta]="menuAberto === 'medicamento'">▼</span>
   </div>
@@ -49,10 +49,10 @@
     <div routerLink="/medicamento/listagem" class="submenu-item">Listagem</div>
   </div>
 
-  <!-- ESTOQUE -->
+  <!-- PRODUTOS -->
   <div class="menu-item" (click)="toggleMenu('produto')">
-    <img src="/assets/estoque_icone.png" />
-    <span>Estoque</span>
+    <img src="/assets/produto.png" />
+    <span>Produtos</span>
     <span class="seta" [class.aberta]="menuAberto === 'produto'">▼</span>
   </div>
 
@@ -63,7 +63,7 @@
 
   <!-- AGENDA -->
   <div class="menu-item" (click)="toggleMenu('agenda')">
-    <img src="/assets/calendario_icone.png" />
+    <img src="/assets/calendario.png" />
     <span>Agenda</span>
     <span class="seta" [class.aberta]="menuAberto === 'agenda'">▼</span>
   </div>
@@ -71,5 +71,11 @@
   <div class="submenu" [class.aberto]="menuAberto === 'agenda'">
     <div routerLink="/agenda/listagem" class="submenu-item">Calendário</div>
     <div routerLink="/agenda/evento-cadastro" class="submenu-item">Novo Evento</div>
+  </div>
+
+  <!-- AGENDA -->
+  <div class="menu-item" (click)="toggleMenu('agenda')">
+    <img src="/assets/relatorio.png" />
+    <span>Relatórios</span>
   </div>
 </div>

@@ -3,7 +3,12 @@
 <div class="main-container">
   <app-sidebar></app-sidebar>
   <div class="form-list-panel">
-    <h2><b>Relação de Funcionários</b></h2>
+    <h2><b>Listagem de Funcionários</b></h2>
+    <nav class="breadcrumb">
+      <a routerLink="/home">Home</a>
+      <span class="breadcrumb-span">/</span>
+      <span>Listagem de Funcionários</span>
+    </nav>
     <div class="filters">
       <label>
         <input type="radio" name="status" value="todos" [(ngModel)]="filtroStatus" />
@@ -41,7 +46,6 @@
               <td>
                 <div class="buttons">
                   <a [routerLink]="['/funcionario/edicao', f.id]" class="btn">Editar</a>
-                  <a (click)="excluir(f.id!)" class="btn">Excluir</a>
                 </div>
               </td>
             </tr>

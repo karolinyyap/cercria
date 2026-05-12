@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import Swal from 'sweetalert2';
 import { SidebarService } from '../../services/sidebar/sidebar.service';
+import { ElementRef, HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -13,8 +14,16 @@ import { SidebarService } from '../../services/sidebar/sidebar.service';
 export class Header implements OnInit {
   usuario = 'Faça seu Login';
   sidebarService = inject(SidebarService);
+  menuAberto = false;
 
-  constructor(private router: Router) {}
+  toggleMenu() {
+    this.menuAberto = !this.menuAberto;
+  }
+
+  constructor(
+    private router: Router,
+    private elementRef: ElementRef,
+  ) {}
 
   ngOnInit() {
     const user = localStorage.getItem('usuario');
@@ -45,5 +54,26 @@ export class Header implements OnInit {
         });
       }
     });
+  }
+
+  irParaPerfil() {
+    const user = JSON.parse(localStorage.getItem('usuario')!);
+    this.router.navigate(['/funcionario/edicao', user.id]);
+  }
+
+  irParaLogin() {
+    this.router.navigate(['/login']);
+  }
+
+  irParaAlterarSenha() {
+    this.router.navigate(['/alterar-senha']);
+    this.menuAberto = false;
+  }
+
+  @HostListener('document:click', ['$event'])
+  clicouFora(event: MouseEvent) {
+    if (!this.elementRef.nativeElement.contains(event.target)) {
+      this.menuAberto = false;
+    }
   }
 }

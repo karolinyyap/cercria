@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { Header } from '../../../components/header/header';
@@ -17,8 +17,8 @@ import { Produto } from '../../../models/Produto';
 export class ProdutoEdicao {
   produto: Produto = new Produto();
 
+  private servico = inject(ProdutoService);
   constructor(
-    private servico: ProdutoService,
     private rota: ActivatedRoute,
     private cdr: ChangeDetectorRef,
     private toastr: ToastrService,

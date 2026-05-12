@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { Header } from '../../../components/header/header';
@@ -18,8 +18,9 @@ export class FuncionarioCadastro {
   //JSON de funcionario
   funcionarios: Funcionario[] = [];
 
+  private servico = inject(FuncionarioService);
+
   constructor(
-    private servico: FuncionarioService,
     private toastr: ToastrService,
     private router: Router,
   ) {}

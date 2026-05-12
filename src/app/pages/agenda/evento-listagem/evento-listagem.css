@@ -27,14 +27,15 @@
   font-size: 1.8rem;
   font-weight: 600;
   color: var(--cor-secundaria);
-  margin-bottom: 16px;
+  margin-bottom: 10px;
+  padding-left: 0.3%;
 }
 
 .calendario-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 24px;
+  margin-bottom: 10px;
 }
 
 .btn-novo-evento {
@@ -205,4 +206,33 @@
   padding: 8px 16px;
   border-radius: 6px;
   cursor: pointer;
+}
+
+.breadcrumb {
+  display: flex;
+  padding-left: 5%;
+  gap: 8px;
+  margin-top: 2px;
+  font-size: 15px;
+  color: #5a6a9a;
+  padding-left: 0.3%;
+}
+
+.breadcrumb-span {
+  color: #2a4fa8;
+}
+
+.breadcrumb a {
+  color: #1e3b8a;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+.breadcrumb span:last-child {
+  color: #5a6a9a;
+  font-weight: 400;
 }

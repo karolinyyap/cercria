@@ -4,6 +4,11 @@
   <app-sidebar></app-sidebar>
   <div class="form-list-panel">
     <h2><b>Cadastro de Medicamento</b></h2>
+    <nav class="breadcrumb">
+      <a routerLink="/home">Home</a>
+      <span class="breadcrumb-span">/</span>
+      <span>Cadastro de Medicamentos</span>
+    </nav>
 
     <form class="form-grid" #form="ngForm" (ngSubmit)="cadastrar(form)">
       <div class="form-buttons">
@@ -11,7 +16,7 @@
       </div>
 
       <div class="campo grande">
-        <label>Nome do medicamento *</label>
+        <label>Nome do medicamento <span>*</span></label>
         <input
           type="text"
           name="nome"
@@ -32,7 +37,7 @@
       </div>
 
       <div class="campo">
-        <label>Categoria *</label>
+        <label>Categoria <span>*</span></label>
         <select name="origem" required [(ngModel)]="medicamento.categoria" #categoria="ngModel">
           <option value="">Selecione</option>
           <option value="Analgésico">Analgésico</option>
@@ -50,7 +55,7 @@
       </div>
 
       <div class="campo">
-        <label>Unidade de medida *</label>
+        <label>Unidade de medida <span>*</span></label>
         <select name="origem" required [(ngModel)]="medicamento.unidadeMedida" #unidade="ngModel">
           <option value="">Selecione</option>
           <option value="Comprimido">Comprimido</option>

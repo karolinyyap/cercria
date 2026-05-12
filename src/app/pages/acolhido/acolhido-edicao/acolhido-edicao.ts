@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -11,8 +11,6 @@ import { NgxMaskDirective } from 'ngx-mask';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { signal } from '@angular/core';
-import { Medicamento } from '../../../models/Medicamento';
-import { MedicamentoService } from '../../../services/medicamento/medicamento.service';
 
 @Component({
   selector: 'app-acolhido-edicao',
@@ -24,9 +22,8 @@ export class AcolhidoEdicao implements OnInit {
   acolhido: Acolhido = new Acolhido();
   carregado = false;
 
+  private servico = inject(AcolhidoService);
   constructor(
-    private servico: AcolhidoService,
-    private servicoMedicamento: MedicamentoService,
     private rota: ActivatedRoute,
     private toastr: ToastrService,
     private cdr: ChangeDetectorRef,
@@ -48,12 +45,6 @@ export class AcolhidoEdicao implements OnInit {
   ngOnInit(): void {
     const id = Number(this.rota.snapshot.paramMap.get('id'));
 
-    // carregar medicamentos
-    this.servicoMedicamento.selecionar().subscribe((lista) => {
-      console.log('Medicamentos:', lista); // teste
-      this.medicamentos.set(lista);
-    });
-
     //carregar acolhido
     this.servico.buscarPorId(id).subscribe({
       next: (retorno) => {
@@ -65,10 +56,6 @@ export class AcolhidoEdicao implements OnInit {
         this.acolhido.dataEntrada = this.formatarData(retorno.dataEntrada);
         this.acolhido.dataSaida = this.formatarData(retorno.dataSaida);
 
-        if (!this.acolhido.medicamentos) {
-          this.acolhido.medicamentos = [];
-        }
-
         this.carregado = true;
 
         this.cdr.detectChanges();
@@ -77,30 +64,5 @@ export class AcolhidoEdicao implements OnInit {
         console.error('ERRO:', erro);
       },
     });
-  }
-
-  ////////////////
-  medicamentos = signal<Medicamento[]>([]);
-
-  filtroMedicamento: string = '';
-
-  medicamentosSelecionados: Medicamento[] = [];
-
-  filtrarMedicamentos() {
-    const lista = this.medicamentos();
-
-    if (!this.filtroMedicamento.trim()) {
-      return [];
-    }
-
-    return lista.filter((m) => m.nome.toLowerCase().includes(this.filtroMedicamento.toLowerCase()));
-  }
-
-  toggleMedicamento(id: number) {
-    if (this.acolhido.medicamentos.includes(id)) {
-      this.acolhido.medicamentos = this.acolhido.medicamentos.filter((m) => m !== id);
-    } else {
-      this.acolhido.medicamentos.push(id);
-    }
   }
 }

@@ -65,4 +65,9 @@ export class FuncionarioService {
     // Faz uma requisição GET passando o ID do funcionario diretamente na URL
     return this.http.delete<void>(this.url + '/' + id);
   }
+
+  //Método de alterar senha
+  alterarSenha(dados: any) {
+    return this.http.put('http://localhost:8080/funcionario/alterar-senha', dados);
+  }
 }

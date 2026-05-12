@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { Header } from '../../../components/header/header';
@@ -19,10 +19,8 @@ import Swal from 'sweetalert2';
 export class FuncionarioListagem implements OnInit {
   funcionarios = signal<Funcionario[]>([]);
 
-  constructor(
-    private servico: FuncionarioService,
-    private toastr: ToastrService,
-  ) {}
+  private servico = inject(FuncionarioService);
+  constructor(private toastr: ToastrService) {}
 
   ngOnInit(): void {
     this.servico.selecionar().subscribe({
@@ -32,29 +30,6 @@ export class FuncionarioListagem implements OnInit {
       error: (err) => {
         console.error('erro:', err);
       },
-    });
-  }
-
-  excluir(id: number) {
-    Swal.fire({
-      title: 'Tem certeza?',
-      text: 'Esse funcionário será excluído!',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Sim, excluir',
-      cancelButtonText: 'Cancelar',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.servico.remover(id).subscribe({
-          next: () => {
-            this.funcionarios.update((lista) => lista.filter((m) => m.id !== id));
-            this.toastr.success('Funcionário excluído com sucesso!');
-          },
-          error: (err) => {
-            console.error('Erro ao excluir:', err);
-          },
-        });
-      }
     });
   }
 

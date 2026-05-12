@@ -4,6 +4,13 @@
   <app-sidebar></app-sidebar>
   <div class="form-list-panel">
     <h2><b>Edição de Acolhido</b></h2>
+    <nav class="breadcrumb">
+      <a routerLink="/home">Home</a>
+      <span class="breadcrumb-span">/</span>
+      <a routerLink="/acolhido/listagem">Listagem de Acolhidos</a>
+      <span class="breadcrumb-span">/</span>
+      <span>Editando {{ acolhido.nome }}</span>
+    </nav>
 
     <form class="form-grid" #form="ngForm" (ngSubmit)="editar()">
       <div class="form-buttons">
@@ -11,7 +18,7 @@
       </div>
 
       <div class="campo grande">
-        <label>Nome completo *</label>
+        <label>Nome completo <span>*</span></label>
         <input
           type="text"
           name="nome"
@@ -32,7 +39,7 @@
       </div>
 
       <div class="campo">
-        <label>CPF *</label>
+        <label>CPF <span>*</span></label>
         <input
           type="text"
           name="cpf"
@@ -48,7 +55,7 @@
       </div>
 
       <div class="campo">
-        <label>Data de nascimento *</label>
+        <label>Data de nascimento <span>*</span></label>
         <input
           type="date"
           name="dataNascimento"
@@ -63,7 +70,7 @@
       </div>
 
       <div class="campo grande">
-        <label>Escola *</label>
+        <label>Escola <span>*</span></label>
         <input
           type="text"
           name="escola"
@@ -121,12 +128,12 @@
       </div>
 
       <div class="campo">
-        <label>Data de entrada *</label>
+        <label>Data de entrada <span>*</span></label>
         <input type="date" name="dataEntrada" required [(ngModel)]="acolhido.dataEntrada" />
       </div>
 
       <div class="campo">
-        <label>Cor da pele *</label>
+        <label>Cor da pele <span>*</span></label>
         <select name="corPele" required [(ngModel)]="acolhido.corPele" #corPele="ngModel">
           <option value="">Selecione</option>
           <option value="Branca">Branca</option>
@@ -170,25 +177,8 @@
         }
       </div>
 
-      <div class="campo grande">
-        <label>Medicamentos</label>
-
-        <div class="lista-medicamentos">
-          @for (m of medicamentos(); track m.id) {
-            <div class="item-medicamento">
-              <input
-                type="checkbox"
-                [checked]="acolhido.medicamentos.includes(m.id!)"
-                (change)="toggleMedicamento(m.id!)"
-              />
-              {{ m.nome }}
-            </div>
-          }
-        </div>
-      </div>
-
       <div class="campo">
-        <label>Tamanho Camiseta *</label>
+        <label>Tamanho Camiseta <span>*</span></label>
         <select
           name="tamanhoCamiseta"
           required
@@ -210,7 +200,7 @@
       </div>
 
       <div class="campo">
-        <label>Tamanho Bermuda/Calça *</label>
+        <label>Tamanho Bermuda/Calça <span>*</span></label>
         <input
           type="number"
           name="tamanhoBermudaCalca"
@@ -227,7 +217,7 @@
       </div>
 
       <div class="campo">
-        <label>Tamanho Calçado *</label>
+        <label>Tamanho Calçado <span>*</span></label>
         <input
           type="number"
           name="tamanhoCalcado"
@@ -244,7 +234,7 @@
       </div>
 
       <div class="campo">
-        <label>Tamanho Roupa Íntima *</label>
+        <label>Tamanho Roupa Íntima <span>*</span></label>
         <select
           name="tamanhoRoupaIntima"
           required

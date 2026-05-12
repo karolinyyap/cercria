@@ -3,6 +3,11 @@
   flex: 1;
 }
 
+span {
+  font-weight: bolder;
+  color: red;
+}
+
 .form-list-panel {
   background-color: white;
   width: 60%;
@@ -15,8 +20,8 @@
 
 h2 {
   margin-top: 50px;
-  text-align: center;
-  margin-bottom: 30px;
+  padding-left: 5%;
+  margin-bottom: 10px;
   color: var(--cor-secundaria) !important;
 }
 
@@ -56,7 +61,7 @@ select:focus {
 }
 
 .btn,
-a {
+.btn-voltar {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -101,4 +106,33 @@ a {
   font-size: 12px;
   margin-top: 4px;
   display: block;
+}
+
+.breadcrumb {
+  display: flex;
+  padding-left: 5%;
+  gap: 8px;
+  margin-top: 2px;
+  font-size: 15px;
+  color: #5a6a9a;
+  padding-left: 5%;
+}
+
+.breadcrumb-span {
+  color: #2a4fa8;
+}
+
+.breadcrumb a {
+  color: #1e3b8a;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+.breadcrumb span:last-child {
+  color: #5a6a9a;
+  font-weight: 400;
 }

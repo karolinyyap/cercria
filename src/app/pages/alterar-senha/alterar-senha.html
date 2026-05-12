@@ -1,0 +1,42 @@
+<app-header></app-header>
+
+<div class="main-container">
+  <app-sidebar></app-sidebar>
+  <div class="form-container">
+    <h2>Alterar senha</h2>
+
+    <form #form="ngForm" (ngSubmit)="alterarSenha()">
+      <div class="campo">
+        <label>Nova senha *</label>
+        <input
+          type="password"
+          name="novaSenha"
+          required
+          minlength="6"
+          [(ngModel)]="dados.novaSenha"
+          #novaSenha="ngModel"
+        />
+      </div>
+
+      <div class="campo">
+        <label>Confirmar nova senha *</label>
+        <input
+          type="password"
+          name="confirmarSenha"
+          required
+          [(ngModel)]="dados.confirmarSenha"
+          #confirmarSenha="ngModel"
+        />
+      </div>
+
+      <!-- erro -->
+      @if (erroSenha) {
+        <small class="erro">{{ erroSenha }}</small>
+      }
+
+      <div class="form-buttons">
+        <button type="submit" class="btn" [disabled]="form.invalid">Alterar senha</button>
+      </div>
+    </form>
+  </div>
+</div>

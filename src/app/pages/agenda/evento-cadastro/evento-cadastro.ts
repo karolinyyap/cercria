@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, inject } from '@angular/core';
 import { Header } from '../../../components/header/header';
 import { Sidebar } from '../../../components/sidebar/sidebar';
 import { RouterLink, Router } from '@angular/router';
@@ -34,10 +34,11 @@ export class EventoCadastro {
   // Lista de status permitidos
   statusList: string[] = ['Em andamento', 'Cancelado', 'Adiado', 'Realizado'];
 
+  private acolhidoService = inject(AcolhidoService);
+  private eventoService = inject(EventoService);
+  private funcionarioService = inject(FuncionarioService);
+
   constructor(
-    private eventoService: EventoService,
-    private acolhidoService: AcolhidoService,
-    private funcionarioService: FuncionarioService,
     private toastr: ToastrService,
     private router: Router,
   ) {}

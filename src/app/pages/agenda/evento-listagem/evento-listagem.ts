@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { Header } from '../../../components/header/header';
@@ -52,12 +52,13 @@ export class EventoListagem implements OnInit, AfterViewInit {
     },
   };
 
+  private acolhidoService = inject(AcolhidoService);
+  private eventoService = inject(EventoService);
+  private funcionarioService = inject(FuncionarioService);
+
   constructor(
-    private eventoService: EventoService,
     private router: Router,
     private cd: ChangeDetectorRef,
-    private acolhidoService: AcolhidoService,
-    private funcionarioService: FuncionarioService,
   ) {}
 
   ngOnInit(): void {

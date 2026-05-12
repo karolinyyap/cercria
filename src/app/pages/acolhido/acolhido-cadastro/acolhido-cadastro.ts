@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, inject } from '@angular/core';
 import { Header } from '../../../components/header/header';
 import { Sidebar } from '../../../components/sidebar/sidebar';
 import { RouterLink, Router } from '@angular/router';
@@ -6,8 +6,6 @@ import { FormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { NgxMaskDirective } from 'ngx-mask';
 import { Acolhido } from '../../../models/Acolhido';
-import { Medicamento } from '../../../models/Medicamento';
-import { MedicamentoService } from '../../../services/medicamento/medicamento.service';
 import { AcolhidoService } from '../../../services/acolhido/acolhido.service';
 
 @Component({
@@ -20,25 +18,14 @@ export class AcolhidoCadastro {
   //JSON de Acolhidos
   acolhidos: Acolhido[] = [];
 
+  private servico = inject(AcolhidoService);
+
   constructor(
-    private servico: AcolhidoService,
     private toastr: ToastrService,
     private router: Router,
-    private servicoMedicamento: MedicamentoService,
   ) {}
 
-  ngOnInit(): void {
-    this.servicoMedicamento.selecionar().subscribe({
-      next: (retorno) => {
-        this.medicamentos.set(retorno);
-      },
-      error: (err) => {
-        console.error('Erro ao carregar medicamentos', err);
-      },
-    });
-  }
-
-  //Objeto do tipo funcionário
+  //Objeto do tipo acolhido
   acolhido = new Acolhido();
 
   //Método de cadastro
@@ -54,30 +41,5 @@ export class AcolhidoCadastro {
       this.toastr.success('Acolhido cadastrado com sucesso!');
       this.router.navigate(['/acolhido/listagem']);
     });
-  }
-
-  /////
-  medicamentos = signal<Medicamento[]>([]);
-
-  filtroMedicamento: string = '';
-
-  medicamentosSelecionados: Medicamento[] = [];
-
-  filtrarMedicamentos() {
-    const lista = this.medicamentos();
-
-    if (!this.filtroMedicamento.trim()) {
-      return [];
-    }
-
-    return lista.filter((m) => m.nome.toLowerCase().includes(this.filtroMedicamento.toLowerCase()));
-  }
-
-  toggleMedicamento(id: number) {
-    if (this.acolhido.medicamentos.includes(id)) {
-      this.acolhido.medicamentos = this.acolhido.medicamentos.filter((m) => m !== id);
-    } else {
-      this.acolhido.medicamentos.push(id);
-    }
   }
 }

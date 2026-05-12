@@ -2,7 +2,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark">
   <div class="container-fluid">
     <button class="btn-menu" (click)="sidebarService.toggle()">☰</button>
-    <img src="assets/casa_navbar.png" alt="Logo" />
+    <img class="img-home" src="assets/home.png" alt="Logo" />
     <a class="navbar-brand" routerLink="/home">CERCRIA - Sistema de Gestão</a>
     <button
       class="navbar-toggler"
@@ -18,12 +18,31 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
         <li class="nav-item d-flex align-items-center gap-2">
-          <img src="assets/user.png" />
+          <img src="assets/perfil.png" />
 
-          <span class="usuario-texto"> Olá, {{ usuario }}! </span>
+          @if (usuario !== 'Faça seu Login') {
+            <div class="usuario-menu">
+              <span class="usuario-texto" (click)="toggleMenu()"> Olá, {{ usuario }}! ▼ </span>
 
-          <!-- botão logout -->
-          <button class="btn-logout" (click)="logout()" title="Sair">X</button>
+              @if (menuAberto) {
+                <div class="dropdown">
+                  <div class="dropdown-item" (click)="irParaPerfil()">
+                    <img class="img-dropdown" src="assets/editar.png" />Editar perfil
+                  </div>
+                  <div class="dropdown-item" (click)="irParaAlterarSenha()">
+                    <img class="img-dropdown" src="assets/alterar.png" />Alterar Senha
+                  </div>
+                  <div class="dropdown-item" (click)="logout()">
+                    <img class="img-dropdown" src="assets/sair.png" /> Sair
+                  </div>
+                </div>
+              }
+            </div>
+          } @else {
+            <span class="usuario-texto login-link" (click)="irParaLogin()">
+              {{ usuario }}
+            </span>
+          }
         </li>
       </ul>
     </div>

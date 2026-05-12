@@ -3,6 +3,29 @@
   flex: 1;
 }
 
+span {
+  font-weight: bolder;
+  color: red;
+}
+
+.content-row {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.panel {
+  flex: 1;
+}
+
+.cards-row {
+  width: 260px;
+}
+
+.metric-card {
+  width: 100%;
+}
+
 .page-content {
   flex: 1;
   padding: 36px 40px;
@@ -50,13 +73,6 @@
   border-color: #1e3b8a;
 }
 
-.cards-row {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
-  margin-bottom: 24px;
-}
-
 .metric-card {
   background: white;
   border-radius: 12px;
@@ -77,12 +93,6 @@
   font-weight: 700;
 }
 
-.metric-val.entradas {
-  color: #1d9e75;
-}
-.metric-val.saidas {
-  color: #e24b4a;
-}
 .metric-val.atual {
   color: #1e3b8a;
 }
@@ -91,27 +101,6 @@
   font-size: 12px;
   color: #5a6a8a;
   margin-top: 4px;
-}
-
-.tabs {
-  display: flex;
-  border-bottom: 2px solid #e2e8f8;
-}
-
-.tab {
-  padding: 11px 28px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  color: #5a6a8a;
-  border-bottom: 3px solid transparent;
-  margin-bottom: -2px;
-  transition: 0.2s;
-}
-
-.tab.ativo {
-  color: #1e3b8a;
-  border-bottom-color: #1e3b8a;
 }
 
 .panel {
@@ -168,18 +157,6 @@ select {
   transition: 0.2s;
 }
 
-textarea {
-  padding: 10px 12px;
-  border-radius: 10px;
-  border: 1px solid #cdd5ee;
-  font-size: 14px;
-  color: #1a2540;
-  outline: none;
-  resize: none;
-  height: 72px;
-  transition: 0.2s;
-}
-
 input:focus,
 select:focus,
 textarea:focus {
@@ -232,36 +209,6 @@ textarea:focus {
   cursor: not-allowed;
 }
 
-.btn-saida {
-  padding: 9px 24px;
-  background: #e24b4a;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.btn-saida:hover {
-  background: #c0392b;
-}
-.btn-saida:disabled {
-  background: #f0a0a0;
-  cursor: not-allowed;
-}
-
-.alerta-estoque {
-  background: #fcebeb;
-  border: 1px solid #f7c1c1;
-  border-radius: 8px;
-  padding: 10px 16px;
-  font-size: 13px;
-  color: #a32d2d;
-  margin-bottom: 16px;
-}
-
 .hist-title {
   font-size: 13px;
   font-weight: 700;
@@ -271,87 +218,9 @@ textarea:focus {
   border-top: 1px solid #eef1fb;
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 60px;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 24px;
-  table-layout: fixed;
-}
-
-thead {
-  background: #eef1fb;
-}
-
-thead th {
-  padding: 12px 14px;
-  text-align: left;
-  font-size: 12px;
-  font-weight: 700;
-  color: #5a6a8a;
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
-  text-align: center;
-}
-
-td {
-  padding: 12px 14px;
-  font-size: 14px;
-  color: #1a2540;
-  border-bottom: 1px solid #eef1fb;
-  text-align: center;
-}
-
-tbody tr:last-child td {
-  border-bottom: none;
-}
-tbody tr:hover {
-  background: #f8f9fe;
-}
-
 .buttons {
   display: flex;
   gap: 6px;
-}
-
-.btn-ed {
-  padding: 4px 12px;
-  background: #eef1fb;
-  color: #1e3b8a;
-  border: 1px solid #d0d9f5;
-  border-radius: 6px;
-  font-size: 12px;
-  font-weight: 600;
-  cursor: pointer;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-}
-
-.btn-ed:hover {
-  background: #1e3b8a;
-  color: white;
-}
-
-.btn-ex {
-  padding: 4px 12px;
-  background: #fcebeb;
-  color: #a32d2d;
-  border: 1px solid #f7c1c1;
-  border-radius: 6px;
-  font-size: 12px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.btn-ex:hover {
-  background: #e24b4a;
-  color: white;
 }
 
 .empty {
@@ -362,28 +231,6 @@ tbody tr:hover {
 }
 
 .btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 9px 18px;
-  background-color: var(--cor-secundaria);
-  color: white;
-  text-decoration: none;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 16px;
-  cursor: pointer;
-  transition:
-    background 0.2s,
-    box-shadow 0.2s,
-    transform 0.1s;
-  box-shadow: 0 4px 12px rgba(30, 59, 138, 0.25);
-  border: none;
-}
-
-.btn,
-.btn-ed,
-.btn-det {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -414,44 +261,36 @@ tbody tr:hover {
   color: var(--cor-secundaria);
 }
 
-.card-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.4);
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.card-detalhe h3 {
-  margin-top: 5px;
-  margin-bottom: 15px;
-  font-weight: bold;
-}
-
-.card-detalhe {
-  background: white;
-  padding: 25px;
-  border-radius: 10px;
-  width: 400px;
-}
-
 .buttons {
   display: flex;
   justify-content: center;
   gap: 8px;
 }
 
-.entrada {
-  font-weight: bold;
-  color: green;
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 2px;
+  font-size: 15px;
+  color: #5a6a9a;
 }
 
-.saida {
-  font-weight: bold;
-  color: red;
+.breadcrumb-span {
+  color: #2a4fa8;
+}
+
+.breadcrumb a {
+  color: #1e3b8a;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+.breadcrumb span:last-child {
+  color: #5a6a9a;
+  font-weight: 400;
 }
