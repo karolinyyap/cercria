@@ -15,6 +15,7 @@ span {
   margin: 50px auto;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
   display: flex;
+  border-radius: 14px;
   flex-direction: column;
 }
 

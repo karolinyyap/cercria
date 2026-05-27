@@ -4,14 +4,13 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { MedicamentoService } from '../../../services/medicamento/medicamento.service';
-import { EntradaMedicamentoService } from '../../../services/medicamento/entrada-medicamento.service';
+import { MedicamentoEstoqueService } from '../../../services/medicamento/estoque-medicamento.service';
+import { FuncionarioService } from '../../../services/funcionario/funcionario.service';
+import { Funcionario } from '../../../models/Funcionario';
 import { Sidebar } from '../../../components/sidebar/sidebar';
 import { Header } from '../../../components/header/header';
-import { EntradaMedicamento } from '../../../models/EntradaMedicamento';
-import { FuncionarioService } from '../../../services/funcionario/funcionario.service';
-import { Acolhido } from '../../../models/Acolhido';
+import { MedicamentoEstoqueM } from '../../../models/MedicamentoEstoqueM';
 import { Medicamento } from '../../../models/Medicamento';
-import { Funcionario } from '../../../models/Funcionario';
 import { ToastrService } from 'ngx-toastr';
 import { ChangeDetectorRef } from '@angular/core';
 
@@ -29,31 +28,24 @@ export class MedicamentoEstoque implements OnInit {
 
   private route = inject(ActivatedRoute);
   private medicamentoService = inject(MedicamentoService);
-  private entradaService = inject(EntradaMedicamentoService);
+  private entradaService = inject(MedicamentoEstoqueService);
   private funcionarioService = inject(FuncionarioService);
 
   acolhidoSelecionadoId: number | null = null;
 
   medicamento: Medicamento = {} as Medicamento;
   medicamentoId!: number;
-  entradas: EntradaMedicamento[] = [];
-  acolhidos: Acolhido[] = [];
-  funcionarios: Funcionario[] = [];
+  entradas: MedicamentoEstoqueM[] = [];
+  responsaveis: Funcionario[] = [];
 
-  totalEntradas = 0;
-  totalSaidas = 0;
+  estoqueAtual = 0;
 
-  get estoqueAtual(): number {
-    return this.totalEntradas - this.totalSaidas;
-  }
-
-  //EDITAR ISSO AQUI
-  novaEntrada: EntradaMedicamento = {
-    id: 1,
+  novaEntrada: MedicamentoEstoqueM = {
     quantidade: 0,
-    dataEntrada: '',
+    quantidade_atual: 0,
     origem: '',
-    responsavel: '',
+    responsavel: undefined,
+    dataEntrada: '',
     dataValidade: '',
     medicamento: { id: 0 },
   };
@@ -63,8 +55,12 @@ export class MedicamentoEstoque implements OnInit {
   ngOnInit(): void {
     this.medicamentoId = Number(this.route.snapshot.paramMap.get('id'));
 
+    // data atual
+    this.novaEntrada.dataEntrada = new Date().toISOString().split('T')[0];
+
     this.carregarMedicamento();
-    this.carregarResponsavel();
+    this.carregarResponsaveis();
+    this.carregarEstoque();
   }
 
   carregarMedicamento(): void {
@@ -77,12 +73,19 @@ export class MedicamentoEstoque implements OnInit {
     });
   }
 
-  carregarResponsavel(): void {
+  carregarResponsaveis(): void {
     this.funcionarioService.selecionar().subscribe({
       next: (lista) => {
-        this.funcionarios = lista;
+        this.responsaveis = lista;
+
+        const usuario = localStorage.getItem('usuario');
+
+        if (usuario) {
+          const usuarioLogado = JSON.parse(usuario);
+
+          this.novaEntrada.responsavel = this.responsaveis.find((r) => r.id === usuarioLogado.id);
+        }
       },
-      error: (err) => console.error('Erro ao carregar funcionarios', err),
     });
   }
 
@@ -93,7 +96,9 @@ export class MedicamentoEstoque implements OnInit {
 
     operacao.subscribe({
       next: () => {
+        this.carregarEstoque();
         this.limparFormEntrada();
+
         this.toastr.success('Entrada cadastrada!');
       },
       error: (err) => console.error('Erro ao salvar entrada', err),
@@ -102,13 +107,37 @@ export class MedicamentoEstoque implements OnInit {
 
   limparFormEntrada(): void {
     this.novaEntrada = {
-      id: 1,
       quantidade: 0,
-      dataEntrada: '',
+      quantidade_atual: 0,
       origem: '',
-      responsavel: '',
+      responsavel: undefined,
+      dataEntrada: new Date().toISOString().split('T')[0],
       dataValidade: '',
-      medicamento: { id: this.medicamentoId },
+      medicamento: {
+        id: this.medicamentoId,
+      },
     };
+
+    this.carregarResponsaveis();
+  }
+
+  carregarEstoque(): void {
+    this.entradaService.listarPorMedicamento(this.medicamentoId).subscribe({
+      next: (lista: MedicamentoEstoqueM[]) => {
+        this.entradas = lista;
+
+        if (lista.length > 0) {
+          this.estoqueAtual = lista[lista.length - 1].quantidade_atual;
+        } else {
+          this.estoqueAtual = 0;
+        }
+
+        this.cdr.detectChanges();
+      },
+
+      error: (err) => {
+        console.error(err);
+      },
+    });
   }
 }

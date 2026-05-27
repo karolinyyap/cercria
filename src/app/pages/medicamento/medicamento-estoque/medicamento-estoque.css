@@ -294,3 +294,10 @@ textarea:focus {
   color: #5a6a9a;
   font-weight: 400;
 }
+
+.erro {
+  color: #d93025;
+  font-size: 12px;
+  margin-top: 4px;
+  display: block;
+}

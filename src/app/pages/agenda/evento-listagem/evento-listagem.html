@@ -18,12 +18,12 @@
   </div>
 </div>
 
-<!-- Popup -->
-@if (mostrarPopup && eventoSelecionado) {
+<!-- POPUP EVENTO -->
+@if (mostrarPopup && tipoSelecionado === 'evento' && eventoSelecionado) {
   <div class="popup-overlay" (click)="fecharPopup()">
     <div class="popup-card" (click)="$event.stopPropagation()">
       <div class="popup-header">
-        <h3>{{ eventoSelecionado.nome || 'Evento' }}</h3>
+        <h3>{{ eventoSelecionado.nome }}</h3>
       </div>
 
       <div class="popup-body">
@@ -43,24 +43,6 @@
         </p>
 
         <p>
-          <strong>Responsáveis:</strong>
-          @if (eventoSelecionado.responsaveis.length > 0) {
-            {{ eventoSelecionado.responsaveis.map(id => getNomeResponsavel(id)).join(', ') }}
-          } @else {
-            Nenhum responsável
-          }
-        </p>
-
-        <p>
-          <strong>Acolhidos:</strong>
-          @if (eventoSelecionado.acolhidos.length > 0) {
-            {{ eventoSelecionado.acolhidos.map(id => getNomeAcolhido(id)).join(', ') }}
-          } @else {
-            Atividade sem acolhidos
-          }
-        </p>
-
-        <p>
           <strong>Descrição:</strong>
           {{ eventoSelecionado.descricao }}
         </p>
@@ -70,8 +52,58 @@
         <button class="btn-editar" [routerLink]="['/agenda/evento-edicao', eventoSelecionado.id]">
           Editar
         </button>
+
         <button class="btn-fechar" (click)="fecharPopup()">Fechar</button>
       </div>
+    </div>
+  </div>
+}
+
+<!-- POPUP MEDICAMENTO -->
+@if (mostrarPopup && tipoSelecionado === 'medicamento' && agendaSelecionada) {
+  <div class="popup-overlay" (click)="fecharPopup()">
+    <div class="popup-card" (click)="$event.stopPropagation()">
+      <div class="popup-header">
+        <h3>Administrar Medicamento</h3>
+      </div>
+
+      <div class="popup-body">
+        <p>
+          <strong>Acolhido:</strong>
+          {{ agendaSelecionada.acolhido }}
+        </p>
+
+        <p>
+          <strong>Medicamento:</strong>
+          {{ agendaSelecionada.medicamento }}
+        </p>
+
+        <p>
+          <strong>Horário:</strong>
+          {{ agendaSelecionada.horario }}
+        </p>
+      </div>
+
+      <div class="popup-footer">
+        <button class="btn-editar" (click)="darMedicamento(agendaSelecionada.id)">Dar</button>
+
+        <button class="btn-fechar" (click)="mostrarMotivo = !mostrarMotivo">Não deu</button>
+      </div>
+
+      @if (mostrarMotivo) {
+        <div class="campo-recusa">
+          <label>Motivo da recusa</label>
+          <textarea
+            [(ngModel)]="motivoRecusa"
+            rows="3"
+            placeholder="Ex.: acolhido recusou tomar"
+          ></textarea>
+
+          <button type="button" class="btn-confirmar" (click)="naoTomou(agendaSelecionada.id)">
+            Confirmar
+          </button>
+        </div>
+      }
     </div>
   </div>
 }

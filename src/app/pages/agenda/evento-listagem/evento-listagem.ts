@@ -11,14 +11,17 @@ import interactionPlugin from '@fullcalendar/interaction';
 import ptBrLocale from '@fullcalendar/core/locales/pt-br';
 import { ChangeDetectorRef } from '@angular/core';
 import { EventoService } from '../../../services/evento/evento.service';
+import { AgendaMedicamentoService } from '../../../services/medicamento/agenda-medicamento.service';
 import { Evento } from '../../../models/Evento';
 import { AcolhidoService } from '../../../services/acolhido/acolhido.service';
 import { FuncionarioService } from '../../../services/funcionario/funcionario.service';
+import { ToastrService } from 'ngx-toastr';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-calendario-inicial',
   standalone: true,
-  imports: [CommonModule, RouterLink, Header, Sidebar, FullCalendarModule],
+  imports: [CommonModule, RouterLink, Header, Sidebar, FullCalendarModule, FormsModule],
   templateUrl: './evento-listagem.html',
   styleUrls: ['./evento-listagem.css'],
 })
@@ -47,18 +50,37 @@ export class EventoListagem implements OnInit, AfterViewInit {
     height: 'auto',
     events: [],
     eventClick: (info) => {
-      const id = Number(info.event.id);
-      this.abrirPopup(id);
+      const tipo = info.event.extendedProps['tipo'];
+      if (tipo === 'medicamento') {
+        this.tipoSelecionado = 'medicamento';
+        this.agendaSelecionada = {
+          id: Number(info.event.id),
+          acolhido: info.event.extendedProps['acolhido'],
+          medicamento: info.event.extendedProps['medicamento'],
+          horario: info.event.extendedProps['horario'],
+          status: info.event.extendedProps['status'],
+        };
+        this.mostrarPopup = true;
+        this.cd.detectChanges();
+        return;
+      }
+      this.tipoSelecionado = 'evento';
+      this.abrirPopup(Number(info.event.id));
     },
   };
 
   private acolhidoService = inject(AcolhidoService);
   private eventoService = inject(EventoService);
   private funcionarioService = inject(FuncionarioService);
+  private agendaService = inject(AgendaMedicamentoService);
+
+  agendaSelecionada: any = null;
+  tipoSelecionado = '';
 
   constructor(
     private router: Router,
     private cd: ChangeDetectorRef,
+    private toastr: ToastrService,
   ) {}
 
   ngOnInit(): void {
@@ -78,23 +100,49 @@ export class EventoListagem implements OnInit, AfterViewInit {
   }
 
   carregarEventos(): void {
+    const calendarApi = this.calendarComponent?.getApi();
+
+    if (!calendarApi) return;
+
+    calendarApi.removeAllEvents();
+
     this.eventoService.selecionar().subscribe({
       next: (eventos) => {
-        const calendarApi = this.calendarComponent.getApi();
-
-        const eventosFormatados = eventos.map((evento) => ({
+        const listaEventos = eventos.map((evento) => ({
           id: String(evento.id),
-          title: `${evento.nome} - ${evento.hora}`,
+          title: evento.nome,
           start: this.formatarData(evento.data, evento.hora),
-          color: this.getCorStatus(this.getStatusEvento(evento.data, evento.hora)),
+          color: '#3788d8',
+          extendedProps: {
+            tipo: 'evento',
+          },
         }));
 
-        console.log('Eventos formatados:', eventosFormatados);
-
-        calendarApi.removeAllEvents();
-        calendarApi.addEventSource(eventosFormatados);
+        calendarApi.addEventSource(listaEventos);
       },
-      error: (err) => console.error(err),
+    });
+
+    this.agendaService.selecionar().subscribe({
+      next: (agenda) => {
+        const listaAgenda = agenda
+          .filter((a: any) => a.status === 'PENDENTE')
+
+          .map((a: any) => ({
+            id: String(a.id),
+            title: `${a.acolhido.nome}`,
+            start: this.formatarData(a.data, a.horario),
+            color: '#dc3545',
+            extendedProps: {
+              tipo: 'medicamento',
+              acolhido: a.acolhido.nome,
+              medicamento: a.medicamento.nome,
+              horario: a.horario,
+              status: a.status,
+            },
+          }));
+
+        calendarApi.addEventSource(listaAgenda);
+      },
     });
   }
 
@@ -124,7 +172,12 @@ export class EventoListagem implements OnInit, AfterViewInit {
 
   fecharPopup(): void {
     this.mostrarPopup = false;
+
     this.eventoSelecionado = null;
+    this.agendaSelecionada = null;
+
+    this.mostrarMotivo = false;
+    this.motivoRecusa = '';
   }
 
   getCorStatus(status: string): string {
@@ -162,5 +215,52 @@ export class EventoListagem implements OnInit, AfterViewInit {
   getNomeResponsavel(id: number): string {
     const r = this.responsaveisLista.find((x) => x.id === id);
     return r ? r.nome : 'Desconhecido';
+  }
+
+  mostrarMotivo = false;
+  motivoRecusa = '';
+
+  darMedicamento(agendaId: number): void {
+    this.agendaService
+      .marcarTomou(agendaId)
+
+      .subscribe({
+        next: () => {
+          this.toastr.success('Medicamento administrado');
+          this.fecharPopup();
+          this.carregarEventos();
+        },
+        error: (err) => {
+          console.error(err);
+          this.toastr.error('Erro ao registrar');
+        },
+      });
+  }
+
+  naoTomou(agendaId: number): void {
+    if (!this.motivoRecusa.trim()) {
+      this.toastr.warning('Informe o motivo');
+      return;
+    }
+
+    this.agendaService
+      .marcarNaoTomou(agendaId, this.motivoRecusa)
+
+      .subscribe({
+        next: () => {
+          this.toastr.warning('Marcado como não tomado');
+
+          this.mostrarMotivo = false;
+          this.motivoRecusa = '';
+
+          this.fecharPopup();
+          this.carregarEventos();
+        },
+
+        error: (err) => {
+          console.error(err);
+          this.toastr.error('Erro ao registrar');
+        },
+      });
   }
 }

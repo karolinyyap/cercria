@@ -44,17 +44,14 @@
                 required
                 min="1"
                 [(ngModel)]="novaEntrada.quantidade"
+                #quantidade="ngModel"
               />
-            </div>
 
-            <div class="campo">
-              <label>Data de entrada <span>*</span></label>
-              <input
-                type="date"
-                name="dataEntrada"
-                required
-                [(ngModel)]="novaEntrada.dataEntrada"
-              />
+              @if (quantidade.touched) {
+                @if (quantidade.errors?.['required']) {
+                  <small class="erro">Quantidade é obrigatória</small>
+                }
+              }
             </div>
 
             <div class="campo">
@@ -64,18 +61,72 @@
                 name="dataValidade"
                 required
                 [(ngModel)]="novaEntrada.dataValidade"
+                #dataValidade="ngModel"
               />
+
+              @if (dataValidade.touched) {
+                @if (dataValidade.errors?.['required']) {
+                  <small class="erro">Data de validade é obrigatória</small>
+                }
+              }
             </div>
 
             <div class="campo">
               <label>Origem <span>*</span></label>
-              <select name="origem" required [(ngModel)]="novaEntrada.origem">
+              <select name="origem" required [(ngModel)]="novaEntrada.origem" #origem="ngModel">
                 <option value="">Selecione</option>
                 <option value="Prefeitura">Prefeitura</option>
                 <option value="Farmácia popular">Farmácia popular</option>
               </select>
+
+              @if (origem.touched) {
+                @if (origem.errors?.['required']) {
+                  <small class="erro">Origem é obrigatória</small>
+                }
+              }
             </div>
 
+            <div class="campo">
+              <label>Data de entrada <span>*</span></label>
+              <input
+                type="date"
+                name="dataEntrada"
+                required
+                [(ngModel)]="novaEntrada.dataEntrada"
+                #dataEntrada="ngModel"
+              />
+
+              @if (dataEntrada.touched) {
+                @if (dataEntrada.errors?.['required']) {
+                  <small class="erro">Data de entrada é obrigatória</small>
+                }
+              }
+            </div>
+
+            <div class="campo">
+              <label>Responsável <span>*</span></label>
+
+              <select
+                name="responsavel"
+                required
+                [(ngModel)]="novaEntrada.responsavel"
+                #responsavel="ngModel"
+              >
+                <option [ngValue]="undefined">Selecione</option>
+
+                @for (r of responsaveis; track r.id) {
+                  <option [ngValue]="r">
+                    {{ r.nome }}
+                  </option>
+                }
+              </select>
+
+              @if (responsavel.touched) {
+                @if (responsavel.errors?.['required']) {
+                  <small class="erro"> Responsável é obrigatório </small>
+                }
+              }
+            </div>
             <div class="form-actions">
               <button type="button" class="btn-limpar" (click)="limparFormEntrada()">Limpar</button>
               <button type="submit" class="btn" [disabled]="formEntrada.invalid">Salvar</button>

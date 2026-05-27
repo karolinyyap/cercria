@@ -20,6 +20,7 @@ import { EdicaoEvento } from './pages/agenda/evento-edicao/evento-edicao';
 import { EventoListagem } from './pages/agenda/evento-listagem/evento-listagem';
 import { authGuard } from './guards/auth-guard';
 import { AlterarSenha } from './pages/alterar-senha/alterar-senha';
+import { MedicamentoControle } from './pages/medicamento/medicamento-controle/medicamento-controle';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -47,6 +48,11 @@ export const routes: Routes = [
       { path: 'cadastro', component: AcolhidoCadastro, canActivate: [authGuard] },
       { path: 'listagem', component: AcolhidoListagem, canActivate: [authGuard] },
       { path: 'edicao/:id', component: AcolhidoEdicao, canActivate: [authGuard] },
+      {
+        path: 'controle-medicamento/:id',
+        component: MedicamentoControle,
+        canActivate: [authGuard],
+      },
     ],
   },
   {

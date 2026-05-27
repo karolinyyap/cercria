@@ -2,15 +2,15 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { EntradaMedicamento } from '../../models/EntradaMedicamento';
+import { MedicamentoEstoqueM } from '../../models/MedicamentoEstoqueM';
 
 @Injectable({ providedIn: 'root' })
-export class EntradaMedicamentoService {
+export class MedicamentoEstoqueService {
   private url = 'http://localhost:8080/entrada-medicamento';
   private http = inject(HttpClient);
 
-  cadastrar(e: EntradaMedicamento): Observable<EntradaMedicamento> {
-    return this.http.post<EntradaMedicamento>(this.url + '/cadastro', e).pipe(
+  cadastrar(e: MedicamentoEstoqueM): Observable<MedicamentoEstoqueM> {
+    return this.http.post<MedicamentoEstoqueM>(this.url + '/cadastro', e).pipe(
       catchError((err) => {
         console.error('Erro ao cadastrar entrada', err);
         return throwError(() => err);
@@ -18,16 +18,16 @@ export class EntradaMedicamentoService {
     );
   }
 
-  listarPorMedicamento(medicamentoId: number): Observable<EntradaMedicamento[]> {
-    return this.http.get<EntradaMedicamento[]>(`${this.url}/medicamento/${medicamentoId}`);
+  listarPorMedicamento(medicamentoId: number): Observable<MedicamentoEstoqueM[]> {
+    return this.http.get<MedicamentoEstoqueM[]>(`${this.url}/medicamento/${medicamentoId}`);
   }
 
-  buscarPorId(id: number): Observable<EntradaMedicamento> {
-    return this.http.get<EntradaMedicamento>(`${this.url}/${id}`);
+  buscarPorId(id: number): Observable<MedicamentoEstoqueM> {
+    return this.http.get<MedicamentoEstoqueM>(`${this.url}/${id}`);
   }
 
-  editar(e: EntradaMedicamento): Observable<EntradaMedicamento> {
-    return this.http.put<EntradaMedicamento>(this.url + '/edicao', e).pipe(
+  editar(e: MedicamentoEstoqueM): Observable<MedicamentoEstoqueM> {
+    return this.http.put<MedicamentoEstoqueM>(this.url + '/edicao', e).pipe(
       catchError((err) => {
         console.error('Erro ao editar entrada', err);
         return throwError(() => err);

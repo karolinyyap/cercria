@@ -65,7 +65,7 @@ h2 {
   align-items: center;
   justify-content: center;
   padding: 9px 18px;
-  background-color: var(--cor-secundaria);
+  background-color: var(--cor-terciaria);
   color: white;
   text-decoration: none;
   border-radius: 8px;
@@ -167,6 +167,17 @@ td:last-child {
 }
 
 .buttons .btn:first-child:hover {
+  background: var(--cor-terciaria);
+  color: white;
+}
+
+.buttons .btn:last-child {
+  background: #eef1ff;
+  color: var(--cor-secundaria);
+  box-shadow: none;
+}
+
+.buttons .btn:last-child:hover {
   background: var(--cor-secundaria);
   color: white;
 }
