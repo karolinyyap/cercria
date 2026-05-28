@@ -26,16 +26,21 @@ export class Login {
       })
       .subscribe({
         next: (usuario) => {
-          if (usuario) {
-            localStorage.setItem('usuario', JSON.stringify(usuario));
+          console.log(usuario);
 
-            this.router.navigate(['/home']);
-          } else {
-            alert('Email ou senha inválidos');
-          }
+          sessionStorage.setItem('usuario', JSON.stringify(usuario));
+
+          this.router.navigate(['/home']);
         },
-        error: () => {
-          alert('Erro ao conectar com o servidor');
+
+        error: (err) => {
+          console.log(err);
+
+          if (err.status === 401) {
+            alert('Email ou senha inválidos');
+          } else {
+            alert('Erro ao conectar com servidor');
+          }
         },
       });
   }

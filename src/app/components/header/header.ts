@@ -26,7 +26,7 @@ export class Header implements OnInit {
   ) {}
 
   ngOnInit() {
-    const user = localStorage.getItem('usuario');
+    const user = sessionStorage.getItem('usuario');
 
     if (user) {
       const usuarioObj = JSON.parse(user);
@@ -57,7 +57,7 @@ export class Header implements OnInit {
   }
 
   irParaPerfil() {
-    const user = JSON.parse(localStorage.getItem('usuario')!);
+    const user = JSON.parse(sessionStorage.getItem('usuario')!);
     this.router.navigate(['/funcionario/edicao', user.id]);
   }
 

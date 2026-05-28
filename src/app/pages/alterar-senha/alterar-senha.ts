@@ -37,19 +37,29 @@ export class AlterarSenha {
       return;
     }
 
-    const user = JSON.parse(localStorage.getItem('usuario')!);
+    const usuarioString = sessionStorage.getItem('usuario');
+
+    if (!usuarioString) {
+      this.toastr.error('Sessão expirada');
+
+      return;
+    }
+
+    const user = JSON.parse(usuarioString);
 
     const payload = {
       id: user.id,
-      novaSenha: this.dados.novaSenha,
+      senha: this.dados.novaSenha,
     };
 
     this.servico.alterarSenha(payload).subscribe({
       next: () => {
         this.toastr.success('Senha alterada com sucesso!');
       },
+
       error: (err) => {
         console.log(err);
+
         this.toastr.error('Erro ao alterar senha');
       },
     });
