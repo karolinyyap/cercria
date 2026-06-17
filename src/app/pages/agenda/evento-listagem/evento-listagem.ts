@@ -147,15 +147,7 @@ export class EventoListagem implements OnInit, AfterViewInit {
   }
 
   formatarData(data: string, hora: string): string {
-    const d = new Date(data);
-
-    const [h, m, s] = hora.split(':');
-
-    d.setHours(Number(h));
-    d.setMinutes(Number(m));
-    d.setSeconds(Number(s || 0));
-
-    return d.toISOString();
+    return `${data}T${hora}`;
   }
 
   abrirPopup(id: number): void {
@@ -172,12 +164,13 @@ export class EventoListagem implements OnInit, AfterViewInit {
 
   fecharPopup(): void {
     this.mostrarPopup = false;
-
     this.eventoSelecionado = null;
     this.agendaSelecionada = null;
 
     this.mostrarMotivo = false;
     this.motivoRecusa = '';
+
+    this.cd.detectChanges();
   }
 
   getCorStatus(status: string): string {
@@ -250,11 +243,11 @@ export class EventoListagem implements OnInit, AfterViewInit {
         next: () => {
           this.toastr.warning('Marcado como não tomado');
 
-          this.mostrarMotivo = false;
-          this.motivoRecusa = '';
-
           this.fecharPopup();
-          this.carregarEventos();
+
+          setTimeout(() => {
+            this.carregarEventos();
+          }, 100);
         },
 
         error: (err) => {

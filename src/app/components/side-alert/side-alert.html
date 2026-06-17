@@ -1,28 +1,27 @@
 <div class="alertas">
   <header>
-    <img src="/assets/alerta.png" />
+    <img src="/assets/alerta.png" alt="Alerta" />
     <h2>Alertas</h2>
   </header>
 
-  <div class="alerta-item">
-    <p><strong>Medicamentos baixos</strong></p>
-    <span>3 medicamentos</span>
+  <div class="side-alert">
+    @for (a of alertasPaginados; track $index) {
+      <div class="alert-card">
+        <h4>{{ a.tipo }}</h4>
+        <p>{{ a.mensagem }}</p>
+      </div>
+    }
+
+    @if (alerts.length === 0) {
+      <p class="sem-alerta">Nenhum alerta encontrado.</p>
+    }
   </div>
 
-  <div class="alerta-item">
-    <p><strong>Próxima consulta</strong></p>
-    <span>Hoje - 14:00</span>
-  </div>
-
-  <div class="alerta-item">
-    <p><strong>Estoque crítico</strong></p>
-    <span>2 itens</span>
-  </div>
-
-  <!-- Paginação -->
   <div class="paginacao">
-    <button>&lt;</button>
-    <span>1</span>
-    <button>&gt;</button>
+    <button (click)="paginaAnterior()" [disabled]="paginaAtual === 1">←</button>
+
+    <span>{{ paginaAtual }} / {{ totalPaginas || 1 }}</span>
+
+    <button (click)="proximaPagina()" [disabled]="paginaAtual === totalPaginas">→</button>
   </div>
 </div>

@@ -74,7 +74,6 @@ export class EventoCadastro {
       !this.evento.nome ||
       !this.evento.data ||
       !this.evento.hora ||
-      !this.evento.status ||
       !this.evento.descricao ||
       this.evento.responsaveis.length === 0
     ) {

@@ -40,9 +40,15 @@ export class MedicamentoControle implements OnInit {
   acolhidoId!: number;
 
   ngOnInit(): void {
-    const usuarioStorage = localStorage.getItem('usuario');
+    const usuarioStorage = sessionStorage.getItem('usuario');
+
+    console.log('SESSION STORAGE:', usuarioStorage);
+
     if (usuarioStorage) {
       const usuario = JSON.parse(usuarioStorage);
+
+      console.log('USUARIO LOGADO:', usuario);
+
       this.usuarioLogado = usuario.nome;
     }
 
@@ -110,33 +116,63 @@ export class MedicamentoControle implements OnInit {
   }
 
   salvarProgramacao(): void {
-    const funcionario = this.funcionarios.find((f) => f.nome === this.usuarioLogado);
+    const usuarioStorage = sessionStorage.getItem('usuario');
+
+    if (!usuarioStorage) {
+      this.toastr.error('Usuário não encontrado.');
+      return;
+    }
+
+    const usuario = JSON.parse(usuarioStorage);
+
+    //console.log('USUARIO:', usuario);
+    //console.log('FUNCIONARIOS:', this.funcionarios);
+
+    const funcionario = this.funcionarios.find((f) => f.id === usuario.id);
+
+    //console.log('FUNCIONARIO ENCONTRADO:', funcionario);
+
+    if (!funcionario) {
+      this.toastr.error('Funcionário logado não encontrado.');
+      return;
+    }
 
     const { medicamentoId, responsavel, acolhidoId, ...resto } = this.novaProgramacao;
 
     const dados = {
       ...resto,
       vezesAoDia: this.novaProgramacao.vezesDia,
-      iniciandoEm: this.novaProgramacao.iniciandoEm,
       diasSemana: this.novaProgramacao.diasSemana.join(','),
+
       acolhido: {
         id: this.acolhidoId,
       },
+
       medicamento: {
         id: medicamentoId,
       },
+
       funcionarioCadastro: {
-        id: funcionario?.id,
+        id: funcionario.id,
       },
+
       dataFim: resto.usoContinuo ? null : resto.dataFim,
     };
+
+    //console.log('DADOS ENVIADOS:', dados);
 
     this.controleService.cadastrar(dados).subscribe({
       next: () => {
         this.toastr.success('Medicamento programado com sucesso!');
-        this.limparProgramacao();
+
+        setTimeout(() => {
+          this.limparProgramacao();
+        });
       },
-      error: (err) => console.error('Detalhe do erro:', err.error),
+
+      error: (err) => {
+        console.error('Detalhe do erro:', err.error);
+      },
     });
   }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, signal, inject } from '@angular/core';
+import { Component, OnInit, signal, inject, ChangeDetectorRef } from '@angular/core';
 import { RouterLink, ActivatedRoute, Router } from '@angular/router';
 import { Header } from '../../../components/header/header';
 import { Sidebar } from '../../../components/sidebar/sidebar';
@@ -37,6 +37,7 @@ export class EdicaoEvento implements OnInit {
     private rota: ActivatedRoute,
     private toastr: ToastrService,
     private router: Router,
+    private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -49,7 +50,7 @@ export class EdicaoEvento implements OnInit {
     // evento
     this.eventoService.buscarPorId(id).subscribe({
       next: (retorno) => {
-        console.log('EVENTO:', retorno);
+        //console.log('EVENTO:', retorno);
 
         this.evento = retorno;
 
@@ -73,7 +74,9 @@ export class EdicaoEvento implements OnInit {
           // Formato yyyy-MM-dd que o input[type="date"] espera
           this.evento.data = dataLocal.toLocaleDateString('en-CA'); // "2025-04-22"
         }
+        this.cdr.detectChanges();
       },
+
       error: (err) => console.error(err),
     });
   }
@@ -129,6 +132,7 @@ export class EdicaoEvento implements OnInit {
     } else {
       this.evento.acolhidos.push(id);
     }
+    this.cdr.detectChanges();
   }
 
   // Verificar se está selecionado

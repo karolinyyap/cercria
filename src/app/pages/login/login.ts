@@ -29,6 +29,7 @@ export class Login {
           console.log(usuario);
 
           sessionStorage.setItem('usuario', JSON.stringify(usuario));
+          console.log(usuario);
 
           this.router.navigate(['/home']);
         },
