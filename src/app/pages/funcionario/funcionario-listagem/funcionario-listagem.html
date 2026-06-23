@@ -63,7 +63,7 @@
             </p>
             <p>
               <b>Data de nascimento:</b>
-              {{ funcionarioSelecionado()!.dataNascimento | mask: 'dd/MM/yyyy' }}
+              {{ funcionarioSelecionado()!.dataNascimento | date: 'dd/MM/yyyy' }}
             </p>
             <p><b>Email:</b> {{ funcionarioSelecionado()!.email }}</p>
             <p><b>CPF:</b> {{ funcionarioSelecionado()!.cpf | mask: '000.000.000-00' }}</p>

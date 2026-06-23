@@ -171,7 +171,15 @@ export class MedicamentoControle implements OnInit {
       },
 
       error: (err) => {
-        console.error('Detalhe do erro:', err.error);
+        console.error('Erro:', err);
+
+        if (typeof err.error === 'string') {
+          this.toastr.error(err.error);
+        } else if (err.error?.message) {
+          this.toastr.error(err.error.message);
+        } else {
+          this.toastr.error('Erro ao programar medicamento.');
+        }
       },
     });
   }
@@ -207,10 +215,16 @@ export class MedicamentoControle implements OnInit {
           this.limparSaidaEsporadica();
         });
       },
-
       error: (err) => {
-        console.log(err);
-        this.toastr.error('Erro ao registrar saída');
+        console.error(err);
+
+        if (typeof err.error === 'string') {
+          this.toastr.error(err.error);
+        } else if (err.error?.message) {
+          this.toastr.error(err.error.message);
+        } else {
+          this.toastr.error('Erro ao registrar saída.');
+        }
       },
     });
   }
