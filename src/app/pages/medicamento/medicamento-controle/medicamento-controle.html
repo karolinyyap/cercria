@@ -39,7 +39,7 @@
               <label>Medicamento <span class="asterisco">*</span></label>
 
               <select
-                [(ngModel)]="novaProgramacao.medicamentoId"
+                [(ngModel)]="novaProgramacao.medicamento.id"
                 name="medicamentoId"
                 #medicamentoProg="ngModel"
                 required
@@ -127,7 +127,7 @@
 
                     <select
                       class="select-pequeno"
-                      [(ngModel)]="novaProgramacao.vezesDia"
+                      [(ngModel)]="novaProgramacao.vezesAoDia"
                       name="vezesDia"
                     >
                       @for (n of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; track n) {
@@ -329,7 +329,7 @@
 
               <select [(ngModel)]="novaSaidaEsporadica.responsavel" name="responsavel">
                 @for (f of funcionarios; track f.id) {
-                  <option [value]="f.nome">
+                  <option [ngValue]="{ id: f.id }">
                     {{ f.nome }}
                   </option>
                 }

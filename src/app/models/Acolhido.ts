@@ -19,8 +19,6 @@ export class Acolhido {
   deficiencia?: string;
   ppcaam?: string;
 
-  /*medicamentos: number[] = [];*/
-
   tamanhoCamiseta: string = '';
   tamanhoBermudaCalca: string = '';
   tamanhoCalcado!: number;

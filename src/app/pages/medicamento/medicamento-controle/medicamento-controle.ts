@@ -7,6 +7,8 @@ import { Acolhido } from '../../../models/Acolhido';
 import { MedicamentoService } from '../../../services/medicamento/medicamento.service';
 import { FuncionarioService } from '../../../services/funcionario/funcionario.service';
 import { ToastrService } from 'ngx-toastr';
+import { ControleUsoMedicamento } from '../../../models/ControleUsoMedicamento';
+import { SaidaEsporadica } from '../../../models/SaidaEsporadica';
 import { ControleMedicamentoService } from '../../../services/medicamento/medicamento-controle.service';
 import { Header } from '../../../components/header/header';
 import { Sidebar } from '../../../components/sidebar/sidebar';
@@ -25,7 +27,7 @@ export class MedicamentoControle implements OnInit {
   ) {}
 
   abaAtiva: 'programado' | 'esporadico' = 'programado';
-  usuarioLogado: string = '';
+  usuarioLogado!: number;
 
   funcionarios: any[] = [];
   medicamentos: { id: number; nome: string }[] = [];
@@ -40,56 +42,28 @@ export class MedicamentoControle implements OnInit {
   acolhidoId!: number;
 
   ngOnInit(): void {
-    const usuarioStorage = sessionStorage.getItem('usuario');
+    const usuario = JSON.parse(sessionStorage.getItem('usuario')!);
 
-    console.log('SESSION STORAGE:', usuarioStorage);
+    this.usuarioLogado = usuario.id;
 
-    if (usuarioStorage) {
-      const usuario = JSON.parse(usuarioStorage);
-
-      console.log('USUARIO LOGADO:', usuario);
-
-      this.usuarioLogado = usuario.nome;
-    }
+    this.novaSaidaEsporadica.responsavel = {
+      id: this.usuarioLogado,
+    };
 
     this.acolhidoId = Number(this.route.snapshot.paramMap.get('id'));
 
-    this.novaProgramacao.acolhidoId = this.acolhidoId;
-    this.novaProgramacao.responsavel = this.usuarioLogado;
+    this.novaProgramacao.acolhido = {
+      id: this.acolhidoId,
+    };
 
     this.carregarAcolhido();
     this.carregarMedicamentos();
     this.carregarFuncionarios();
   }
 
-  novaProgramacao = {
-    acolhidoId: null as number | null,
-    medicamentoId: null as number | null,
-    dose: 1,
+  novaProgramacao = new ControleUsoMedicamento();
 
-    intervalo: null as number | null,
-    iniciandoEm: '',
-    vezesDia: null as number | null,
-
-    horarioFixo: '',
-
-    diasSemana: [] as string[],
-    dataInicio: '',
-    dataFim: '',
-    usoContinuo: false,
-    observacao: '',
-    responsavel: this.usuarioLogado,
-  };
-
-  novaSaidaEsporadica = {
-    acolhidoId: null as number | null,
-    medicamentoId: null as number | null,
-    dataSaida: '',
-    horario: '',
-    motivo: '',
-    dose: 1,
-    responsavel: this.usuarioLogado,
-  };
+  novaSaidaEsporadica = new SaidaEsporadica();
 
   diasSemana = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
 
@@ -124,71 +98,59 @@ export class MedicamentoControle implements OnInit {
     }
 
     const usuario = JSON.parse(usuarioStorage);
-
-    //console.log('USUARIO:', usuario);
-    //console.log('FUNCIONARIOS:', this.funcionarios);
-
     const funcionario = this.funcionarios.find((f) => f.id === usuario.id);
-
-    //console.log('FUNCIONARIO ENCONTRADO:', funcionario);
 
     if (!funcionario) {
       this.toastr.error('Funcionário logado não encontrado.');
       return;
     }
 
-    const { medicamentoId, responsavel, acolhidoId, ...resto } = this.novaProgramacao;
-
-    const dados = {
-      ...resto,
-      vezesAoDia: this.novaProgramacao.vezesDia,
-      diasSemana: this.novaProgramacao.diasSemana.join(','),
-
-      acolhido: {
-        id: this.acolhidoId,
-      },
-
-      medicamento: {
-        id: medicamentoId,
-      },
-
-      funcionarioCadastro: {
-        id: funcionario.id,
-      },
-
-      dataFim: resto.usoContinuo ? null : resto.dataFim,
+    this.novaProgramacao.acolhido = {
+      id: this.acolhidoId,
     };
 
-    //console.log('DADOS ENVIADOS:', dados);
+    this.novaProgramacao.funcionarioCadastro = {
+      id: funcionario.id,
+    };
 
+    this.novaProgramacao.diasSemana = Array.isArray(this.novaProgramacao.diasSemana)
+      ? this.novaProgramacao.diasSemana
+      : [];
+
+    if (this.novaProgramacao.usoContinuo) {
+      this.novaProgramacao.dataFim = undefined;
+    }
+
+    if (!this.novaProgramacao.medicamento?.id) {
+      this.toastr.error('Selecione um medicamento');
+      return;
+    }
+
+    const dados = {
+      ...this.novaProgramacao,
+      diasSemana: this.novaProgramacao.diasSemana.join(','),
+    };
+
+    console.log('DADOS ENVIADOS:', this.novaProgramacao);
     this.controleService.cadastrar(dados).subscribe({
       next: () => {
         this.toastr.success('Medicamento programado com sucesso!');
 
         setTimeout(() => {
-          this.limparProgramacao();
+          this.limparSaidaEsporadica();
         });
       },
 
       error: (err) => {
-        console.error('Erro:', err);
+        //console.error('ERRO COMPLETO:', err);
+        //console.error('BODY:', err.error);
 
-        if (typeof err.error === 'string') {
-          this.toastr.error(err.error);
-        } else if (err.error?.message) {
-          this.toastr.error(err.error.message);
-        } else {
-          this.toastr.error('Erro ao programar medicamento.');
-        }
+        this.toastr.error(JSON.stringify(err.error));
       },
     });
   }
 
   salvarSaidaEsporadica(): void {
-    const funcionario = this.funcionarios.find(
-      (f) => f.nome === this.novaSaidaEsporadica.responsavel,
-    );
-
     const dados = {
       data: this.novaSaidaEsporadica.dataSaida,
       horario: this.novaSaidaEsporadica.horario,
@@ -201,9 +163,7 @@ export class MedicamentoControle implements OnInit {
       medicamento: {
         id: this.novaSaidaEsporadica.medicamentoId,
       },
-      funcionarioResponsavel: {
-        id: funcionario?.id,
-      },
+      funcionarioResponsavel: this.novaSaidaEsporadica.responsavel,
     };
 
     //console.log('ESPORADICO →', dados);
@@ -230,34 +190,16 @@ export class MedicamentoControle implements OnInit {
   }
 
   limparProgramacao(): void {
-    this.novaProgramacao = {
-      acolhidoId: this.acolhidoId,
-      medicamentoId: null,
-      dose: 1,
-      intervalo: null,
-      iniciandoEm: '',
-      vezesDia: null,
-      horarioFixo: '',
-      diasSemana: [],
-      dataInicio: '',
-      dataFim: '',
-      usoContinuo: false,
-      observacao: '',
-      responsavel: this.usuarioLogado,
-    };
+    this.novaProgramacao = new ControleUsoMedicamento();
+    this.novaProgramacao.acolhido = { id: this.acolhidoId };
+    this.novaProgramacao.dose = 1;
   }
 
   limparSaidaEsporadica(): void {
-    this.novaSaidaEsporadica = {
-      acolhidoId: this.acolhidoId,
-      medicamentoId: null,
-      dataSaida: '',
-      horario: '',
-      motivo: '',
-      dose: 1,
-      responsavel: this.usuarioLogado,
+    this.novaSaidaEsporadica = new SaidaEsporadica();
+    this.novaSaidaEsporadica.responsavel = {
+      id: this.usuarioLogado,
     };
-
     this.cdr.detectChanges();
   }
 
@@ -265,7 +207,6 @@ export class MedicamentoControle implements OnInit {
     this.acolhidoService.buscarPorId(this.acolhidoId).subscribe({
       next: (a) => {
         this.acolhido = a;
-
         this.cdr.detectChanges();
       },
 
@@ -291,8 +232,6 @@ export class MedicamentoControle implements OnInit {
     this.funcionarioService.selecionar().subscribe({
       next: (lista) => {
         this.funcionarios = lista;
-
-        this.novaSaidaEsporadica.responsavel = this.usuarioLogado;
       },
 
       error: (err) => {

@@ -1,6 +1,5 @@
 export class ControleUsoMedicamento {
-  id?: number;
-  dose: number = 0;
+  dose: number = 1;
   intervalo?: number;
   iniciandoEm?: string;
   vezesAoDia?: number;
@@ -10,17 +9,16 @@ export class ControleUsoMedicamento {
   dataFim?: string;
   usoContinuo: boolean = false;
   observacao?: string;
-  ativo: boolean = true;
 
-  medicamento?: {
-    id: number;
+  medicamento: { id: number } = {
+    id: 0,
   };
 
-  acolhido?: {
-    id: number;
+  acolhido: { id: number } = {
+    id: 0,
   };
 
-  funcionarioCadastro?: {
-    id: number;
+  funcionarioCadastro: { id: number } = {
+    id: 0,
   };
 }

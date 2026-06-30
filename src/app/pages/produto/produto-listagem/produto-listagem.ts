@@ -88,4 +88,16 @@ export class ProdutoListagem {
 
     this.produtosFiltrados.set(filtrados);
   }
+
+  /*carregarEstoque(): void {
+    this..selecionar().subscribe({
+      next: (lista) => {
+        this.produtos = lista;
+      },
+
+      error: (err) => {
+        console.error('Erro ao carregar produtos', err);
+      },
+    });
+  }*/
 }

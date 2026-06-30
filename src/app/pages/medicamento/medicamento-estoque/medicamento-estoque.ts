@@ -78,7 +78,7 @@ export class MedicamentoEstoque implements OnInit {
       next: (lista) => {
         this.responsaveis = lista;
 
-        const usuario = localStorage.getItem('usuario');
+        const usuario = sessionStorage.getItem('usuario');
 
         if (usuario) {
           const usuarioLogado = JSON.parse(usuario);
@@ -90,18 +90,22 @@ export class MedicamentoEstoque implements OnInit {
   }
 
   salvarEntrada(): void {
-    this.novaEntrada.medicamento = { id: this.medicamentoId };
+    this.novaEntrada.medicamento!.id = this.medicamentoId;
 
-    const operacao = this.entradaService.cadastrar(this.novaEntrada);
-
-    operacao.subscribe({
+    this.entradaService.cadastrar(this.novaEntrada).subscribe({
       next: () => {
-        this.carregarEstoque();
-        this.limparFormEntrada();
-
         this.toastr.success('Entrada cadastrada!');
+
+        this.carregarEstoque();
+
+        setTimeout(() => {
+          this.limparFormEntrada();
+        });
       },
-      error: (err) => console.error('Erro ao salvar entrada', err),
+
+      error: (err) => {
+        console.error(err);
+      },
     });
   }
 
@@ -117,8 +121,6 @@ export class MedicamentoEstoque implements OnInit {
         id: this.medicamentoId,
       },
     };
-
-    this.carregarResponsaveis();
   }
 
   carregarEstoque(): void {

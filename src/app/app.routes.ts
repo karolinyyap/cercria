@@ -21,6 +21,7 @@ import { EventoListagem } from './pages/agenda/evento-listagem/evento-listagem';
 import { authGuard } from './guards/auth-guard';
 import { AlterarSenha } from './pages/alterar-senha/alterar-senha';
 import { MedicamentoControle } from './pages/medicamento/medicamento-controle/medicamento-controle';
+import { ProdutoControle } from './pages/produto/produto-controle/produto-controle';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -61,6 +62,7 @@ export const routes: Routes = [
       { path: 'cadastro', component: ProdutoCadastro, canActivate: [authGuard] },
       { path: 'listagem', component: ProdutoListagem, canActivate: [authGuard] },
       { path: 'edicao/:id', component: ProdutoEdicao, canActivate: [authGuard] },
+      { path: 'controle', component: ProdutoControle, canActivate: [authGuard] },
     ],
   },
   {
