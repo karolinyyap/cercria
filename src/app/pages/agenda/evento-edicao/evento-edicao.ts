@@ -4,14 +4,15 @@ import { Header } from '../../../components/header/header';
 import { Sidebar } from '../../../components/sidebar/sidebar';
 import { FormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-
 import { Evento } from '../../../models/Evento';
 import { Acolhido } from '../../../models/Acolhido';
 import { Funcionario } from '../../../models/Funcionario';
-
 import { EventoService } from '../../../services/evento/evento.service';
 import { AcolhidoService } from '../../../services/acolhido/acolhido.service';
 import { FuncionarioService } from '../../../services/funcionario/funcionario.service';
+import { ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-edicao-evento',
@@ -39,6 +40,9 @@ export class EdicaoEvento implements OnInit {
     private router: Router,
     private cdr: ChangeDetectorRef,
   ) {}
+
+  @ViewChild('form')
+  formulario!: NgForm;
 
   ngOnInit(): void {
     const id = Number(this.rota.snapshot.paramMap.get('id'));
@@ -151,5 +155,22 @@ export class EdicaoEvento implements OnInit {
 
   isResponsavelSelecionado(id: number): boolean {
     return this.evento.responsaveis.includes(id);
+  }
+
+  canDeactivate(): Promise<boolean> | boolean {
+    console.log(this.formulario?.dirty);
+
+    if (!this.formulario?.dirty) {
+      return true;
+    }
+
+    return Swal.fire({
+      title: 'Existem alterações não salvas',
+      text: 'Deseja realmente sair desta página?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sim, sair',
+      cancelButtonText: 'Continuar editando',
+    }).then((result) => result.isConfirmed);
   }
 }

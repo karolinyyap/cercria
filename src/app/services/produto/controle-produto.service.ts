@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
+import { EntradaProduto } from '../../models/EntradaProduto';
 
 @Injectable({
   providedIn: 'root',
@@ -30,5 +31,9 @@ export class ControleProdutoService {
         return throwError(() => err);
       }),
     );
+  }
+
+  listarPorProduto(produtoId: number): Observable<EntradaProduto[]> {
+    return this.http.get<EntradaProduto[]>(`${this.url}/entrada/produto/${produtoId}`);
   }
 }

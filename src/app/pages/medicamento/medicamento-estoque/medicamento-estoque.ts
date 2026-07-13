@@ -13,6 +13,9 @@ import { MedicamentoEstoqueM } from '../../../models/MedicamentoEstoqueM';
 import { Medicamento } from '../../../models/Medicamento';
 import { ToastrService } from 'ngx-toastr';
 import { ChangeDetectorRef } from '@angular/core';
+import { ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-medicamento-estoque',
@@ -141,5 +144,25 @@ export class MedicamentoEstoque implements OnInit {
         console.error(err);
       },
     });
+  }
+
+  @ViewChild('form')
+  formulario!: NgForm;
+
+  canDeactivate(): Promise<boolean> | boolean {
+    console.log(this.formulario?.dirty);
+
+    if (!this.formulario?.dirty) {
+      return true;
+    }
+
+    return Swal.fire({
+      title: 'Existem alterações não salvas',
+      text: 'Deseja realmente sair desta página?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sim, sair',
+      cancelButtonText: 'Continuar editando',
+    }).then((result) => result.isConfirmed);
   }
 }

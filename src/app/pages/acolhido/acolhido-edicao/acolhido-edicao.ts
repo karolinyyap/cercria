@@ -10,7 +10,9 @@ import { AcolhidoService } from '../../../services/acolhido/acolhido.service';
 import { NgxMaskDirective } from 'ngx-mask';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { signal } from '@angular/core';
+import { ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-acolhido-edicao',
@@ -64,5 +66,25 @@ export class AcolhidoEdicao implements OnInit {
         console.error('ERRO:', erro);
       },
     });
+  }
+
+  @ViewChild('form')
+  formulario!: NgForm;
+
+  canDeactivate(): Promise<boolean> | boolean {
+    console.log(this.formulario?.dirty);
+
+    if (!this.formulario?.dirty) {
+      return true;
+    }
+
+    return Swal.fire({
+      title: 'Existem alterações não salvas',
+      text: 'Deseja realmente sair desta página?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sim, sair',
+      cancelButtonText: 'Continuar editando',
+    }).then((result) => result.isConfirmed);
   }
 }

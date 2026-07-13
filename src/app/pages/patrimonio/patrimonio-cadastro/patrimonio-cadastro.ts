@@ -1,44 +1,44 @@
 import { Component, inject } from '@angular/core';
 import { Header } from '../../../components/header/header';
 import { Sidebar } from '../../../components/sidebar/sidebar';
-import { RouterLink, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { ProdutoService } from '../../../services/produto/produto.service';
-import { Produto } from '../../../models/Produto';
+import { RouterLink, Router } from '@angular/router';
+import { Patrimonio } from '../../../models/Patrimonio';
 import { ToastrService } from 'ngx-toastr';
+import { PatrimonioService } from '../../../services/patrimonio/patrimonio.service';
 import { ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-produto-cadastro',
-  imports: [Header, RouterLink, FormsModule, Sidebar],
-  templateUrl: './produto-cadastro.html',
-  styleUrl: './produto-cadastro.css',
+  selector: 'app-patrimonio-cadastro',
+  imports: [Header, Sidebar, FormsModule, RouterLink],
+  templateUrl: './patrimonio-cadastro.html',
+  styleUrl: './patrimonio-cadastro.css',
 })
-export class ProdutoCadastro {
-  //JSON de produto
-  produtos: Produto[] = [];
+export class PatrimonioCadastro {
+  //JSON de patrimônio
+  patrimonios: Patrimonio[] = [];
 
-  private servico = inject(ProdutoService);
+  private servico = inject(PatrimonioService);
   constructor(
     private toastr: ToastrService,
     private router: Router,
   ) {}
 
-  //Objeto do tipo produto
-  produto = new Produto();
+  //Objeto do tipo patrimônio
+  patrimonio = new Patrimonio();
 
   //Método de cadastro
   cadastrar(form: any): void {
-    this.servico.cadastrar(this.produto).subscribe((retorno) => {
-      this.produtos.push(retorno);
+    this.servico.cadastrar(this.patrimonio).subscribe((retorno) => {
+      this.patrimonios.push(retorno);
 
-      this.produto = new Produto();
+      this.patrimonio = new Patrimonio();
       form.reset();
 
-      this.toastr.success('Produto cadastrado com sucesso!');
-      this.router.navigate(['/produto/listagem']);
+      this.toastr.success('Patrimônio cadastrado com sucesso!');
+      this.router.navigate(['/patrimonio/listagem']);
     });
   }
 

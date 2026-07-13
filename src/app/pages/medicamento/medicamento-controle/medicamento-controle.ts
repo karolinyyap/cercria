@@ -13,6 +13,9 @@ import { ControleMedicamentoService } from '../../../services/medicamento/medica
 import { Header } from '../../../components/header/header';
 import { Sidebar } from '../../../components/sidebar/sidebar';
 import { RouterLink } from '@angular/router';
+import { ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-controle-medicamento',
@@ -238,5 +241,25 @@ export class MedicamentoControle implements OnInit {
         console.error('Erro ao carregar funcionários', err);
       },
     });
+  }
+
+  @ViewChild('form')
+  formulario!: NgForm;
+
+  canDeactivate(): Promise<boolean> | boolean {
+    console.log(this.formulario?.dirty);
+
+    if (!this.formulario?.dirty) {
+      return true;
+    }
+
+    return Swal.fire({
+      title: 'Existem alterações não salvas',
+      text: 'Deseja realmente sair desta página?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sim, sair',
+      cancelButtonText: 'Continuar editando',
+    }).then((result) => result.isConfirmed);
   }
 }

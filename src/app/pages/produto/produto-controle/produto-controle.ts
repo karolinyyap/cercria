@@ -10,6 +10,9 @@ import { Header } from '../../../components/header/header';
 import { Sidebar } from '../../../components/sidebar/sidebar';
 import { ProdutoService } from '../../../services/produto/produto.service';
 import { ToastrService } from 'ngx-toastr';
+import { ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-produto-controle',
@@ -112,7 +115,7 @@ export class ProdutoControle implements OnInit {
 
   salvarEntrada(): void {
     const payload = this.montarPayloadEntrada();
-    console.log('ENTRADA:', payload);
+    //console.log('ENTRADA:', payload);
 
     this.controleService.cadastrarEntrada(payload).subscribe({
       next: () => {
@@ -127,7 +130,7 @@ export class ProdutoControle implements OnInit {
 
   salvarSaida(): void {
     const payload = this.montarPayloadSaida();
-    console.log('SAÍDA:', payload);
+    //console.log('SAÍDA:', payload);
 
     this.controleService.cadastrarSaida(payload).subscribe({
       next: () => {
@@ -138,5 +141,25 @@ export class ProdutoControle implements OnInit {
         this.toastr.error('Erro ao cadastrar saída.');
       },
     });
+  }
+
+  @ViewChild('form')
+  formulario!: NgForm;
+
+  canDeactivate(): Promise<boolean> | boolean {
+    //console.log(this.formulario?.dirty);
+
+    if (!this.formulario?.dirty) {
+      return true;
+    }
+
+    return Swal.fire({
+      title: 'Existem alterações não salvas',
+      text: 'Deseja realmente sair desta página?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sim, sair',
+      cancelButtonText: 'Continuar editando',
+    }).then((result) => result.isConfirmed);
   }
 }

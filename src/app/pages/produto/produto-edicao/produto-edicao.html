@@ -13,10 +13,6 @@
     </nav>
 
     <form class="form-grid" #form="ngForm" (ngSubmit)="editar()">
-      <div class="form-buttons">
-        <a routerLink="/produto/listagem" class="btn">Listar</a>
-      </div>
-
       <div class="campo grande">
         <label>Nome do produto <span>*</span></label>
         <input
@@ -50,20 +46,6 @@
           <option value="Produtos de limpeza">Produtos de limpeza</option>
           <option value="Produtos de higiene pessoal">Produtos de higiene pessoal</option>
         </select>
-      </div>
-
-      <div class="campo">
-        <label>Rendimento</label>
-        <input
-          type="number"
-          id="quantidade"
-          name="quantidade"
-          [(ngModel)]="produto.rendimento"
-          min="1"
-          step="1"
-          placeholder="Em porção"
-          required
-        />
       </div>
 
       <div class="campo">

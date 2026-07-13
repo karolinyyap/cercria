@@ -1,0 +1,90 @@
+<app-header></app-header>
+
+<div class="main-container">
+  <app-sidebar></app-sidebar>
+  <div class="form-list-panel">
+    <h2><b>Listagem de Patrimônio</b></h2>
+    <nav class="breadcrumb">
+      <a routerLink="/home">Home</a>
+      <span class="breadcrumb-span">/</span>
+      <span>Listagem de Patrimônio</span>
+    </nav>
+
+    <div class="top-actions">
+      <div class="filtros-linha">
+        <label>Tombamento: </label>
+        <input
+          type="text"
+          placeholder="Buscar por tombamento..."
+          [(ngModel)]="filtroNome"
+          (input)="filtrar()"
+        />
+
+        <label>Especificação:</label>
+        <input
+          type="text"
+          placeholder="Buscar por especificação..."
+          [(ngModel)]="filtroEspecificacao"
+          (input)="filtrar()"
+        />
+
+        <button (click)="filtroNome = ''; filtrar()">Limpar filtro</button>
+      </div>
+
+      <a routerLink="/patrimonio/cadastro" class="btn">+ Novo Produto</a>
+    </div>
+
+    <div class="list-panel">
+      <table>
+        <thead>
+          <tr>
+            <th>Tombamento</th>
+            <th>Especificação</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (p of patrimoniosFiltrados(); track p.id) {
+            <tr>
+              <td (click)="abrirDetalhes(p)" class="nome-click">
+                {{ p.tombamento }}
+              </td>
+              <td (click)="abrirDetalhes(p)" class="nome-click">
+                {{ p.especificacao }}
+              </td>
+              <td>
+                <div class="buttons">
+                  <a [routerLink]="['/patrimonio/edicao', p.id]" class="btn">Editar</a>
+                  <button (click)="excluir(p.id!)" class="btn">Excluir</button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+
+      @if (patrimoniosSelecionado()) {
+        <div class="card-overlay">
+          <div class="card-medicamento">
+            <h2>{{ patrimoniosSelecionado()!.tombamento }}</h2>
+
+            <p>
+              <b>Data de aquisição:</b>
+              {{ patrimoniosSelecionado()!.dtAquisicao | date: 'dd/MM/yyyy' }}
+            </p>
+
+            <p>
+              <b>Especificação:</b>
+              {{ patrimoniosSelecionado()!.especificacao }}
+            </p>
+
+            <button (click)="fecharDetalhes()" class="btn">Fechar</button>
+          </div>
+        </div>
+      }
+    </div>
+    <div class="btnExterno">
+      <a routerLink="/produto/cadastro" class="btn"><< Voltar</a>
+    </div>
+  </div>
+</div>

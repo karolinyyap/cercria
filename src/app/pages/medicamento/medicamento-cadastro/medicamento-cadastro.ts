@@ -6,6 +6,9 @@ import { FormsModule } from '@angular/forms';
 import { MedicamentoService } from '../../../services/medicamento/medicamento.service';
 import { Medicamento } from '../../../models/Medicamento';
 import { ToastrService } from 'ngx-toastr';
+import { ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-medicamento-cadastro',
@@ -37,5 +40,25 @@ export class MedicamentoCadastro {
       this.toastr.success('Medicamento cadastrado com sucesso!');
       this.router.navigate(['/medicamento/listagem']);
     });
+  }
+
+  @ViewChild('form')
+  formulario!: NgForm;
+
+  canDeactivate(): Promise<boolean> | boolean {
+    console.log(this.formulario?.dirty);
+
+    if (!this.formulario?.dirty) {
+      return true;
+    }
+
+    return Swal.fire({
+      title: 'Existem alterações não salvas',
+      text: 'Deseja realmente sair desta página?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sim, sair',
+      cancelButtonText: 'Continuar editando',
+    }).then((result) => result.isConfirmed);
   }
 }

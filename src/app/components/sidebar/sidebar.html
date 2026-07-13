@@ -62,6 +62,18 @@
     <div routerLink="/produto/controle" class="submenu-item">Controle</div>
   </div>
 
+  <!-- PATRIMÔNIO -->
+  <div class="menu-item" (click)="toggleMenu('patrimonio')">
+    <img src="/assets/patrimonio.png" />
+    <span>Patrimônio</span>
+    <span class="seta" [class.aberta]="menuAberto === 'patrimonio'">▼</span>
+  </div>
+
+  <div class="submenu" [class.aberto]="menuAberto === 'patrimonio'">
+    <div routerLink="/patrimonio/cadastro" class="submenu-item">Cadastro</div>
+    <div routerLink="/patrimonio/listagem" class="submenu-item">Listagem</div>
+  </div>
+
   <!-- AGENDA -->
   <div class="menu-item" (click)="toggleMenu('agenda')">
     <img src="/assets/calendario.png" />
@@ -74,7 +86,7 @@
     <div routerLink="/agenda/evento-cadastro" class="submenu-item">Novo Evento</div>
   </div>
 
-  <!-- AGENDA -->
+  <!-- RELATÓRIOS -->
   <div class="menu-item" (click)="toggleMenu('agenda')">
     <img src="/assets/relatorio.png" />
     <span>Relatórios</span>

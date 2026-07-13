@@ -7,6 +7,9 @@ import { ToastrService } from 'ngx-toastr';
 import { NgxMaskDirective } from 'ngx-mask';
 import { Acolhido } from '../../../models/Acolhido';
 import { AcolhidoService } from '../../../services/acolhido/acolhido.service';
+import { ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-acolhido-cadastro',
@@ -41,5 +44,25 @@ export class AcolhidoCadastro {
       this.toastr.success('Acolhido cadastrado com sucesso!');
       this.router.navigate(['/acolhido/listagem']);
     });
+  }
+
+  @ViewChild('form')
+  formulario!: NgForm;
+
+  canDeactivate(): Promise<boolean> | boolean {
+    console.log(this.formulario?.dirty);
+
+    if (!this.formulario?.dirty) {
+      return true;
+    }
+
+    return Swal.fire({
+      title: 'Existem alterações não salvas',
+      text: 'Deseja realmente sair desta página?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sim, sair',
+      cancelButtonText: 'Continuar editando',
+    }).then((result) => result.isConfirmed);
   }
 }

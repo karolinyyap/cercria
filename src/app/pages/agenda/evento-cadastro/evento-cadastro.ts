@@ -4,14 +4,15 @@ import { Sidebar } from '../../../components/sidebar/sidebar';
 import { RouterLink, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-
 import { Evento } from '../../../models/Evento';
 import { Acolhido } from '../../../models/Acolhido';
 import { Funcionario } from '../../../models/Funcionario';
-
 import { EventoService } from '../../../services/evento/evento.service';
 import { AcolhidoService } from '../../../services/acolhido/acolhido.service';
 import { FuncionarioService } from '../../../services/funcionario/funcionario.service';
+import { ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-evento-cadastro',
@@ -21,6 +22,8 @@ import { FuncionarioService } from '../../../services/funcionario/funcionario.se
   styleUrl: './evento-cadastro.css',
 })
 export class EventoCadastro {
+  @ViewChild('form')
+  formulario!: NgForm;
   // Lista de eventos cadastrados
   eventos: Evento[] = [];
 
@@ -86,6 +89,7 @@ export class EventoCadastro {
         this.eventos.push(retorno);
         this.evento = new Evento();
         form.reset();
+
         this.toastr.success('Evento cadastrado com sucesso!');
         this.router.navigate(['/agenda/listagem']);
       },
@@ -153,5 +157,22 @@ export class EventoCadastro {
 
   isResponsavelSelecionado(id: number): boolean {
     return this.evento.responsaveis.includes(id);
+  }
+
+  canDeactivate(): Promise<boolean> | boolean {
+    console.log(this.formulario?.dirty);
+
+    if (!this.formulario?.dirty) {
+      return true;
+    }
+
+    return Swal.fire({
+      title: 'Existem alterações não salvas',
+      text: 'Deseja realmente sair desta página?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sim, sair',
+      cancelButtonText: 'Continuar editando',
+    }).then((result) => result.isConfirmed);
   }
 }

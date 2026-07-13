@@ -22,6 +22,10 @@ import { authGuard } from './guards/auth-guard';
 import { AlterarSenha } from './pages/alterar-senha/alterar-senha';
 import { MedicamentoControle } from './pages/medicamento/medicamento-controle/medicamento-controle';
 import { ProdutoControle } from './pages/produto/produto-controle/produto-controle';
+import { PatrimonioListagem } from './pages/patrimonio/patrimonio-listagem/patrimonio-listagem';
+import { PatrimonioEdicao } from './pages/patrimonio/patrimonio-edicao/patrimonio-edicao';
+import { PatrimonioCadastro } from './pages/patrimonio/patrimonio-cadastro/patrimonio-cadastro';
+import { canDeactivateGuard } from './guards/can-deactivate-guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -29,30 +33,66 @@ export const routes: Routes = [
   {
     path: 'funcionario',
     children: [
-      { path: 'cadastro', component: FuncionarioCadastro, canActivate: [authGuard] },
+      {
+        path: 'cadastro',
+        component: FuncionarioCadastro,
+        canActivate: [authGuard],
+        canDeactivate: [canDeactivateGuard],
+      },
       { path: 'listagem', component: FuncionarioListagem, canActivate: [authGuard] },
-      { path: 'edicao/:id', component: FuncionarioEdicao, canActivate: [authGuard] },
+      {
+        path: 'edicao/:id',
+        component: FuncionarioEdicao,
+        canActivate: [authGuard],
+        canDeactivate: [canDeactivateGuard],
+      },
     ],
   },
   {
     path: 'medicamento',
     children: [
-      { path: 'cadastro', component: MedicamentoCadastro, canActivate: [authGuard] },
+      {
+        path: 'cadastro',
+        component: MedicamentoCadastro,
+        canActivate: [authGuard],
+        canDeactivate: [canDeactivateGuard],
+      },
       { path: 'listagem', component: MedicamentoListagem, canActivate: [authGuard] },
-      { path: 'edicao/:id', component: MedicamentoEdicao, canActivate: [authGuard] },
-      { path: 'estoque/:id', component: MedicamentoEstoque, canActivate: [authGuard] },
+      {
+        path: 'edicao/:id',
+        component: MedicamentoEdicao,
+        canActivate: [authGuard],
+        canDeactivate: [canDeactivateGuard],
+      },
+      {
+        path: 'estoque/:id',
+        component: MedicamentoEstoque,
+        canActivate: [authGuard],
+        canDeactivate: [canDeactivateGuard],
+      },
     ],
   },
   {
     path: 'acolhido',
     children: [
-      { path: 'cadastro', component: AcolhidoCadastro, canActivate: [authGuard] },
+      {
+        path: 'cadastro',
+        component: AcolhidoCadastro,
+        canActivate: [authGuard],
+        canDeactivate: [canDeactivateGuard],
+      },
       { path: 'listagem', component: AcolhidoListagem, canActivate: [authGuard] },
-      { path: 'edicao/:id', component: AcolhidoEdicao, canActivate: [authGuard] },
+      {
+        path: 'edicao/:id',
+        component: AcolhidoEdicao,
+        canActivate: [authGuard],
+        canDeactivate: [canDeactivateGuard],
+      },
       {
         path: 'controle-medicamento/:id',
         component: MedicamentoControle,
         canActivate: [authGuard],
+        canDeactivate: [canDeactivateGuard],
       },
     ],
   },
@@ -60,17 +100,60 @@ export const routes: Routes = [
     path: 'produto',
     children: [
       { path: 'cadastro', component: ProdutoCadastro, canActivate: [authGuard] },
-      { path: 'listagem', component: ProdutoListagem, canActivate: [authGuard] },
-      { path: 'edicao/:id', component: ProdutoEdicao, canActivate: [authGuard] },
-      { path: 'controle', component: ProdutoControle, canActivate: [authGuard] },
+      {
+        path: 'listagem',
+        component: ProdutoListagem,
+        canActivate: [authGuard],
+        canDeactivate: [canDeactivateGuard],
+      },
+      {
+        path: 'edicao/:id',
+        component: ProdutoEdicao,
+        canActivate: [authGuard],
+        canDeactivate: [canDeactivateGuard],
+      },
+      {
+        path: 'controle',
+        component: ProdutoControle,
+        canActivate: [authGuard],
+        canDeactivate: [canDeactivateGuard],
+      },
     ],
   },
   {
     path: 'agenda',
     children: [
       { path: 'listagem', component: EventoListagem, canActivate: [authGuard] },
-      { path: 'evento-edicao/:id', component: EdicaoEvento, canActivate: [authGuard] },
-      { path: 'evento-cadastro', component: EventoCadastro, canActivate: [authGuard] },
+      {
+        path: 'evento-edicao/:id',
+        component: EdicaoEvento,
+        canActivate: [authGuard],
+        canDeactivate: [canDeactivateGuard],
+      },
+      {
+        path: 'evento-cadastro',
+        component: EventoCadastro,
+        canActivate: [authGuard],
+        canDeactivate: [canDeactivateGuard],
+      },
+    ],
+  },
+  {
+    path: 'patrimonio',
+    children: [
+      { path: 'listagem', component: PatrimonioListagem, canActivate: [authGuard] },
+      {
+        path: 'edicao/:id',
+        component: PatrimonioEdicao,
+        canActivate: [authGuard],
+        canDeactivate: [canDeactivateGuard],
+      },
+      {
+        path: 'cadastro',
+        component: PatrimonioCadastro,
+        canActivate: [authGuard],
+        canDeactivate: [canDeactivateGuard],
+      },
     ],
   },
   { path: 'alterar-senha', component: AlterarSenha },

@@ -5,6 +5,7 @@ export class EntradaProduto {
   dataValidade: string = '';
   origem: string = '';
   observacao?: string;
+  quantidadeAtual?: number;
 
   produtoId: number | null = null;
   funcionarioId: number | null = null;
