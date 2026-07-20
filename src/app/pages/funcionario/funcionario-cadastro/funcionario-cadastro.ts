@@ -21,6 +21,7 @@ export class FuncionarioCadastro {
   //JSON de funcionario
   funcionarios: Funcionario[] = [];
 
+  // Injeção do serviço responsável pelas operações com funcionários
   private servico = inject(FuncionarioService);
 
   constructor(

@@ -18,9 +18,10 @@ import Swal from 'sweetalert2';
   styleUrl: './acolhido-cadastro.css',
 })
 export class AcolhidoCadastro {
-  //JSON de Acolhidos
+  //Lista para cadastro dos acolhidos, do tipo Acolhido
   acolhidos: Acolhido[] = [];
 
+  // Injeção do serviço responsável pelas operações com acolhidos
   private servico = inject(AcolhidoService);
 
   constructor(
@@ -49,6 +50,7 @@ export class AcolhidoCadastro {
   @ViewChild('form')
   formulario!: NgForm;
 
+  //Método para criar mensagem de formulário não salvo ao sair
   canDeactivate(): Promise<boolean> | boolean {
     console.log(this.formulario?.dirty);
 

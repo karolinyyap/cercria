@@ -18,8 +18,10 @@ import Swal from 'sweetalert2';
   styleUrl: './medicamento-edicao.css',
 })
 export class MedicamentoEdicao {
+  // Objeto do tipo medicamento
   medicamento: Medicamento = new Medicamento();
 
+  // Injeção do serviço responsável pelas operações com medicamentos
   private servico = inject(MedicamentoService);
   constructor(
     private rota: ActivatedRoute,

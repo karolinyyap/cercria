@@ -24,7 +24,9 @@ export class AcolhidoEdicao implements OnInit {
   acolhido: Acolhido = new Acolhido();
   carregado = false;
 
+  // Injeção do serviço responsável pelas operações com acolhidos
   private servico = inject(AcolhidoService);
+
   constructor(
     private rota: ActivatedRoute,
     private toastr: ToastrService,
@@ -45,9 +47,10 @@ export class AcolhidoEdicao implements OnInit {
   }
 
   ngOnInit(): void {
+    //Pega o id para buscar o registro no banco
     const id = Number(this.rota.snapshot.paramMap.get('id'));
 
-    //carregar acolhido
+    //Carregar dados do acolhido nos campos respectivos
     this.servico.buscarPorId(id).subscribe({
       next: (retorno) => {
         console.log('RETORNO:', retorno);
@@ -71,6 +74,7 @@ export class AcolhidoEdicao implements OnInit {
   @ViewChild('form')
   formulario!: NgForm;
 
+  //Método para criar mensagem de formulário não salvo ao sair
   canDeactivate(): Promise<boolean> | boolean {
     console.log(this.formulario?.dirty);
 

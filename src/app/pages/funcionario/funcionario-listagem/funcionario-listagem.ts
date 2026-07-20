@@ -8,7 +8,6 @@ import { FuncionarioService } from '../../../services/funcionario/funcionario.se
 import { NgxMaskPipe } from 'ngx-mask';
 import { CommonModule } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
-//import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-funcionario-listagem',
@@ -17,10 +16,11 @@ import { ToastrService } from 'ngx-toastr';
   styleUrl: './funcionario-listagem.css',
 })
 export class FuncionarioListagem implements OnInit {
+  // Signals para armazenar listas vindas dos serviços
   funcionarios = signal<Funcionario[]>([]);
 
+  // Injeção do serviço responsável pelas operações com funcionários
   private servico = inject(FuncionarioService);
-  constructor(private toastr: ToastrService) {}
 
   ngOnInit(): void {
     this.servico.selecionar().subscribe({
@@ -47,6 +47,8 @@ export class FuncionarioListagem implements OnInit {
   //Filtro de status
   filtroStatus: string = 'todos';
 
+  //Método para filtrar os funcionários
+  //Um funcionário é considerado ativo quando sua data de saída == NULL
   filtrarFuncionarios() {
     if (this.filtroStatus === 'ativos') {
       return this.funcionarios().filter((f) => !f.dataSaida);

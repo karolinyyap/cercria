@@ -22,14 +22,17 @@ import Swal from 'sweetalert2';
   styleUrl: './evento-edicao.css',
 })
 export class EdicaoEvento implements OnInit {
+  // Criação de objetos
   evento: Evento = new Evento();
 
+  // Listas
   acolhidos = signal<Acolhido[]>([]);
   responsaveis = signal<Funcionario[]>([]);
 
   filtroAcolhido: string = '';
   filtroResponsavel: string = '';
 
+  // Injeção do serviço responsável pelas operações com acolhidos, eventos e funcionários
   private acolhidoService = inject(AcolhidoService);
   private eventoService = inject(EventoService);
   private funcionarioService = inject(FuncionarioService);
@@ -47,11 +50,11 @@ export class EdicaoEvento implements OnInit {
   ngOnInit(): void {
     const id = Number(this.rota.snapshot.paramMap.get('id'));
 
-    // listas
+    // Listas
     this.acolhidoService.selecionar().subscribe((res) => this.acolhidos.set(res));
     this.funcionarioService.selecionar().subscribe((res) => this.responsaveis.set(res));
 
-    // evento
+    // Evento
     this.eventoService.buscarPorId(id).subscribe({
       next: (retorno) => {
         //console.log('EVENTO:', retorno);
@@ -61,7 +64,7 @@ export class EdicaoEvento implements OnInit {
         this.evento.acolhidos = retorno.acolhidos ?? [];
         this.evento.responsaveis = retorno.responsaveis ?? [];
 
-        // segurança
+        // Segurança
         this.evento.acolhidos = [...this.evento.acolhidos];
         this.evento.responsaveis = [...this.evento.responsaveis];
 
@@ -76,7 +79,7 @@ export class EdicaoEvento implements OnInit {
           );
 
           // Formato yyyy-MM-dd que o input[type="date"] espera
-          this.evento.data = dataLocal.toLocaleDateString('en-CA'); // "2025-04-22"
+          this.evento.data = dataLocal.toLocaleDateString('en-CA');
         }
         this.cdr.detectChanges();
       },
@@ -116,6 +119,7 @@ export class EdicaoEvento implements OnInit {
       );
   }
 
+  // Filtro de responsáveis
   filtrarResponsaveis(): Funcionario[] {
     const lista = this.responsaveis();
 
@@ -129,7 +133,6 @@ export class EdicaoEvento implements OnInit {
   }
 
   // Seleção/Deseleção de Acolhidos
-
   toggleAcolhido(id: number): void {
     if (this.evento.acolhidos.includes(id)) {
       this.evento.acolhidos = this.evento.acolhidos.filter((a) => a !== id);
@@ -140,7 +143,6 @@ export class EdicaoEvento implements OnInit {
   }
 
   // Verificar se está selecionado
-
   isAcolhidoSelecionado(id: number): boolean {
     return this.evento.acolhidos.includes(id);
   }

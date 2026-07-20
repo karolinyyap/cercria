@@ -17,9 +17,10 @@ import Swal from 'sweetalert2';
   styleUrl: './produto-cadastro.css',
 })
 export class ProdutoCadastro {
-  //JSON de produto
+  //Lista para cadastro de produto
   produtos: Produto[] = [];
 
+  // Injeção do serviço responsável pelas operações com produto
   private servico = inject(ProdutoService);
   constructor(
     private toastr: ToastrService,

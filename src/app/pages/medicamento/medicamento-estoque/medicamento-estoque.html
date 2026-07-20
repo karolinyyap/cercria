@@ -2,6 +2,7 @@
 <div class="main-container">
   <app-sidebar></app-sidebar>
   <div class="page-content">
+    <!-- BREADCRUMB -->
     <nav class="breadcrumb">
       <a routerLink="/home">Home</a>
       <span class="breadcrumb-span">/</span>
@@ -10,6 +11,7 @@
       <span>Estoque de {{ medicamento.nome }}</span>
     </nav>
 
+    <!-- NOME DO MEDICAMENTO -->
     <div class="med-header">
       @if (medicamento; as m) {
         <div>
@@ -35,7 +37,9 @@
         <div class="panel-body">
           <div class="section-title">Registrar nova entrada</div>
 
+          <!-- FORMULÁRIO DE ENTRADA D EESTOQUE -->
           <form #formEntrada="ngForm" (ngSubmit)="salvarEntrada()" class="form-grid">
+            <!-- QUANTIDADE -->
             <div class="campo">
               <label>Quantidade <span>*</span></label>
               <input
@@ -54,6 +58,7 @@
               }
             </div>
 
+            <!-- DATA DE VALIDADE -->
             <div class="campo">
               <label>Data de validade <span>*</span></label>
               <input
@@ -71,6 +76,7 @@
               }
             </div>
 
+            <!-- ORIGEM -->
             <div class="campo">
               <label>Origem <span>*</span></label>
               <select name="origem" required [(ngModel)]="novaEntrada.origem" #origem="ngModel">
@@ -86,6 +92,7 @@
               }
             </div>
 
+            <!-- DATA DE ENTRADA -->
             <div class="campo">
               <label>Data de entrada <span>*</span></label>
               <input
@@ -103,6 +110,7 @@
               }
             </div>
 
+            <!-- RESPONSÁVEL -->
             <div class="campo">
               <label>Responsável <span>*</span></label>
 
@@ -127,6 +135,7 @@
                 }
               }
             </div>
+            <!-- BOTÕES INFERIORES -->
             <div class="form-actions">
               <button type="button" class="btn-limpar" (click)="limparFormEntrada()">Limpar</button>
               <button type="submit" class="btn" [disabled]="formEntrada.invalid">Salvar</button>

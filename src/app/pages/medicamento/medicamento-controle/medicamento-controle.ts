@@ -32,9 +32,11 @@ export class MedicamentoControle implements OnInit {
   abaAtiva: 'programado' | 'esporadico' = 'programado';
   usuarioLogado!: number;
 
+  //Listas
   funcionarios: any[] = [];
   medicamentos: { id: number; nome: string }[] = [];
 
+  // Injeção do serviço responsável pelas operações com acolhidos, medicamentos e funcionários
   private route = inject(ActivatedRoute);
   private acolhidoService = inject(AcolhidoService);
   private medicamentoService = inject(MedicamentoService);
@@ -45,6 +47,7 @@ export class MedicamentoControle implements OnInit {
   acolhidoId!: number;
 
   ngOnInit(): void {
+    //Pega o usuário logado
     const usuario = JSON.parse(sessionStorage.getItem('usuario')!);
 
     this.usuarioLogado = usuario.id;
@@ -64,8 +67,8 @@ export class MedicamentoControle implements OnInit {
     this.carregarFuncionarios();
   }
 
+  // Objetos do tipo controleUso e Saída Esporádica
   novaProgramacao = new ControleUsoMedicamento();
-
   novaSaidaEsporadica = new SaidaEsporadica();
 
   diasSemana = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
@@ -92,6 +95,7 @@ export class MedicamentoControle implements OnInit {
     }
   }
 
+  // Método de cadastro de medicamentos periódicos
   salvarProgramacao(): void {
     const usuarioStorage = sessionStorage.getItem('usuario');
 
@@ -153,6 +157,7 @@ export class MedicamentoControle implements OnInit {
     });
   }
 
+  // Método para salvar saída esporádica
   salvarSaidaEsporadica(): void {
     const dados = {
       data: this.novaSaidaEsporadica.dataSaida,
@@ -192,12 +197,14 @@ export class MedicamentoControle implements OnInit {
     });
   }
 
+  //Limpar os campos da saída programada
   limparProgramacao(): void {
     this.novaProgramacao = new ControleUsoMedicamento();
     this.novaProgramacao.acolhido = { id: this.acolhidoId };
     this.novaProgramacao.dose = 1;
   }
 
+  //Limpar campos da saída esporádica
   limparSaidaEsporadica(): void {
     this.novaSaidaEsporadica = new SaidaEsporadica();
     this.novaSaidaEsporadica.responsavel = {
@@ -206,6 +213,7 @@ export class MedicamentoControle implements OnInit {
     this.cdr.detectChanges();
   }
 
+  // Carregar os acolhidos do banco no combobox
   carregarAcolhido(): void {
     this.acolhidoService.buscarPorId(this.acolhidoId).subscribe({
       next: (a) => {
@@ -219,6 +227,7 @@ export class MedicamentoControle implements OnInit {
     });
   }
 
+  // Carregar os medicamentos do banco no combobox
   carregarMedicamentos(): void {
     this.medicamentoService.selecionar().subscribe({
       next: (lista) => {
@@ -231,6 +240,7 @@ export class MedicamentoControle implements OnInit {
     });
   }
 
+  // Carregar os funcionários do banco no combobox
   carregarFuncionarios(): void {
     this.funcionarioService.selecionar().subscribe({
       next: (lista) => {

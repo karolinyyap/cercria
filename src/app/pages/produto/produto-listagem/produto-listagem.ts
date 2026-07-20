@@ -17,8 +17,10 @@ import { ControleProdutoService } from '../../../services/produto/controle-produ
   styleUrl: './produto-listagem.css',
 })
 export class ProdutoListagem implements OnInit {
+  // Signal para armazenar lista vinda dos serviço
   produtos = signal<Produto[]>([]);
 
+  // Injeção do serviço responsável pelas operações com produto
   private servico = inject(ProdutoService);
   private controleService = inject(ControleProdutoService);
   constructor(
@@ -73,7 +75,7 @@ export class ProdutoListagem implements OnInit {
     });
   }
 
-  //Configuração do card
+  // Configuração do card
   produtoSelecionado = signal<Produto | null>(null);
 
   abrirDetalhes(produto: Produto) {
@@ -84,7 +86,7 @@ export class ProdutoListagem implements OnInit {
     this.produtoSelecionado.set(null);
   }
 
-  //Filtros
+  // Filtros
   filtroNome: string = '';
   filtroCategoria: string = '';
 

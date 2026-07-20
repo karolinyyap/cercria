@@ -29,6 +29,7 @@ export class MedicamentoEstoque implements OnInit {
     private cdr: ChangeDetectorRef,
   ) {}
 
+  // Injeção do serviço responsável pelas operações com acolhidos, medicamentos e funcionários
   private route = inject(ActivatedRoute);
   private medicamentoService = inject(MedicamentoService);
   private entradaService = inject(MedicamentoEstoqueService);
@@ -36,6 +37,7 @@ export class MedicamentoEstoque implements OnInit {
 
   acolhidoSelecionadoId: number | null = null;
 
+  //Listas
   medicamento: Medicamento = {} as Medicamento;
   medicamentoId!: number;
   entradas: MedicamentoEstoqueM[] = [];
@@ -43,6 +45,7 @@ export class MedicamentoEstoque implements OnInit {
 
   estoqueAtual = 0;
 
+  //Model da entrada
   novaEntrada: MedicamentoEstoqueM = {
     quantidade: 0,
     quantidade_atual: 0,
@@ -56,6 +59,7 @@ export class MedicamentoEstoque implements OnInit {
   alertaEstoque = false;
 
   ngOnInit(): void {
+    //Pega o id do medicamento
     this.medicamentoId = Number(this.route.snapshot.paramMap.get('id'));
 
     // data atual
@@ -66,6 +70,7 @@ export class MedicamentoEstoque implements OnInit {
     this.carregarEstoque();
   }
 
+  // Carregar os medicamentos do banco no combobox
   carregarMedicamento(): void {
     this.medicamentoService.buscarPorId(this.medicamentoId).subscribe({
       next: (m) => {
@@ -76,6 +81,7 @@ export class MedicamentoEstoque implements OnInit {
     });
   }
 
+  // Carregar os responsáveis do banco no combobox
   carregarResponsaveis(): void {
     this.funcionarioService.selecionar().subscribe({
       next: (lista) => {
@@ -92,6 +98,7 @@ export class MedicamentoEstoque implements OnInit {
     });
   }
 
+  // Método para salvar a entrada
   salvarEntrada(): void {
     this.novaEntrada.medicamento!.id = this.medicamentoId;
 
@@ -126,6 +133,7 @@ export class MedicamentoEstoque implements OnInit {
     };
   }
 
+  // Carregar o estoque do banco (quantidade)
   carregarEstoque(): void {
     this.entradaService.listarPorMedicamento(this.medicamentoId).subscribe({
       next: (lista: MedicamentoEstoqueM[]) => {

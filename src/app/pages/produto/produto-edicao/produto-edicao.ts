@@ -18,8 +18,10 @@ import Swal from 'sweetalert2';
   styleUrl: './produto-edicao.css',
 })
 export class ProdutoEdicao {
+  // Objeto do tipo produto
   produto: Produto = new Produto();
 
+  // Injeção do serviço responsável pelas operações com produto
   private servico = inject(ProdutoService);
   constructor(
     private rota: ActivatedRoute,

@@ -16,8 +16,10 @@ import Swal from 'sweetalert2';
   styleUrl: './medicamento-listagem.css',
 })
 export class MedicamentoListagem implements OnInit {
+  // Signals para armazenar listas vindas dos serviços
   medicamentos = signal<Medicamento[]>([]);
 
+  // Injeção do serviço responsável pelas operações com medicamentos
   private servico = inject(MedicamentoService);
   constructor(private toastr: ToastrService) {}
 
@@ -34,6 +36,7 @@ export class MedicamentoListagem implements OnInit {
     });
   }
 
+  //Método para exclusão
   excluir(id: number) {
     Swal.fire({
       title: 'Tem certeza?',
@@ -60,7 +63,7 @@ export class MedicamentoListagem implements OnInit {
     });
   }
 
-  //Configuração do card
+  // Configuração do card
   medicamentoSelecionado = signal<Medicamento | null>(null);
 
   abrirDetalhes(medicamento: Medicamento) {
@@ -71,9 +74,10 @@ export class MedicamentoListagem implements OnInit {
     this.medicamentoSelecionado.set(null);
   }
 
-  //Filtro
+  // Filtro
   filtroNome: string = '';
 
+  // Signals para armazenar listas vindas dos serviços
   medicamentosFiltro = signal<Medicamento[]>([]);
   medicamentosFiltrados = signal<Medicamento[]>([]);
 

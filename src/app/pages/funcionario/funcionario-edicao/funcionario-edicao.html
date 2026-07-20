@@ -4,6 +4,7 @@
   <app-sidebar></app-sidebar>
   <div class="form-list-panel">
     <h2><b>Edição de Funcionário</b></h2>
+    <!-- BREADCRUMB -->
     <nav class="breadcrumb">
       <a routerLink="/home">Home</a>
       <span class="breadcrumb-span">/</span>
@@ -12,8 +13,10 @@
       <span>Editando {{ funcionario.nome }}</span>
     </nav>
 
+    <!-- FORMULÁRIO DE EDIÇÃO DE FUNCIONÁRIO -->
     <form class="form-grid" #form="ngForm" (ngSubmit)="editar()">
       <div class="campo grande">
+        <!-- NOME -->
         <label>Nome completo <span>*</span></label>
         <input
           type="text"
@@ -34,6 +37,7 @@
         }
       </div>
 
+      <!-- TELEFONE -->
       <div class="campo">
         <label>Telefone <span>*</span></label>
         <input
@@ -49,6 +53,7 @@
         }
       </div>
 
+      <!-- DATA DE NASCIMENTO -->
       <div class="campo">
         <label>Data de nascimento <span>*</span></label>
         <input
@@ -64,6 +69,7 @@
         }
       </div>
 
+      <!-- E MAIL -->
       <div class="campo grande">
         <label>E-mail <span>*</span></label>
         <input
@@ -85,6 +91,7 @@
         }
       </div>
 
+      <!-- CPF -->
       <div class="campo">
         <label>CPF <span>*</span></label>
         <input
@@ -100,6 +107,7 @@
         }
       </div>
 
+      <!-- RG -->
       <div class="campo">
         <label>RG <span>*</span></label>
         <input
@@ -116,6 +124,7 @@
         }
       </div>
 
+      <!-- ÓRGÃO EMISSOR -->
       <div class="campo">
         <label>Órgão Emissor <span>*</span></label>
         <input
@@ -131,6 +140,7 @@
         }
       </div>
 
+      <!-- UNIDADE FEDERATIVA -->
       <div class="campo">
         <label>UF <span>*</span></label>
         <input
@@ -147,6 +157,7 @@
         }
       </div>
 
+      <!-- CARGO -->
       <div class="campo">
         <label>Cargo <span>*</span></label>
         <select name="cargo" required [(ngModel)]="funcionario.cargo" #cargo="ngModel">
@@ -165,6 +176,7 @@
         }
       </div>
 
+      <!-- ESCOLARIDADE -->
       <div class="campo">
         <label>Escolaridade <span>*</span></label>
         <select
@@ -193,6 +205,7 @@
         }
       </div>
 
+      <!-- CARGA HORÁRIA -->
       <div class="campo">
         <label>Carga Horária <span>*</span></label>
         <input
@@ -209,6 +222,7 @@
         }
       </div>
 
+      <!-- SEXO -->
       <div class="campo">
         <label>Sexo <span>*</span></label>
         <select name="sexo" required [(ngModel)]="funcionario.sexo" #sexo="ngModel">
@@ -222,6 +236,7 @@
         }
       </div>
 
+      <!-- DATA DE ADMISSÃO -->
       <div class="campo">
         <label>Data de admissão <span>*</span></label>
         <input
@@ -237,14 +252,16 @@
         }
       </div>
 
+      <!-- DATA DE SAÍDA -->
       <div class="campo">
         <label>Data de saída</label>
         <input type="date" name="dataSaida" [(ngModel)]="funcionario.dataSaida" />
       </div>
 
+      <!-- BOTÕES INFERIORES -->
       <div class="form-buttons">
         <button type="submit" class="btn">Alterar</button>
-        <a routerLink="/funcionario/listagem" class="btn-voltar"><< Voltar</a>
+        <a routerLink="/funcionario/listagem" class="btn-voltar">Voltar</a>
       </div>
     </form>
   </div>

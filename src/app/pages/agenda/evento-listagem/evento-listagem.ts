@@ -69,6 +69,7 @@ export class EventoListagem implements OnInit, AfterViewInit {
     },
   };
 
+  // Injeção do serviço responsável pelas operações com acolhidos, eventos, funcionários e agenda
   private acolhidoService = inject(AcolhidoService);
   private eventoService = inject(EventoService);
   private funcionarioService = inject(FuncionarioService);
@@ -99,6 +100,7 @@ export class EventoListagem implements OnInit, AfterViewInit {
     this.carregarEventos();
   }
 
+  // Método para carregar os eventos
   carregarEventos(): void {
     const calendarApi = this.calendarComponent?.getApi();
 
@@ -184,6 +186,7 @@ export class EventoListagem implements OnInit, AfterViewInit {
     }
   }
 
+  //Pegar o status do evento
   getStatusEvento(data: string, hora: string): string {
     const dataEvento = new Date(data);
 
@@ -197,6 +200,7 @@ export class EventoListagem implements OnInit, AfterViewInit {
     return agora < dataEvento ? 'Em andamento' : 'Finalizado';
   }
 
+  //Listas
   acolhidosLista: any[] = [];
   responsaveisLista: any[] = [];
 
@@ -213,6 +217,7 @@ export class EventoListagem implements OnInit, AfterViewInit {
   mostrarMotivo = false;
   motivoRecusa = '';
 
+  // Método para confirmar a saída do medicamento no calendário
   darMedicamento(agendaId: number): void {
     this.agendaService
       .marcarTomou(agendaId)
@@ -230,6 +235,7 @@ export class EventoListagem implements OnInit, AfterViewInit {
       });
   }
 
+  // Método para confirmar a não-saída do medicamento
   naoTomou(agendaId: number): void {
     if (!this.motivoRecusa.trim()) {
       this.toastr.warning('Informe o motivo');

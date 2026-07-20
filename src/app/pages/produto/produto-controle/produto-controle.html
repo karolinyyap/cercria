@@ -6,6 +6,7 @@
   <div class="estoque-container">
     <div class="estoque-header">
       <h2>Controle de Estoque de Produtos</h2>
+      <!-- BREADCRUMB -->
       <nav class="breadcrumb">
         <a routerLink="/home">Home</a>
         <span class="breadcrumb-span">/</span>
@@ -15,6 +16,7 @@
       </nav>
     </div>
 
+    <!-- TABS -->
     <div class="tabs">
       <div
         class="tab"
@@ -33,12 +35,15 @@
       </div>
     </div>
 
+    <!-- FORMULÁRIO -->
     <div class="produto-panel">
       <div class="produto-panel-body">
+        <!-- ENTRADA -->
         @if (abaSelecionada === 'entrada') {
           <form (ngSubmit)="salvarEntrada()">
             <div class="produto-form-grid">
               <div class="produto-campo">
+                <!-- PRODUTO -->
                 <label>Produto <span class="asterisco">*</span></label>
                 <select
                   [(ngModel)]="entrada.produtoId"
@@ -59,6 +64,7 @@
                 }
               </div>
 
+              <!-- QUANTIDADE -->
               <div class="produto-campo">
                 <label>Quantidade <span class="asterisco">*</span></label>
                 <input
@@ -75,6 +81,7 @@
                 }
               </div>
 
+              <!-- DATA DE VALIDADE -->
               <div class="produto-campo">
                 <label>Data de validade</label>
                 <input type="date" [(ngModel)]="entrada.dataValidade" name="dtValidade" />
@@ -95,6 +102,7 @@
                 }
               </div>
 
+              <!-- ORIGEM -->
               <div class="produto-campo">
                 <label>Origem <span class="asterisco">*</span></label>
                 <select [(ngModel)]="entrada.origem" name="origem" #origem="ngModel" required>
@@ -110,6 +118,7 @@
                 }
               </div>
 
+              <!-- RESPONSÁVEL -->
               <div class="produto-campo">
                 <label>Responsável <span class="asterisco">*</span></label>
 
@@ -133,6 +142,7 @@
                 }
               </div>
 
+              <!-- OBS -->
               <div class="produto-campo full">
                 <label>Observação</label>
                 <textarea
@@ -144,6 +154,7 @@
               </div>
             </div>
 
+            <!-- BOTÕES INFERIORES -->
             <div class="produto-actions">
               <button type="button" class="btn-limpar" (click)="limparEntrada()">Limpar</button>
               <button type="submit" class="btn-salvar">Salvar</button>
@@ -152,10 +163,10 @@
         }
 
         <!--SAÍDA-->
-
         @if (abaSelecionada === 'saida') {
           <form (ngSubmit)="salvarSaida()">
             <div class="produto-form-grid">
+              <!-- PRODUTO -->
               <div class="produto-campo">
                 <label>Produto <span class="asterisco">*</span></label>
                 <select
@@ -178,6 +189,7 @@
                 }
               </div>
 
+              <!-- QUANTIDADE -->
               <div class="produto-campo">
                 <label>Quantidade <span class="asterisco">*</span></label>
                 <input
@@ -195,6 +207,7 @@
                 }
               </div>
 
+              <!-- RESPONSÁVEL -->
               <div class="produto-campo">
                 <label>Responsável <span class="asterisco">*</span></label>
                 <select
@@ -217,6 +230,7 @@
                 }
               </div>
 
+              <!-- DATA DE SAÍDA -->
               <div class="produto-campo">
                 <label>Data da saída <span class="asterisco">*</span></label>
                 <input
@@ -232,6 +246,7 @@
                 }
               </div>
 
+              <!-- MOTIVO -->
               <div class="produto-campo full">
                 <label>Motivo <span class="asterisco">*</span></label>
                 <textarea
@@ -247,6 +262,7 @@
               }
             </div>
 
+            <!-- BOTÕES INFERIORES -->
             <div class="produto-actions">
               <button type="button" class="btn-limpar" (click)="limparSaida()">Limpar</button>
               <button type="submit" class="btn-salvar">Salvar</button>

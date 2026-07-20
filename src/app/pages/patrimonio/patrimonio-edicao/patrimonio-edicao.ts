@@ -17,8 +17,10 @@ import Swal from 'sweetalert2';
   styleUrl: './patrimonio-edicao.css',
 })
 export class PatrimonioEdicao {
+  // Objeto do tipo patrimônio
   patrimonio: Patrimonio = new Patrimonio();
 
+  // Injeção do serviço responsável pelas operações com PATRIMÔNIO
   private servico = inject(PatrimonioService);
   constructor(
     private rota: ActivatedRoute,

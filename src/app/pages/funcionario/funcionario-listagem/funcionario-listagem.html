@@ -4,11 +4,13 @@
   <app-sidebar></app-sidebar>
   <div class="form-list-panel">
     <h2><b>Listagem de Funcionários</b></h2>
+    <!-- BREADCRUMB -->
     <nav class="breadcrumb">
       <a routerLink="/home">Home</a>
       <span class="breadcrumb-span">/</span>
       <span>Listagem de Funcionários</span>
     </nav>
+    <!-- FILTROS -->
     <div class="filters">
       <label>
         <input type="radio" name="status" value="todos" [(ngModel)]="filtroStatus" />
@@ -29,6 +31,7 @@
     <div class="btnExterno">
       <a routerLink="/funcionario/cadastro" class="btn">+ Novo Funcionário</a>
     </div>
+    <!-- TABELA -->
     <div class="list-panel">
       <table>
         <thead>
@@ -38,6 +41,7 @@
           </tr>
         </thead>
         <tbody>
+          <!-- REGISTROS FILTRADOS -->
           @for (f of filtrarFuncionarios(); track f.id) {
             <tr>
               <td (click)="abrirDetalhes(f)" class="nome-click">
@@ -53,6 +57,7 @@
         </tbody>
       </table>
 
+      <!-- CARD -->
       @if (funcionarioSelecionado()) {
         <div class="card-overlay">
           <div class="card-funcionario">
@@ -78,8 +83,9 @@
         </div>
       }
     </div>
+    <!-- BOTÕES INFERIORES -->
     <div class="btnExterno">
-      <a routerLink="/funcionario/cadastro" class="btn"><< Voltar</a>
+      <a routerLink="/funcionario/cadastro" class="btn">Voltar</a>
     </div>
   </div>
 </div>

@@ -37,6 +37,7 @@ export class EventoCadastro {
   // Lista de status permitidos
   statusList: string[] = ['Em andamento', 'Cancelado', 'Adiado', 'Realizado'];
 
+  // Injeção do serviço responsável pelas operações com acolhidos, eventos e funcionários
   private acolhidoService = inject(AcolhidoService);
   private eventoService = inject(EventoService);
   private funcionarioService = inject(FuncionarioService);
@@ -71,7 +72,6 @@ export class EventoCadastro {
   }
 
   // Método de Cadastro
-
   cadastrar(form: any): void {
     if (
       !this.evento.nome ||
@@ -132,7 +132,6 @@ export class EventoCadastro {
   }
 
   // Seleção/Deseleção de Acolhidos
-
   toggleAcolhido(id: number): void {
     if (this.evento.acolhidos.includes(id)) {
       this.evento.acolhidos = this.evento.acolhidos.filter((a) => a !== id);

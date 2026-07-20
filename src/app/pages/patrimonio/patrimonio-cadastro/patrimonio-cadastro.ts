@@ -17,7 +17,7 @@ import Swal from 'sweetalert2';
   styleUrl: './patrimonio-cadastro.css',
 })
 export class PatrimonioCadastro {
-  //JSON de patrimônio
+  //Lista para cadastro de patrimônio
   patrimonios: Patrimonio[] = [];
 
   private servico = inject(PatrimonioService);

@@ -18,6 +18,7 @@ export class Login {
     private router: Router,
   ) {}
 
+  //Método para autenticar a entrada
   entrar() {
     this.http
       .post<any>('http://localhost:8080/funcionario/login', {

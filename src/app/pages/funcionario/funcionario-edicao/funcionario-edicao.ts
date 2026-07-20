@@ -19,8 +19,10 @@ import Swal from 'sweetalert2';
   styleUrl: './funcionario-edicao.css',
 })
 export class FuncionarioEdicao implements OnInit {
+  // Objeto do tipo funcionário
   funcionario: Funcionario = new Funcionario();
 
+  // Injeção do serviço responsável pelas operações com funcionários
   private servico = inject(FuncionarioService);
 
   constructor(
@@ -50,6 +52,7 @@ export class FuncionarioEdicao implements OnInit {
     });
   }
 
+  // Método para formatar data dd/MM/aaaa
   formatarData(data: any): string {
     if (!data) return '';
 

@@ -26,6 +26,7 @@ export class ProdutoControle implements OnInit {
     private toastr: ToastrService,
   ) {}
 
+  // Injeção do serviço responsável pelas operações com produto
   private funcionarioService = inject(FuncionarioService);
   private controleService = inject(ControleProdutoService);
   private produtoService = inject(ProdutoService);
@@ -35,6 +36,7 @@ export class ProdutoControle implements OnInit {
   produtos: any[] = [];
   usuarioLogado: number | null = null;
 
+  // Objetos de entrada e saída
   entrada = new EntradaProduto();
   saida = new SaidaProduto();
 
@@ -50,11 +52,11 @@ export class ProdutoControle implements OnInit {
 
     this.limparEntrada();
     this.limparSaida();
-
     this.carregarFuncionarios();
     this.carregarProdutos();
   }
 
+  // Carregar funcionários do banco no combobox
   carregarFuncionarios(): void {
     this.funcionarioService.selecionar().subscribe({
       next: (lista) => {
@@ -66,6 +68,7 @@ export class ProdutoControle implements OnInit {
     });
   }
 
+  // Carregar produtos do banco no combobox
   carregarProdutos(): void {
     this.produtoService.selecionar().subscribe({
       next: (lista) => {
@@ -113,6 +116,7 @@ export class ProdutoControle implements OnInit {
     };
   }
 
+  // Método de salvar entrada
   salvarEntrada(): void {
     const payload = this.montarPayloadEntrada();
     //console.log('ENTRADA:', payload);
@@ -128,6 +132,7 @@ export class ProdutoControle implements OnInit {
     });
   }
 
+  //Método de salvar saída
   salvarSaida(): void {
     const payload = this.montarPayloadSaida();
     //console.log('SAÍDA:', payload);

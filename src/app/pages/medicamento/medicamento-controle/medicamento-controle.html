@@ -6,12 +6,14 @@
   <div class="page-content">
     <nav class="breadcrumb">
       <a routerLink="/home">Home</a>
+      <!-- BREADCRUMB -->
       <span class="breadcrumb-span">/</span>
       <a routerLink="/acolhido/listagem">Acolhidos</a>
       <span class="breadcrumb-span">/</span>
       <span>Administrando Medicamentos de {{ acolhido?.nome }}</span>
     </nav>
 
+    <!-- TÍTULO COM NOME DO ACOLHIDO -->
     <div class="page-header">
       <div>
         <h2>{{ acolhido?.nome }}</h2>
@@ -29,6 +31,7 @@
       </div>
     </div>
 
+    <!-- FORMULÁRIOS DE SAÍDA PERIÓDICA E PROGRAMADA -->
     <div class="panel">
       <!-- SAÍDA PERIÓDICA -->
       @if (abaAtiva === 'programado') {
@@ -111,6 +114,7 @@
                     <span>horas</span>
                   </div>
 
+                  <!-- INICIANDO EM -->
                   <div class="freq-inline">
                     <label>Iniciando em</label>
 
@@ -122,6 +126,7 @@
                     />
                   </div>
 
+                  <!-- VEZES AO DIA -->
                   <div class="freq-inline">
                     <label>Vezes ao dia</label>
 

@@ -17,9 +17,10 @@ import Swal from 'sweetalert2';
   styleUrl: './medicamento-cadastro.css',
 })
 export class MedicamentoCadastro {
-  //JSON de funcionario
+  //Lista para o cadastro de medicamentos
   medicamentos: Medicamento[] = [];
 
+  // Injeção do serviço responsável pelas operações com medicamentos
   private servico = inject(MedicamentoService);
   constructor(
     private toastr: ToastrService,

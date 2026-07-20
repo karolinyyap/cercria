@@ -4,6 +4,7 @@
   <app-sidebar></app-sidebar>
   <div class="form-list-panel">
     <h2 class="titulo">Cadastro de Evento</h2>
+    <!-- BREADCRUMB -->
     <nav class="breadcrumb">
       <a routerLink="/home">Home</a>
       <span class="breadcrumb-span">/</span>
@@ -13,7 +14,7 @@
     </nav>
 
     <form #form="ngForm" (ngSubmit)="editar()">
-      <!-- Nome -->
+      <!-- NOME -->
       <div class="form-group">
         <label>Nome do Evento <span>*</span></label>
         <input
@@ -34,7 +35,7 @@
         }
       </div>
 
-      <!-- Data e Hora -->
+      <!-- DATA E HORA -->
       <div class="form-row">
         <div class="form-group">
           <label>Data <span>*</span></label>
@@ -67,6 +68,7 @@
         </div>
       </div>
 
+      <!-- RESPONSÁVEIS -->
       <div class="form-group">
         <label>Responsáveis <span>*</span></label>
 
@@ -97,7 +99,7 @@
         <small class="erro">Responsável é obrigatório</small>
       }
 
-      <!-- Descrição -->
+      <!-- DESCRIÇÃO -->
       <div class="form-group">
         <label>Descrição <span>*</span></label>
         <textarea
@@ -118,7 +120,7 @@
         }
       </div>
 
-      <!-- Acolhidos -->
+      <!-- ACOLHIDOS -->
       <div class="form-group">
         <label>Acolhidos Participantes</label>
         <input
@@ -143,11 +145,9 @@
         </div>
       </div>
 
-      <!-- Botões -->
+      <!-- BOTÕES INFERIORES -->
       <div class="botoes">
-        <button type="button" class="btn-voltar" [routerLink]="['/agenda/listagem']">
-          << Voltar
-        </button>
+        <button type="button" class="btn-voltar" [routerLink]="['/agenda/listagem']">Voltar</button>
 
         <div class="botoes-direita">
           <button type="reset" class="btn-limpar">Limpar</button>

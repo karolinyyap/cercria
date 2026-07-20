@@ -7,7 +7,6 @@ import Swal from 'sweetalert2';
 import { Sidebar } from '../../../components/sidebar/sidebar';
 import { Header } from '../../../components/header/header';
 import { FormsModule } from '@angular/forms';
-import { NgxMaskPipe } from 'ngx-mask';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -17,8 +16,10 @@ import { CommonModule } from '@angular/common';
   styleUrl: './patrimonio-listagem.css',
 })
 export class PatrimonioListagem implements OnInit {
+  // Signal para armazenar lista vinda dos serviços
   patrimonios = signal<Patrimonio[]>([]);
 
+  // Injeção do serviço responsável pelas operações com patrimônio
   private servico = inject(PatrimonioService);
   constructor(private toastr: ToastrService) {}
 

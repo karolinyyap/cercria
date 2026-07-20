@@ -4,14 +4,18 @@
   <app-sidebar></app-sidebar>
   <div class="form-list-panel">
     <h2><b>Cadastro de Acolhido</b></h2>
+    <!-- BREADCRUMB ROTA -->
     <nav class="breadcrumb">
       <a routerLink="/home">Home</a>
       <span class="breadcrumb-span">/</span>
       <span>Cadastro de Acolhido</span>
     </nav>
 
+    <!-- INÍCIO DO FORMULÁRIO DE CADASTRO DE ACOLHIDO-->
+
     <form class="form-grid" #form="ngForm" (ngSubmit)="cadastrar(form)">
       <div class="campo grande">
+        <!-- NOME -->
         <label>Nome completo <span>*</span></label>
         <input
           type="text"
@@ -32,6 +36,7 @@
         }
       </div>
 
+      <!-- CPF -->
       <div class="campo">
         <label>CPF <span>*</span></label>
         <input
@@ -48,6 +53,7 @@
         }
       </div>
 
+      <!-- DATA DE NASCIMENTO -->
       <div class="campo">
         <label>Data de nascimento <span>*</span></label>
         <input
@@ -63,6 +69,7 @@
         }
       </div>
 
+      <!-- ESCOLA -->
       <div class="campo grande">
         <label>Escola <span>*</span></label>
         <input
@@ -84,6 +91,7 @@
         }
       </div>
 
+      <!-- LOCAL FAMILIAR -->
       <div class="campo grande">
         <label>Local Familiar</label>
         <input
@@ -99,6 +107,7 @@
         }
       </div>
 
+      <!-- N° DO PROCESSO -->
       <div class="campo">
         <label>Número do Processo</label>
         <input
@@ -113,19 +122,33 @@
         }
       </div>
 
+      <!-- VARA -->
       <div class="campo">
         <label>Vara</label>
         <input type="text" name="vara" [(ngModel)]="acolhido.vara" minlength="3" #vara="ngModel" />
+
         @if (vara.errors?.['minlength']) {
           <small class="erro">Mínimo de 3 caracteres</small>
         }
       </div>
 
+      <!-- DATA DE ENTRADA -->
       <div class="campo">
         <label>Data de entrada <span>*</span></label>
-        <input type="date" name="dataEntrada" required [(ngModel)]="acolhido.dataEntrada" />
+        <input
+          type="date"
+          name="dataEntrada"
+          required
+          [(ngModel)]="acolhido.dataEntrada"
+          #dtEntrada="ngModel"
+        />
+
+        @if (dtEntrada.invalid && dtEntrada.touched) {
+          <small class="erro">Data de entrada é obrigatório</small>
+        }
       </div>
 
+      <!-- COR DA PELE -->
       <div class="campo">
         <label>Cor da pele <span>*</span></label>
         <select name="corPele" required [(ngModel)]="acolhido.corPele" #corPele="ngModel">
@@ -136,13 +159,20 @@
           <option value="Amarela">Amarela</option>
           <option value="Indígena">Indígena</option>
         </select>
+
+        @if (corPele.invalid && corPele.touched) {
+          <small class="erro">Cor da pele é obrigatório</small>
+        }
       </div>
+
+      <!-- DATA DE SAÍDA -->
 
       <div class="campo">
         <label>Data de saída</label>
         <input type="date" name="dataSaida" [(ngModel)]="acolhido.dataSaida" />
       </div>
 
+      <!-- DEFICIÊNCIA -->
       <div class="campo grande">
         <label>Deficiência</label>
         <input
@@ -157,6 +187,7 @@
         }
       </div>
 
+      <!-- PPCAAM -->
       <div class="campo">
         <label>PPCAAM</label>
         <input
@@ -171,6 +202,7 @@
         }
       </div>
 
+      <!-- TAMANHO - CAMISA -->
       <div class="campo">
         <label>Tamanho Camiseta <span>*</span></label>
         <select
@@ -193,6 +225,7 @@
         }
       </div>
 
+      <!-- TAMANHO - CALMÇA/BERMUDA -->
       <div class="campo">
         <label>Tamanho Bermuda/Calça <span>*</span></label>
         <input
@@ -210,6 +243,7 @@
         }
       </div>
 
+      <!-- TAMANHO - CALÇADO -->
       <div class="campo">
         <label>Tamanho Calçado <span>*</span></label>
         <input
@@ -227,6 +261,7 @@
         }
       </div>
 
+      <!-- TAMANHO - ROUPA INTÍMA -->
       <div class="campo">
         <label>Tamanho Roupa Íntima <span>*</span></label>
         <select
@@ -249,10 +284,11 @@
         }
       </div>
 
+      <!-- BOTÕES -->
       <div class="form-buttons">
         <button type="submit" class="btn" [disabled]="form.invalid">Salvar</button>
         <button type="reset" class="btn">Limpar</button>
-        <a routerLink="/home" class="btn-voltar"><< Voltar</a>
+        <a routerLink="/home" class="btn-voltar">Voltar</a>
       </div>
     </form>
   </div>

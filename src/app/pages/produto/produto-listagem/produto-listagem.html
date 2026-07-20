@@ -4,12 +4,14 @@
   <app-sidebar></app-sidebar>
   <div class="form-list-panel">
     <h2><b>Listagem de Produtos</b></h2>
+    <!-- BREADCRUMB -->
     <nav class="breadcrumb">
       <a routerLink="/home">Home</a>
       <span class="breadcrumb-span">/</span>
       <span>Listagem de Produtos</span>
     </nav>
 
+    <!-- FILTROS -->
     <div class="top-actions">
       <div class="filtros-linha">
         <label>Nome: </label>
@@ -38,6 +40,7 @@
       <a routerLink="/produto/cadastro" class="btn">+ Novo Produto</a>
     </div>
 
+    <!-- TABELA DE LISTAGEM -->
     <div class="list-panel">
       <table>
         <thead>
@@ -49,6 +52,7 @@
           </tr>
         </thead>
         <tbody>
+          <!-- REGISTROS FILTRADOS DE PRODUTOS -->
           @for (p of produtosFiltrados(); track p.id) {
             <tr>
               <td (click)="abrirDetalhes(p)" class="nome-click">
@@ -71,6 +75,7 @@
         </tbody>
       </table>
 
+      <!-- CARD -->
       @if (produtoSelecionado()) {
         <div class="card-overlay">
           <div class="card-medicamento">
@@ -83,8 +88,9 @@
         </div>
       }
     </div>
+    <!-- BOTÕES INFERIORES -->
     <div class="btnExterno">
-      <a routerLink="/produto/cadastro" class="btn"><< Voltar</a>
+      <a routerLink="/produto/cadastro" class="btn">Voltar</a>
     </div>
   </div>
 </div>

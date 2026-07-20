@@ -18,6 +18,7 @@ import { AcolhidoService } from '../../../services/acolhido/acolhido.service';
 export class AcolhidoListagem {
   acolhidos = signal<Acolhido[]>([]);
 
+  // Injeção do serviço responsável pelas operações com acolhidos
   private servico = inject(AcolhidoService);
 
   constructor(private toastr: ToastrService) {}
@@ -43,10 +44,13 @@ export class AcolhidoListagem {
   fecharDetalhes() {
     this.acolhidoSelecionado.set(null);
   }
+
   //Filtro de status
   filtroStatus: string = 'todos';
 
   filtrarAcolhidos() {
+    //Verifica se o acolhido está ativo ou não pela data de saída
+    //Se data de saída == NULL, o acolhido está ATIVO. Caso contrário, INATIVO
     if (this.filtroStatus === 'ativos') {
       return this.acolhidos().filter((a) => a.ativo);
     }

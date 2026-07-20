@@ -4,6 +4,7 @@
   <app-sidebar></app-sidebar>
   <div class="form-list-panel">
     <h2><b>Edição de Produtos</b></h2>
+    <!-- BREADCRUMB -->
     <nav class="breadcrumb">
       <a routerLink="/home">Home</a>
       <span class="breadcrumb-span">/</span>
@@ -12,7 +13,9 @@
       <span>Editando de {{ produto.nome }}</span>
     </nav>
 
+    <!-- FORMULÁRIO DE EDIÇÃO DE PRODUTO -->
     <form class="form-grid" #form="ngForm" (ngSubmit)="editar()">
+      <!-- NOME -->
       <div class="campo grande">
         <label>Nome do produto <span>*</span></label>
         <input
@@ -34,6 +37,7 @@
         }
       </div>
 
+      <!-- CATEGORIA -->
       <div class="campo">
         <label>Categoria <span>*</span></label>
         <select name="origem" required [(ngModel)]="produto.categoria">
@@ -48,6 +52,7 @@
         </select>
       </div>
 
+      <!-- UNIDADE DE MEDIDA -->
       <div class="campo">
         <label>Unidade de medida <span>*</span></label>
         <select name="unidadeMedida" required [(ngModel)]="produto.unidadeMedida">
@@ -60,9 +65,10 @@
         </select>
       </div>
 
+      <!-- BOTÕES INFERIORES -->
       <div class="form-buttons">
         <button type="submit" class="btn">Alterar</button>
-        <a routerLink="/produto/listagem" class="btn-voltar"><< Voltar</a>
+        <a routerLink="/produto/listagem" class="btn-voltar">Voltar</a>
       </div>
     </form>
   </div>

@@ -3,6 +3,7 @@
 <div class="main-container">
   <app-sidebar></app-sidebar>
   <div class="form-list-panel">
+    <!-- BREADCRUMB - ROTAS -->
     <h2><b>Listagem de Acolhidos</b></h2>
     <nav class="breadcrumb">
       <a routerLink="/home">Home</a>
@@ -10,6 +11,7 @@
       <span>Listagem de Acolhidos</span>
     </nav>
 
+    <!-- FILTROS -->
     <div class="filters">
       <label>
         <input type="radio" name="status" value="todos" [(ngModel)]="filtroStatus" />
@@ -29,19 +31,22 @@
 
     <br />
 
+    <!-- BOTÃO DE ADICIONAR NOVO ACOLHIDO -->
     <div class="btnExterno">
       <a routerLink="/acolhido/cadastro" class="btn"> + Novo Acolhido </a>
     </div>
 
+    <!-- LISTA -->
     <div class="list-panel">
       <table>
         <thead>
+          <!-- HEADER DA TABELA -->
           <tr>
             <th>Nome</th>
             <th>Ações</th>
           </tr>
         </thead>
-
+        <!-- LINHAS DOS REGISTROS DE ACORDO COM O FILTRO APLICADO -->
         <tbody>
           @for (a of filtrarAcolhidos(); track a.id) {
             <tr>
@@ -63,60 +68,35 @@
       </table>
 
       <!-- CARD DETALHES -->
-
       @if (acolhidoSelecionado()) {
         <div class="card-overlay">
           <div class="card-acolhido">
             <h2>{{ acolhidoSelecionado()?.nome }}</h2>
-
+            <p><b>CPF:</b>{{ acolhidoSelecionado()!.cpf | mask: '000.000.000-00' }}</p>
             <p>
-              <b>CPF:</b>
-              {{ acolhidoSelecionado()!.cpf | mask: '000.000.000-00' }}
+              <b>Data de nascimento:</b
+              >{{ acolhidoSelecionado()!.dataNascimento | date: 'dd/MM/yyyy' }}
             </p>
-
+            <p><b>Escola:</b>{{ acolhidoSelecionado()!.escola }}</p>
             <p>
-              <b>Data de nascimento:</b>
-              {{ acolhidoSelecionado()!.dataNascimento | date: 'dd/MM/yyyy' }}
+              <b>Data de entrada:</b>{{ acolhidoSelecionado()!.dataEntrada | date: 'dd/MM/yyyy' }}
             </p>
-
+            <p><b>Cor da pele:</b>{{ acolhidoSelecionado()!.corPele }}</p>
+            <p><b>Deficiência:</b>{{ acolhidoSelecionado()!.deficiencia || 'Não se aplica' }}</p>
             <p>
-              <b>Escola:</b>
-              {{ acolhidoSelecionado()!.escola }}
+              <b>Tamanho Camiseta:</b
+              >{{ acolhidoSelecionado()!.tamanhoCamiseta || 'Não se aplica' }}
             </p>
-
             <p>
-              <b>Data de entrada:</b>
-              {{ acolhidoSelecionado()!.dataEntrada | date: 'dd/MM/yyyy' }}
+              <b>Tamanho Bermuda/Calça:</b
+              >{{ acolhidoSelecionado()!.tamanhoBermudaCalca || 'Não se aplica' }}
             </p>
-
             <p>
-              <b>Cor da pele:</b>
-              {{ acolhidoSelecionado()!.corPele }}
+              <b>Tamanho Calçado:</b>{{ acolhidoSelecionado()!.tamanhoCalcado || 'Não se aplica' }}
             </p>
-
             <p>
-              <b>Deficiência:</b>
-              {{ acolhidoSelecionado()!.deficiencia || 'Não se aplica' }}
-            </p>
-
-            <p>
-              <b>Tamanho Camiseta:</b>
-              {{ acolhidoSelecionado()!.tamanhoCamiseta || 'Não se aplica' }}
-            </p>
-
-            <p>
-              <b>Tamanho Bermuda/Calça:</b>
-              {{ acolhidoSelecionado()!.tamanhoBermudaCalca || 'Não se aplica' }}
-            </p>
-
-            <p>
-              <b>Tamanho Calçado:</b>
-              {{ acolhidoSelecionado()!.tamanhoCalcado || 'Não se aplica' }}
-            </p>
-
-            <p>
-              <b>Tamanho Roupa Íntima:</b>
-              {{ acolhidoSelecionado()!.tamanhoRoupaIntima || 'Não se aplica' }}
+              <b>Tamanho Roupa Íntima:</b
+              >{{ acolhidoSelecionado()!.tamanhoRoupaIntima || 'Não se aplica' }}
             </p>
 
             <button (click)="fecharDetalhes()" class="btn">Fechar</button>
@@ -125,8 +105,9 @@
       }
     </div>
 
+    <!-- BOTÃO INFERIOR -->
     <div class="btnExterno">
-      <a routerLink="/acolhido/cadastro" class="btn"> << Voltar </a>
+      <a routerLink="/acolhido/cadastro" class="btn">Voltar </a>
     </div>
   </div>
 </div>

@@ -5,12 +5,14 @@
 
   <div class="form-list-panel">
     <h2><b>Listagem de Medicamentos</b></h2>
+    <!-- BREADCRUMB -->
     <nav class="breadcrumb">
       <a routerLink="/home">Home</a>
       <span class="breadcrumb-span">/</span>
       <span>Listagem de Medicamentos</span>
     </nav>
 
+    <!-- FILTROS -->
     <div class="top-actions">
       <div class="filtros-linha">
         <input
@@ -25,6 +27,7 @@
       <a routerLink="/medicamento/cadastro" class="btn">+ Novo Medicamento</a>
     </div>
 
+    <!-- TABELA DE LISTAGEM -->
     <div class="list-panel">
       <table>
         <thead>
@@ -34,6 +37,7 @@
           </tr>
         </thead>
         <tbody>
+          <!-- REGISTROS DE MEDICAMENTOS FILTRADOS -->
           @for (m of medicamentosFiltrados(); track m.id) {
             <tr>
               <td (click)="abrirDetalhes(m)" class="nome-click">
@@ -52,6 +56,7 @@
         </tbody>
       </table>
 
+      <!-- CARD -->
       @if (medicamentoSelecionado()) {
         <div class="card-overlay">
           <div class="card-medicamento">
@@ -68,8 +73,9 @@
         </div>
       }
     </div>
+    <!-- BOTÕES INFERIORES -->
     <div class="btnExterno">
-      <a routerLink="/medicamento/cadastro" class="btn"><< Voltar</a>
+      <a routerLink="/medicamento/cadastro" class="btn">Voltar</a>
     </div>
   </div>
 </div>

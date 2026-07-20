@@ -4,6 +4,7 @@
   <app-sidebar></app-sidebar>
   <div class="form-list-panel">
     <h2><b>Edição de Patrimônio</b></h2>
+    <!-- BREADCRUMB -->
     <nav class="breadcrumb">
       <a routerLink="/home">Home</a>
       <span class="breadcrumb-span">/</span>
@@ -12,7 +13,9 @@
       <span>Editando de {{ patrimonio.tombamento }}</span>
     </nav>
 
+    <!-- FORMULÁRIO DE EDIÇÃO DE PATRIMÔNIO -->
     <form class="form-grid" #form="ngForm" (ngSubmit)="editar()">
+      <!-- TOMBAMENTO -->
       <div class="campo">
         <label>Tombamento<span>*</span></label>
         <input
@@ -34,6 +37,7 @@
         }
       </div>
 
+      <!-- DATA DE AQUISIÇÃO -->
       <div class="campo">
         <label>Data de aquisição</label>
         <input
@@ -45,6 +49,7 @@
         />
       </div>
 
+      <!-- ESPECIFICAÇÃO -->
       <div class="campo grande">
         <label>Especificação<span>*</span></label>
         <textarea
@@ -65,10 +70,11 @@
         }
       </div>
 
+      <!-- BOTÕES INFERIORES -->
       <div class="form-buttons">
         <button type="submit" class="btn" [disabled]="form.invalid">Alterar</button>
         <button type="reset" class="btn">Limpar</button>
-        <a routerLink="/patrimonio/listagem" class="btn-voltar"><< Voltar</a>
+        <a routerLink="/patrimonio/listagem" class="btn-voltar">Voltar</a>
       </div>
     </form>
   </div>
