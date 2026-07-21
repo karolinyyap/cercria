@@ -4,13 +4,14 @@ import { Observable } from 'rxjs';
 import { Medicamento } from '../../models/Medicamento';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
+import { environment } from '../../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MedicamentoService {
   // URL base da API de medicamentos, usada como prefixo em todas as requisições
-  private url: string = 'http://localhost:8080/medicamento';
+  private url: string = `${environment.apiUrl}/medicamento`;
 
   // Construtor que injeta o HttpClient, permitindo fazer requisições HTTP
   constructor(private http: HttpClient) {}

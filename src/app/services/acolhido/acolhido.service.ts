@@ -4,13 +4,14 @@ import { Observable } from 'rxjs';
 import { Acolhido } from '../../models/Acolhido';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
+import { environment } from '../../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AcolhidoService {
   // URL base da API de acolhidos, usada como prefixo em todas as requisições
-  private url: string = 'http://localhost:8080/acolhido';
+  private url: string = `${environment.apiUrl}/acolhido`;
 
   // Construtor que injeta o HttpClient, permitindo fazer requisições HTTP
   constructor(private http: HttpClient) {}

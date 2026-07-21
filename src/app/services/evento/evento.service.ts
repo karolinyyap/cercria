@@ -3,13 +3,14 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Evento } from '../../models/Evento';
+import { environment } from '../../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EventoService {
   // URL base da API de eventos
-  private url: string = 'http://localhost:8080/evento';
+  private url: string = `${environment.apiUrl}/evento`;
 
   // Injeta o HttpClient para realizar as requisições HTTP
   constructor(private http: HttpClient) {}

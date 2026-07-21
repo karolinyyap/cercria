@@ -4,13 +4,14 @@ import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { EntradaProduto } from '../../models/EntradaProduto';
+import { environment } from '../../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ControleProdutoService {
   // URL base da API de produtos, usada como prefixo em todas as requisições
-  private url: string = 'http://localhost:8080/controle-produto';
+  private url: string = `${environment.apiUrl}/controle-produto`;
 
   // Construtor que injeta o HttpClient, permitindo fazer requisições HTTP
   constructor(private http: HttpClient) {}

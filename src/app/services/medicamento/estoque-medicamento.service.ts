@@ -3,10 +3,11 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { MedicamentoEstoqueM } from '../../models/MedicamentoEstoqueM';
+import { environment } from '../../../environments/environment.prod';
 
 @Injectable({ providedIn: 'root' })
 export class MedicamentoEstoqueService {
-  private url = 'http://localhost:8080/entrada-medicamento';
+  private url: string = `${environment.apiUrl}/entrada-medicamento`;
   private http = inject(HttpClient);
 
   cadastrar(e: MedicamentoEstoqueM): Observable<MedicamentoEstoqueM> {

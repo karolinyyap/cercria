@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
 import { Patrimonio } from '../../models/Patrimonio';
+import { environment } from '../../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PatrimonioService {
   // URL base da API de patrimônio
-  private url: string = 'http://localhost:8080/patrimonio';
+  private url: string = `${environment.apiUrl}/patrimonio`;
 
   // Injeta o HttpClient para realizar as requisições HTTP
   constructor(private http: HttpClient) {}

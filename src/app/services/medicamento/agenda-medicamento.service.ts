@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root',
@@ -8,7 +9,7 @@ import { Observable } from 'rxjs';
 export class AgendaMedicamentoService {
   private http = inject(HttpClient);
 
-  private api = 'http://localhost:8080/controle-medicamento/agenda';
+  private api: string = `${environment.apiUrl}/controle-medicamento/agenda`;
 
   selecionar(): Observable<any[]> {
     return this.http.get<any[]>(`${this.api}/listagem`);

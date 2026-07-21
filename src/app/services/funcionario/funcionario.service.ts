@@ -4,13 +4,14 @@ import { Observable } from 'rxjs';
 import { Funcionario } from '../../models/Funcionario';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
+import { environment } from '../../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FuncionarioService {
   // URL base da API de funcionarios, usada como prefixo em todas as requisições
-  private url: string = 'http://localhost:8080/funcionario';
+  private url: string = `${environment.apiUrl}/funcionario`;
 
   // Construtor que injeta o HttpClient, permitindo fazer requisições HTTP
   constructor(private http: HttpClient) {}
