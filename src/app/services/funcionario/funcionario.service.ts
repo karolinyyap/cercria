@@ -69,6 +69,6 @@ export class FuncionarioService {
 
   //Método de alterar senha
   alterarSenha(dados: any) {
-    return this.http.put('http://localhost:8080/funcionario/alterar-senha', dados);
+    return this.http.put(`${environment.apiUrl}/funcionario/alterar-senha`, dados);
   }
 }

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { environment } from '../../../environments/environment.prod';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,7 @@ export class Login {
   //Método para autenticar a entrada
   entrar() {
     this.http
-      .post<any>('http://localhost:8080/funcionario/login', {
+      .post<any>(`${environment.apiUrl}/funcionario/login`, {
         email: this.email,
         senha: this.senha,
       })
