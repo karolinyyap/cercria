@@ -8,6 +8,7 @@ import { Sidebar } from '../../../components/sidebar/sidebar';
 import { Header } from '../../../components/header/header';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { permissoes } from '../../../guards/permissoes';
 
 @Component({
   selector: 'app-patrimonio-listagem',
@@ -195,5 +196,28 @@ export class PatrimonioListagem implements OnInit {
     if (this.paginaAtual < this.totalPaginas) {
       this.paginaAtual++;
     }
+  }
+
+  temPermissao(permissao: string): boolean {
+    const cargo = this.servico.getCargo();
+
+    if (!cargo) {
+      return false;
+    }
+
+    const [modulo, acao] = permissao.split(':');
+    const permissoesModulo = permissoes[modulo as keyof typeof permissoes];
+
+    if (!permissoesModulo) {
+      return false;
+    }
+
+    const cargosPermitidos = permissoesModulo[acao as keyof typeof permissoesModulo];
+
+    if (!cargosPermitidos) {
+      return false;
+    }
+
+    return cargosPermitidos.includes(cargo);
   }
 }

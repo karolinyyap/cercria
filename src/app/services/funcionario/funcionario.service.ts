@@ -70,4 +70,23 @@ export class FuncionarioService {
   alterarSenha(dados: any) {
     return this.http.put(`${environment.apiUrl}/funcionario/alterar-senha`, dados);
   }
+
+  getCargo(): string {
+    const usuarioSalvo = sessionStorage.getItem('usuario');
+
+    if (!usuarioSalvo) {
+      return '';
+    }
+
+    try {
+      const usuario = JSON.parse(usuarioSalvo);
+      return usuario.cargo ?? '';
+    } catch {
+      return '';
+    }
+  }
+
+  recuperarSenha(email: string): Observable<any> {
+    return this.http.post<any>(`${this.url}/recuperar-senha`, { email });
+  }
 }

@@ -33,7 +33,9 @@
         <button (click)="limparFiltro()">Limpar filtro</button>
       </div>
 
-      <a routerLink="/patrimonio/cadastro" class="btn">+ Novo Produto</a>
+      @if (temPermissao('patrimonio:cadastrar')) {
+        <a routerLink="/patrimonio/cadastro" class="btn">+ Novo Patrimônio</a>
+      }
     </div>
 
     <!-- TABELA -->
@@ -58,8 +60,12 @@
               </td>
               <td>
                 <div class="buttons">
-                  <a [routerLink]="['/patrimonio/edicao', p.id]" class="btn">Editar</a>
-                  <button (click)="excluir(p.id!)" class="btn-excluir">Excluir</button>
+                  @if (temPermissao('patrimonio:editar')) {
+                    <a [routerLink]="['/patrimonio/edicao', p.id]" class="btn">Editar</a>
+                  }
+                  @if (temPermissao('funcionario:excluir')) {
+                    <button (click)="excluir(p.id!)" class="btn-excluir">Excluir</button>
+                  }
                 </div>
               </td>
             </tr>

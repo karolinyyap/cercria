@@ -1,0 +1,43 @@
+<div class="login-container">
+  <div class="login-panel">
+    <h2>Recuperar senha</h2>
+
+    <p>Informe seu e-mail para gerar uma senha temporária.</p>
+
+    <form #form="ngForm" (ngSubmit)="recuperar()">
+      <div class="form-group">
+        <label>E-mail *</label>
+
+        <input
+          type="email"
+          name="email"
+          required
+          [(ngModel)]="email"
+          placeholder="Digite seu e-mail"
+        />
+      </div>
+
+      <button type="submit">
+        @if (carregando) {
+          Gerando senha...
+        } @else {
+          Recuperar senha
+        }
+      </button>
+    </form>
+
+    @if (senhaTemporaria) {
+      <div class="senha-temporaria">
+        <h3>Senha temporária</h3>
+
+        <strong>{{ senhaTemporaria }}</strong>
+
+        <p>Utilize essa senha para entrar no sistema.</p>
+
+        <p>Após entrar, altere sua senha para uma senha definitiva.</p>
+      </div>
+    }
+
+    <a routerLink="/login" class="voltar"> Voltar para o login </a>
+  </div>
+</div>

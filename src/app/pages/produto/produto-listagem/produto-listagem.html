@@ -37,7 +37,9 @@
         <button (click)="filtroNome = ''; filtroCategoria = ''; filtrar()">Limpar Filtro</button>
       </div>
 
-      <a routerLink="/produto/cadastro" class="btn">+ Novo Produto</a>
+      @if (temPermissao('produto:cadastrar')) {
+        <a routerLink="/produto/cadastro" class="btn">+ Novo Produto</a>
+      }
     </div>
 
     <!-- TABELA DE LISTAGEM -->
@@ -66,8 +68,12 @@
               </td>
               <td>
                 <div class="buttons">
-                  <a [routerLink]="['/produto/edicao', p.id]" class="btn">Editar</a>
-                  <button (click)="excluir(p.id!)" class="btn-excluir">Excluir</button>
+                  @if (temPermissao('produto:editar')) {
+                    <a [routerLink]="['/produto/edicao', p.id]" class="btn">Editar</a>
+                  }
+                  @if (temPermissao('produto:excluir')) {
+                    <button (click)="excluir(p.id!)" class="btn-excluir">Excluir</button>
+                  }
                 </div>
               </td>
             </tr>

@@ -63,4 +63,19 @@ export class EventoService {
   remover(id: number): Observable<any> {
     return this.http.put<any>(this.url + '/excluir/' + id, {});
   }
+
+  getCargo(): string {
+    const usuarioSalvo = sessionStorage.getItem('usuario');
+
+    if (!usuarioSalvo) {
+      return '';
+    }
+
+    try {
+      const usuario = JSON.parse(usuarioSalvo);
+      return usuario.cargo ?? '';
+    } catch {
+      return '';
+    }
+  }
 }

@@ -6,7 +6,9 @@
   <div class="calendario-container">
     <div class="calendario-header">
       <h2 class="calendario-titulo">Calendário de Eventos</h2>
-      <button class="btn-novo-evento" routerLink="/agenda/evento-cadastro">Novo Evento</button>
+      @if (temPermissao('evento:cadastrar')) {
+        <button class="btn-novo-evento" routerLink="/agenda/evento-cadastro">Novo Evento</button>
+      }
     </div>
     <!-- BREADCRUMB - ROTAS -->
     <nav class="breadcrumb">
@@ -50,10 +52,14 @@
       </div>
 
       <div class="popup-footer">
-        <a class="btn-excluir" (click)="excluir(eventoSelecionado.id)"> Excluir </a>
-        <button class="btn-editar" [routerLink]="['/agenda/evento-edicao', eventoSelecionado.id]">
-          Editar
-        </button>
+        @if (temPermissao('evento:excluir')) {
+          <a class="btn-excluir" (click)="excluir(eventoSelecionado.id)"> Excluir </a>
+        }
+        @if (temPermissao('evento:editar')) {
+          <button class="btn-editar" [routerLink]="['/agenda/evento-edicao', eventoSelecionado.id]">
+            Editar
+          </button>
+        }
 
         <button class="btn-fechar" (click)="fecharPopup()">Fechar</button>
       </div>
@@ -87,9 +93,12 @@
       </div>
 
       <div class="popup-footer">
-        <button class="btn-editar" (click)="darMedicamento(agendaSelecionada.id)">Dar</button>
-
-        <button class="btn-fechar" (click)="mostrarMotivo = !mostrarMotivo">Não deu</button>
+        @if (temPermissao('medicamento:saida')) {
+          <button class="btn-editar" (click)="darMedicamento(agendaSelecionada.id)">Dar</button>
+        }
+        @if (temPermissao('medicamento:saida')) {
+          <button class="btn-fechar" (click)="mostrarMotivo = !mostrarMotivo">Não deu</button>
+        }
       </div>
 
       @if (mostrarMotivo) {

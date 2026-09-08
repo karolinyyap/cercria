@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule],
+  imports: [FormsModule, RouterLink],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
@@ -28,17 +28,16 @@ export class Login {
       })
       .subscribe({
         next: (resposta) => {
-          //console.log('RESPOSTA DO LOGIN:', resposta);
-
           const usuario = resposta.funcionario;
 
           sessionStorage.setItem('usuario', JSON.stringify(usuario));
           sessionStorage.setItem('token', resposta.token);
 
-          //console.log('FUNCIONÁRIO LOGADO:', usuario);
-          //console.log('ID:', usuario.id);
-
-          this.router.navigate(['/home']);
+          if (resposta.senhaTemporaria) {
+            this.router.navigate(['/alterar-senha']);
+          } else {
+            this.router.navigate(['/home']);
+          }
         },
 
         error: (err) => {

@@ -7,6 +7,7 @@ import { Funcionario } from '../../../models/Funcionario';
 import { FuncionarioService } from '../../../services/funcionario/funcionario.service';
 import { NgxMaskPipe } from 'ngx-mask';
 import { CommonModule } from '@angular/common';
+import { permissoes } from '../../../guards/permissoes';
 import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
 
@@ -168,5 +169,28 @@ export class FuncionarioListagem implements OnInit {
     if (this.paginaAtual < this.totalPaginas) {
       this.paginaAtual++;
     }
+  }
+
+  temPermissao(permissao: string): boolean {
+    const cargo = this.servico.getCargo();
+
+    if (!cargo) {
+      return false;
+    }
+
+    const [modulo, acao] = permissao.split(':');
+    const permissoesModulo = permissoes[modulo as keyof typeof permissoes];
+
+    if (!permissoesModulo) {
+      return false;
+    }
+
+    const cargosPermitidos = permissoesModulo[acao as keyof typeof permissoesModulo];
+
+    if (!cargosPermitidos) {
+      return false;
+    }
+
+    return cargosPermitidos.includes(cargo);
   }
 }

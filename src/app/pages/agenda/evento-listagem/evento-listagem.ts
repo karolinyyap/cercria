@@ -17,6 +17,7 @@ import { AcolhidoService } from '../../../services/acolhido/acolhido.service';
 import { FuncionarioService } from '../../../services/funcionario/funcionario.service';
 import { ToastrService } from 'ngx-toastr';
 import { FormsModule } from '@angular/forms';
+import { permissoes } from '../../../guards/permissoes';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -310,5 +311,28 @@ export class EventoListagem implements OnInit, AfterViewInit {
         });
       }
     });
+  }
+
+  temPermissao(permissao: string): boolean {
+    const cargo = this.eventoService.getCargo();
+
+    if (!cargo) {
+      return false;
+    }
+
+    const [modulo, acao] = permissao.split(':');
+    const permissoesModulo = permissoes[modulo as keyof typeof permissoes];
+
+    if (!permissoesModulo) {
+      return false;
+    }
+
+    const cargosPermitidos = permissoesModulo[acao as keyof typeof permissoesModulo];
+
+    if (!cargosPermitidos) {
+      return false;
+    }
+
+    return cargosPermitidos.includes(cargo);
   }
 }

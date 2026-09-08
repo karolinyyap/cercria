@@ -13,10 +13,14 @@
   </div>
 
   <div class="submenu" [class.aberto]="menuAberto === 'funcionario'">
-    <div routerLink="/funcionario/cadastro" routerLinkActive="ativo" class="submenu-item">
+    <div
+      class="submenu-item"
+      (click)="abrirPagina('/funcionario/cadastro', 'funcionario:cadastrar')"
+    >
       Cadastro
     </div>
-    <div routerLink="/funcionario/listagem" routerLinkActive="ativo" class="submenu-item">
+
+    <div class="submenu-item" (click)="abrirPagina('/funcionario/listagem', 'funcionario:listar')">
       Listagem
     </div>
   </div>
@@ -29,10 +33,10 @@
   </div>
 
   <div class="submenu" [class.aberto]="menuAberto === 'acolhido'">
-    <div routerLink="/acolhido/cadastro" routerLinkActive="ativo" class="submenu-item">
+    <div class="submenu-item" (click)="abrirPagina('/acolhido/cadastro', 'acolhido:cadastrar')">
       Cadastro
     </div>
-    <div routerLink="/acolhido/listagem" routerLinkActive="ativo" class="submenu-item">
+    <div class="submenu-item" (click)="abrirPagina('/acolhido/listagem', 'acolhido:listar')">
       Listagem
     </div>
   </div>
@@ -45,8 +49,15 @@
   </div>
 
   <div class="submenu" [class.aberto]="menuAberto === 'medicamento'">
-    <div routerLink="/medicamento/cadastro" class="submenu-item">Cadastro</div>
-    <div routerLink="/medicamento/listagem" class="submenu-item">Listagem</div>
+    <div
+      class="submenu-item"
+      (click)="abrirPagina('/medicamento/cadastro', 'medicamento:cadastrar')"
+    >
+      Cadastro
+    </div>
+    <div class="submenu-item" (click)="abrirPagina('/medicamento/listagem', 'medicamento:listar')">
+      Listagem
+    </div>
   </div>
 
   <!-- PRODUTOS -->
@@ -57,9 +68,15 @@
   </div>
 
   <div class="submenu" [class.aberto]="menuAberto === 'produto'">
-    <div routerLink="/produto/cadastro" class="submenu-item">Cadastro</div>
-    <div routerLink="/produto/listagem" class="submenu-item">Listagem</div>
-    <div routerLink="/produto/controle" class="submenu-item">Controle</div>
+    <div class="submenu-item" (click)="abrirPagina('/produto/cadastro', 'produto:cadastrar')">
+      Cadastro
+    </div>
+    <div class="submenu-item" (click)="abrirPagina('/produto/listagem', 'produto:listar')">
+      Listagem
+    </div>
+    <div class="submenu-item" (click)="abrirPagina('/produto/controle', 'produto:controle')">
+      Controle
+    </div>
   </div>
 
   <!-- PATRIMÔNIO -->
@@ -70,8 +87,12 @@
   </div>
 
   <div class="submenu" [class.aberto]="menuAberto === 'patrimonio'">
-    <div routerLink="/patrimonio/cadastro" class="submenu-item">Cadastro</div>
-    <div routerLink="/patrimonio/listagem" class="submenu-item">Listagem</div>
+    <div class="submenu-item" (click)="abrirPagina('/patrimonio/cadastro', 'patrimonio:cadastrar')">
+      Cadastro
+    </div>
+    <div class="submenu-item" (click)="abrirPagina('/patrimonio/listagem', 'patrimonio:listar')">
+      Listagem
+    </div>
   </div>
 
   <!-- AGENDA -->
@@ -82,8 +103,12 @@
   </div>
 
   <div class="submenu" [class.aberto]="menuAberto === 'agenda'">
-    <div routerLink="/agenda/listagem" class="submenu-item">Calendário</div>
-    <div routerLink="/agenda/evento-cadastro" class="submenu-item">Novo Evento</div>
+    <div class="submenu-item" (click)="abrirPagina('/agenda/listagem', 'evento:listar')">
+      Calendário
+    </div>
+    <div class="submenu-item" (click)="abrirPagina('/agenda/cadastro', 'evento:cadastrar')">
+      Novo Evento
+    </div>
   </div>
 
   <!-- RELATÓRIOS -->

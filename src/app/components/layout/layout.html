@@ -3,32 +3,32 @@
     <section>
       <h2>Acesso rápido</h2>
       <div class="layout">
-        <div class="btn-item" routerLink="/funcionario/listagem">
+        <div class="btn-item" (click)="abrirPagina('/funcionario/listagem', 'funcionario:listar')">
           <img src="/assets/funcionario.png" />
           <span>Funcionários</span>
         </div>
 
-        <div class="btn-item" routerLink="/acolhido/listagem">
+        <div class="btn-item" (click)="abrirPagina('/acolhido/listagem', 'acolhido:listar')">
           <img src="/assets/acolhidos.png" />
           <span>Acolhidos</span>
         </div>
 
-        <div class="btn-item" routerLink="/medicamento/listagem">
+        <div class="btn-item" (click)="abrirPagina('/medicamento/listagem', 'medicamento:listar')">
           <img src="/assets/medicamento.png" />
           <span>Medicamentos</span>
         </div>
 
-        <div class="btn-item" routerLink="/produto/listagem">
+        <div class="btn-item" (click)="abrirPagina('/produto/listagem', 'produto:listar')">
           <img src="/assets/produto.png" />
           <span>Produtos</span>
         </div>
 
-        <div class="btn-item" routerLink="/patrimonio/listagem">
+        <div class="btn-item" (click)="abrirPagina('/patrimonio/listagem', 'patrimonio:listar')">
           <img src="/assets/patrimonio.png" />
           <span>Patrimônio</span>
         </div>
 
-        <div class="btn-item" routerLink="/agenda/listagem">
+        <div class="btn-item" (click)="abrirPagina('/agenda/listagem', 'evento:listar')">
           <img src="/assets/calendario.png" />
           <span>Agenda</span>
         </div>

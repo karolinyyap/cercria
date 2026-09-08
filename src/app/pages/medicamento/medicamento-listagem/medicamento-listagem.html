@@ -24,7 +24,9 @@
         <button (click)="filtroNome = ''; filtrar()">Limpar Filtro</button>
       </div>
 
-      <a routerLink="/medicamento/cadastro" class="btn">+ Novo Medicamento</a>
+      @if (temPermissao('medicamento:cadastrar')) {
+        <a routerLink="/medicamento/cadastro" class="btn">+ Novo Medicamento</a>
+      }
     </div>
 
     <!-- TABELA DE LISTAGEM -->
@@ -45,13 +47,21 @@
                 {{ m.nome }}
               </td>
               <td>
-                {{ quantidades[m.id] || 0 }}
+                {{ quantidades()[m.id!] }}
               </td>
               <td>
                 <div class="buttons">
-                  <a [routerLink]="['/medicamento/estoque', m.id]" class="btnEstoque"> Entrada </a>
-                  <a [routerLink]="['/medicamento/edicao', m.id]" class="btn-editar"> Editar </a>
-                  <button (click)="excluir(m.id!)" class="btn-excluir">Excluir</button>
+                  @if (temPermissao('medicamento:entrada')) {
+                    <a [routerLink]="['/medicamento/estoque', m.id]" class="btnEstoque">
+                      Entrada
+                    </a>
+                  }
+                  @if (temPermissao('medicamento:editar')) {
+                    <a [routerLink]="['/medicamento/edicao', m.id]" class="btn-editar"> Editar </a>
+                  }
+                  @if (temPermissao('medicamento:excluir')) {
+                    <button (click)="excluir(m.id!)" class="btn-excluir">Excluir</button>
+                  }
                 </div>
               </td>
             </tr>

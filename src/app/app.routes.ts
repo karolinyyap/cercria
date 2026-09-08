@@ -26,6 +26,8 @@ import { PatrimonioListagem } from './pages/patrimonio/patrimonio-listagem/patri
 import { PatrimonioEdicao } from './pages/patrimonio/patrimonio-edicao/patrimonio-edicao';
 import { PatrimonioCadastro } from './pages/patrimonio/patrimonio-cadastro/patrimonio-cadastro';
 import { canDeactivateGuard } from './guards/can-deactivate-guard';
+import { perfilGuard } from './guards/perfil-guard';
+import { RecuperarSenha } from './pages/recuperar-senha/recuperar-senha';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -36,14 +38,27 @@ export const routes: Routes = [
       {
         path: 'cadastro',
         component: FuncionarioCadastro,
-        canActivate: [authGuard],
+        canActivate: [authGuard, perfilGuard],
+        data: {
+          cargos: ['Coordenador', 'Auxiliar Administrativo'],
+        },
         canDeactivate: [canDeactivateGuard],
       },
-      { path: 'listagem', component: FuncionarioListagem, canActivate: [authGuard] },
+      {
+        path: 'listagem',
+        component: FuncionarioListagem,
+        canActivate: [authGuard, perfilGuard],
+        data: {
+          cargos: ['Coordenador', 'Auxiliar Administrativo'],
+        },
+      },
       {
         path: 'edicao/:id',
         component: FuncionarioEdicao,
-        canActivate: [authGuard],
+        canActivate: [authGuard, perfilGuard],
+        data: {
+          cargos: ['Coordenador', 'Auxiliar Administrativo'],
+        },
         canDeactivate: [canDeactivateGuard],
       },
     ],
@@ -54,20 +69,36 @@ export const routes: Routes = [
       {
         path: 'cadastro',
         component: MedicamentoCadastro,
-        canActivate: [authGuard],
+        canActivate: [authGuard, perfilGuard],
+        data: {
+          cargos: ['Coordenador', 'Enfermeiro(a)', 'Psicólogo(a)', 'Auxiliar administrativo'],
+        },
         canDeactivate: [canDeactivateGuard],
       },
-      { path: 'listagem', component: MedicamentoListagem, canActivate: [authGuard] },
+      {
+        path: 'listagem',
+        component: MedicamentoListagem,
+        canActivate: [authGuard, perfilGuard],
+        data: {
+          cargos: ['Coordenador', 'Enfermeiro(a)', 'Psicólogo(a)', 'Auxiliar administrativo'],
+        },
+      },
       {
         path: 'edicao/:id',
         component: MedicamentoEdicao,
-        canActivate: [authGuard],
+        canActivate: [authGuard, perfilGuard],
+        data: {
+          cargos: ['Coordenador', 'Enfermeiro(a)', 'Psicólogo(a)', 'Auxiliar administrativo'],
+        },
         canDeactivate: [canDeactivateGuard],
       },
       {
         path: 'estoque/:id',
         component: MedicamentoEstoque,
-        canActivate: [authGuard],
+        canActivate: [authGuard, perfilGuard],
+        data: {
+          cargos: ['Coordenador', 'Enfermeiro(a)', 'Psicólogo(a)'],
+        },
         canDeactivate: [canDeactivateGuard],
       },
     ],
@@ -78,15 +109,28 @@ export const routes: Routes = [
       {
         path: 'cadastro',
         component: AcolhidoCadastro,
-        canActivate: [authGuard],
+        canActivate: [authGuard, perfilGuard],
+        data: {
+          cargos: ['Coordenador', 'Auxiliar Administrativo', 'Psicólogo(a)'],
+        },
         canDeactivate: [canDeactivateGuard],
       },
-      { path: 'listagem', component: AcolhidoListagem, canActivate: [authGuard] },
+      {
+        path: 'listagem',
+        component: AcolhidoListagem,
+        canActivate: [authGuard, perfilGuard],
+        data: {
+          cargos: ['Coordenador', 'Auxiliar Administrativo', 'Enfermeiro(a)', 'Psicólogo(a)'],
+        },
+      },
       {
         path: 'edicao/:id',
         component: AcolhidoEdicao,
         canActivate: [authGuard],
-        canDeactivate: [canDeactivateGuard],
+        canDeactivate: [canDeactivateGuard, perfilGuard],
+        data: {
+          cargos: ['Coordenador', 'Auxiliar Administrativo', 'Psicólogo(a)'],
+        },
       },
       {
         path: 'controle-medicamento/:id',
@@ -99,23 +143,47 @@ export const routes: Routes = [
   {
     path: 'produto',
     children: [
-      { path: 'cadastro', component: ProdutoCadastro, canActivate: [authGuard] },
+      {
+        path: 'cadastro',
+        component: ProdutoCadastro,
+        canActivate: [authGuard, perfilGuard],
+        data: {
+          cargos: ['Coordenador', 'Auxiliar Administrativo'],
+        },
+      },
       {
         path: 'listagem',
         component: ProdutoListagem,
-        canActivate: [authGuard],
+        canActivate: [authGuard, perfilGuard],
+        data: {
+          cargos: [
+            'Coordenador',
+            'Psicólogo(a)',
+            'Auxiliar administrativo',
+            'Enfermeiro(a)',
+            'Cozinheiro(a)',
+            'Auxiliar de cozinha',
+            'Auxiliar de serviços gerais',
+          ],
+        },
         canDeactivate: [canDeactivateGuard],
       },
       {
         path: 'edicao/:id',
         component: ProdutoEdicao,
-        canActivate: [authGuard],
+        canActivate: [authGuard, perfilGuard],
+        data: {
+          cargos: ['Coordenador', 'Auxiliar Administrativo'],
+        },
         canDeactivate: [canDeactivateGuard],
       },
       {
         path: 'controle',
         component: ProdutoControle,
-        canActivate: [authGuard],
+        canActivate: [authGuard, perfilGuard],
+        data: {
+          cargos: ['Coordenador', 'Auxiliar Administrativo'],
+        },
         canDeactivate: [canDeactivateGuard],
       },
     ],
@@ -123,17 +191,38 @@ export const routes: Routes = [
   {
     path: 'agenda',
     children: [
-      { path: 'listagem', component: EventoListagem, canActivate: [authGuard] },
+      {
+        path: 'listagem',
+        component: EventoListagem,
+        canActivate: [authGuard, perfilGuard],
+        data: {
+          cargos: [
+            'Coordenador',
+            'Psicólogo(a)',
+            'Auxiliar administrativo',
+            'Enfermeiro(a)',
+            'Cozinheiro(a)',
+            'Auxiliar de cozinha',
+            'Auxiliar de serviços gerais',
+          ],
+        },
+      },
       {
         path: 'evento-edicao/:id',
         component: EdicaoEvento,
-        canActivate: [authGuard],
+        canActivate: [authGuard, perfilGuard],
+        data: {
+          cargos: ['Coordenador', 'Auxiliar administrativo', 'Psicólogo(a)', 'Enfermeiro(a)'],
+        },
         canDeactivate: [canDeactivateGuard],
       },
       {
         path: 'evento-cadastro',
         component: EventoCadastro,
-        canActivate: [authGuard],
+        canActivate: [authGuard, perfilGuard],
+        data: {
+          cargos: ['Coordenador', 'Auxiliar administrativo', 'Psicólogo(a)', 'Enfermeiro(a)'],
+        },
         canDeactivate: [canDeactivateGuard],
       },
     ],
@@ -141,22 +230,39 @@ export const routes: Routes = [
   {
     path: 'patrimonio',
     children: [
-      { path: 'listagem', component: PatrimonioListagem, canActivate: [authGuard] },
+      {
+        path: 'listagem',
+        component: PatrimonioListagem,
+        canActivate: [authGuard, perfilGuard],
+        data: {
+          cargos: ['Coordenador', 'Auxiliar Administrativo'],
+        },
+      },
       {
         path: 'edicao/:id',
         component: PatrimonioEdicao,
-        canActivate: [authGuard],
+        canActivate: [authGuard, perfilGuard],
+        data: {
+          cargos: ['Coordenador', 'Auxiliar Administrativo'],
+        },
         canDeactivate: [canDeactivateGuard],
       },
       {
         path: 'cadastro',
         component: PatrimonioCadastro,
-        canActivate: [authGuard],
+        canActivate: [authGuard, perfilGuard],
+        data: {
+          cargos: ['Coordenador', 'Auxiliar Administrativo'],
+        },
         canDeactivate: [canDeactivateGuard],
       },
     ],
   },
   { path: 'alterar-senha', component: AlterarSenha },
+  {
+    path: 'recuperar-senha',
+    component: RecuperarSenha,
+  },
   { path: 'login', component: Login },
   { path: '**', component: Notfound },
 ];

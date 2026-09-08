@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
 import { MedicamentoEstoqueService } from '../../../services/medicamento/estoque-medicamento.service';
-import { ControleMedicamentoService } from '../../../services/medicamento/medicamento-controle.service';
+import { permissoes } from '../../../guards/permissoes';
 import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
@@ -21,7 +21,7 @@ import { ChangeDetectorRef } from '@angular/core';
 export class MedicamentoListagem implements OnInit {
   // Signals para armazenar listas vindas dos serviços
   medicamentos = signal<Medicamento[]>([]);
-  quantidades: { [medicamentoId: number]: number } = {};
+  quantidades = signal<{ [medicamentoId: number]: number }>({});
 
   // Injeção do serviço responsável pelas operações com medicamentos
   private servico = inject(MedicamentoService);
@@ -39,22 +39,32 @@ export class MedicamentoListagem implements OnInit {
         this.medicamentosFiltro.set(lista);
         this.medicamentosFiltrados.set(lista);
 
-        // Busca a quantidade disponível de cada medicamento
         lista.forEach((medicamento) => {
           this.estoqueService.listarPorMedicamento(medicamento.id!).subscribe({
             next: (entradas) => {
-              this.quantidades[medicamento.id!] = entradas.reduce(
+              const quantidade = entradas.reduce(
                 (total, entrada) => total + (entrada.quantidade_atual ?? 0),
                 0,
               );
+
+              this.quantidades.update((quantidades) => ({
+                ...quantidades,
+                [medicamento.id!]: quantidade,
+              }));
             },
+
             error: (err) => {
               console.error(`Erro ao buscar estoque do medicamento ${medicamento.id}:`, err);
-              this.quantidades[medicamento.id!] = 0;
+
+              this.quantidades.update((quantidades) => ({
+                ...quantidades,
+                [medicamento.id!]: 0,
+              }));
             },
           });
         });
       },
+
       error: (err) => {
         console.error('Erro ao carregar medicamentos:', err);
       },
@@ -204,5 +214,28 @@ export class MedicamentoListagem implements OnInit {
     if (this.paginaAtual < this.totalPaginas) {
       this.paginaAtual++;
     }
+  }
+
+  temPermissao(permissao: string): boolean {
+    const cargo = this.servico.getCargo();
+
+    if (!cargo) {
+      return false;
+    }
+
+    const [modulo, acao] = permissao.split(':');
+    const permissoesModulo = permissoes[modulo as keyof typeof permissoes];
+
+    if (!permissoesModulo) {
+      return false;
+    }
+
+    const cargosPermitidos = permissoesModulo[acao as keyof typeof permissoesModulo];
+
+    if (!cargosPermitidos) {
+      return false;
+    }
+
+    return cargosPermitidos.includes(cargo);
   }
 }

@@ -7,6 +7,7 @@ import { Produto } from '../../../models/Produto';
 import { ProdutoService } from '../../../services/produto/produto.service';
 import { CommonModule } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
+import { permissoes } from '../../../guards/permissoes';
 import Swal from 'sweetalert2';
 import { ControleProdutoService } from '../../../services/produto/controle-produto.service';
 
@@ -193,5 +194,28 @@ export class ProdutoListagem implements OnInit {
     if (this.paginaAtual < this.totalPaginas) {
       this.paginaAtual++;
     }
+  }
+
+  temPermissao(permissao: string): boolean {
+    const cargo = this.servico.getCargo();
+
+    if (!cargo) {
+      return false;
+    }
+
+    const [modulo, acao] = permissao.split(':');
+    const permissoesModulo = permissoes[modulo as keyof typeof permissoes];
+
+    if (!permissoesModulo) {
+      return false;
+    }
+
+    const cargosPermitidos = permissoesModulo[acao as keyof typeof permissoesModulo];
+
+    if (!cargosPermitidos) {
+      return false;
+    }
+
+    return cargosPermitidos.includes(cargo);
   }
 }
