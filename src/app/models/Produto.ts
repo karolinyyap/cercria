@@ -3,5 +3,4 @@ export class Produto {
   nome: string = '';
   categoria: string = '';
   unidadeMedida: string = '';
-  rendimento?: string;
 }

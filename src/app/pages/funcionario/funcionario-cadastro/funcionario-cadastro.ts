@@ -77,7 +77,11 @@ export class FuncionarioCadastro {
       error: (err) => {
         console.error('Erro ao cadastrar funcionário:', err);
 
-        this.toastr.error(err.error?.message || 'Erro ao cadastrar funcionário.', 'Erro');
+        if (err.status === 409) {
+          this.toastr.warning(err.error, 'E-mail já cadastrado');
+        } else {
+          this.toastr.error('Erro ao cadastrar funcionário.', 'Erro');
+        }
       },
     });
   }

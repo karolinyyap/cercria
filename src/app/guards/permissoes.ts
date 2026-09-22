@@ -62,4 +62,8 @@ export const permissoes = {
     editar: ['Coordenador', 'Psicólogo(a)', 'Auxiliar administrativo'],
     excluir: ['Coordenador', 'Auxiliar administrativo'],
   },
+
+  relatorio: {
+    listar: ['Coordenador', 'Auxiliar Administrativo'],
+  },
 };

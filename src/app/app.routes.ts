@@ -28,6 +28,7 @@ import { PatrimonioCadastro } from './pages/patrimonio/patrimonio-cadastro/patri
 import { canDeactivateGuard } from './guards/can-deactivate-guard';
 import { perfilGuard } from './guards/perfil-guard';
 import { RecuperarSenha } from './pages/recuperar-senha/recuperar-senha';
+import { Relatorios } from './pages/relatorios/relatorios';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -257,6 +258,15 @@ export const routes: Routes = [
         canDeactivate: [canDeactivateGuard],
       },
     ],
+  },
+  {
+    path: 'relatorio',
+    component: Relatorios,
+    canActivate: [authGuard, perfilGuard],
+    data: {
+      cargos: ['Coordenador', 'Auxiliar Administrativo'],
+    },
+    canDeactivate: [canDeactivateGuard],
   },
   { path: 'alterar-senha', component: AlterarSenha },
   {

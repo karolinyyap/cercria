@@ -1,0 +1,54 @@
+<app-header></app-header>
+
+<div class="main-container">
+  <app-sidebar></app-sidebar>
+
+  <main class="content">
+    <section class="form-list-panel">
+      <div class="title">
+        <h2>Relatórios</h2>
+        <div class="breadcrumb">
+          <span>Home</span>
+          <span>/</span>
+          <span>Relatórios</span>
+        </div>
+        <p>Selecione o relatório que deseja gerar.</p>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="tipoRelatorio">Tipo de relatório</label>
+
+          <select id="tipoRelatorio" [(ngModel)]="tipoSelecionado">
+            <option value="">Selecione um relatório</option>
+
+            @for (relatorio of relatorios; track relatorio.id) {
+              <option [value]="relatorio.id">
+                {{ relatorio.nome }}
+              </option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div class="buttons">
+        <button
+          type="button"
+          class="btn-primary"
+          [disabled]="!tipoSelecionado || gerando"
+          (click)="gerarRelatorio()"
+        >
+          @if (gerando) {
+            Gerando...
+          } @else {
+            Gerar relatório
+          }
+        </button>
+
+        <button type="button" class="btn-secondary" (click)="limpar()" [disabled]="gerando">
+          Limpar
+        </button>
+      </div>
+    </section>
+  </main>
+</div>

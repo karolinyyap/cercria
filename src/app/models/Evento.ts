@@ -4,7 +4,7 @@ export class Evento {
   data: string = '';
   hora: string = '';
   responsaveis: number[] = [];
-  status: 'Em andamento' | 'Cancelado' | 'Adiado' | 'Realizado' = 'Em andamento';
+  status: string = '';
   descricao: string = '';
   acolhidos: number[] = [];
 }
